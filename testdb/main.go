@@ -71,3 +71,9 @@ func StructQueryField() {
 	}
 	fmt.Println(user.Id, user.Name, user.Age)
 }
+
+
+
+
+
+
