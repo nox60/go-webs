@@ -24,6 +24,7 @@ var MysqlDbErr error
 func main() {
 	testing.Init()
 	fmt.Print("test code")
+	StructQueryField()
 }
 
 // 初始化链接
@@ -63,7 +64,7 @@ type User struct {
 func StructQueryField() {
 
 	user := new(User)
-	row := MysqlDb.QueryRow("select id, name, age from users where id=?", 1)
+	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where accountId = ? ", 3)
 	if err := row.Scan(&user.Id, &user.Name, &user.Age); err != nil {
 		fmt.Printf("scan failed, err:%v", err)
 		return
