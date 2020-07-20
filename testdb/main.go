@@ -51,3 +51,22 @@ func init() {
 	}
 
 }
+
+// 用户表结构体
+type User struct {
+	Id   int64  `db:"id"`
+	Name string `db:"name"`
+	Age  int    `db:"age"`
+}
+
+// 查询数据，指定字段名
+func StructQueryField() {
+
+	user := new(User)
+	row := MysqlDb.QueryRow("select id, name, age from users where id=?", 1)
+	if err := row.Scan(&user.Id, &user.Name, &user.Age); err != nil {
+		fmt.Printf("scan failed, err:%v", err)
+		return
+	}
+	fmt.Println(user.Id, user.Name, user.Age)
+}
