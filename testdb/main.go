@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+//文档
+//https://blog.csdn.net/embinux/article/details/84031620
+
 const (
 	USER_NAME = "root"
 	PASS_WORD = "kkkk!@#$.com"
@@ -65,15 +68,11 @@ func StructQueryField() {
 
 	user := new(User)
 	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where accountId = ? ", 3)
+
 	if err := row.Scan(&user.Id, &user.Name, &user.Age); err != nil {
 		fmt.Printf("scan failed, err:%v", err)
 		return
 	}
+
 	fmt.Println(user.Id, user.Name, user.Age)
 }
-
-
-
-
-
-
