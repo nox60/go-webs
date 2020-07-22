@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"database/sql"
 	"fmt"
 )
 
@@ -12,10 +13,10 @@ type User struct {
 }
 
 // 查询数据，指定字段名
-func StructQueryField() {
+func StructQueryField(accountId int) {
 
 	user := new(User)
-	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where accountId = ? ", 3)
+	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where accountId = ? ", accountId)
 
 	if err := row.Scan(&user.Id, &user.Name, &user.Age); err != nil {
 		fmt.Printf("scan failed, err:%v", err)
@@ -26,19 +27,7 @@ func StructQueryField() {
 }
 
 // UpdateFooBar 更新
-func UpdateFooBar(id int64, x, y string) (err error) {
-	tx, err := MysqlDb.Begin()
-	if err != nil {
-		return
-	}
-	defer func() {
-		switch {
-		case err != nil:
-			tx.Rollback()
-		default:
-			err = tx.Commit()
-		}
-	}()
+func UpdateTxTesting(id int64, x, y string, tx *sql.Tx) (err error) {
 
 	_, err = tx.Exec("update `foo` set `x` = ? where `id` = ?", x, id)
 	if err != nil {
