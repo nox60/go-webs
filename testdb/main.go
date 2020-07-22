@@ -15,6 +15,6 @@ func main() {
 	//services.RetriveUserInfo(1)
 	//services.RetriveUserInfo(2)
 	//services.RetriveUserInfo(3)
-	services.InsertTest()
+	services.InsertTestWithOutTx()
 
 }
