@@ -45,10 +45,27 @@ func InsertTxTest(user *User, tx *sql.Tx) (err error) {
 	if err != nil {
 		return err
 	}
-	//_, err = tx.Exec("INSERT `bar` set `y` = ? where `id` = ?", y, id)
-	//if err != nil {
-	//	return
-	//}
+
+	_, err = tx.Exec("INSERT INTO `tb_users` (`accountId`,`userName`,`realName`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	if err != nil {
+		return err
+	}
+
+	return
+}
+
+// UpdateFooBar 更新
+func InsertWithOutTxTest(user *User) (err error) {
+
+	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`accountId`,`userName`,`realName`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	if err != nil {
+		return err
+	}
+
+	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`accountId`,`userName`,`realName`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	if err != nil {
+		return err
+	}
 
 	return
 }

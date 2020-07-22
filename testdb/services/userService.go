@@ -11,6 +11,7 @@ func RetriveUserInfo(accountId int) {
 
 func InsertTest() {
 	tx, err := dao.MysqlDb.Begin()
+
 	if err != nil {
 		return
 	}
@@ -18,7 +19,7 @@ func InsertTest() {
 		switch {
 		case err != nil:
 			fmt.Println("rollback error")
-			tx.Rollback()
+			// tx.Rollback()
 		default:
 			fmt.Println("commit ")
 			err = tx.Commit()
@@ -27,10 +28,23 @@ func InsertTest() {
 
 	user := dao.User{}
 
-	user.Id = 999
+	user.Id = 888
 	user.Name = "testUserName"
 	user.RealName = "testUssssss"
 
 	err = dao.InsertTxTest(&user, tx)
 
+}
+
+func InsertTestWithOutTx() {
+
+	user := dao.User{}
+
+	user.Id = 888
+	user.Name = "testUserName"
+	user.RealName = "testUssssss"
+
+	err := dao.InsertWithOutTxTest(&user)
+
+	fmt.Println(err)
 }
