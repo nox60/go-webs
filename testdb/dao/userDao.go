@@ -7,9 +7,10 @@ import (
 
 // 用户表结构体
 type User struct {
-	Id   int64  `db:"id"`
-	Name string `db:"name"`
-	Age  int    `db:"age"`
+	Id       int64  `db:"id"`
+	Name     string `db:"name"`
+	Age      int    `db:"age"`
+	RealName string `db:"realName"`
 }
 
 // 查询数据，指定字段名
@@ -27,16 +28,27 @@ func StructQueryField(accountId int) {
 }
 
 // UpdateFooBar 更新
-func UpdateTxTesting(id int64, x, y string, tx *sql.Tx) (err error) {
+func InsertTxTest(user *User, tx *sql.Tx) (err error) {
 
-	_, err = tx.Exec("update `foo` set `x` = ? where `id` = ?", x, id)
+	//_, err = tx.Exec("update `foo` set `x` = ? where `id` = ?", x, id)
+	//if err != nil {
+	//	return
+	//}
+	//_, err = tx.Exec("update `bar` set `y` = ? where `id` = ?", y, id)
+	//if err != nil {
+	//	return
+	//}
+
+	//res, err := pool.Exec("insert into `users` (`name`) values (?)", name)
+
+	_, err = tx.Exec("INSERT INTO `tb_users` (`accountId`,`userName`,`realName`) values (?,?,?) ", user.Id, user.Name, user.RealName)
 	if err != nil {
-		return
+		return err
 	}
-	_, err = tx.Exec("update `bar` set `y` = ? where `id` = ?", y, id)
-	if err != nil {
-		return
-	}
+	//_, err = tx.Exec("INSERT `bar` set `y` = ? where `id` = ?", y, id)
+	//if err != nil {
+	//	return
+	//}
 
 	return
 }

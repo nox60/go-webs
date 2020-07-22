@@ -1,12 +1,15 @@
 package services
 
-import "testdb/dao"
+import (
+	"fmt"
+	"testdb/dao"
+)
 
 func RetriveUserInfo(accountId int) {
 	dao.StructQueryField(accountId)
 }
 
-func UpdateTest() {
+func InsertTest() {
 	tx, err := dao.MysqlDb.Begin()
 	if err != nil {
 		return
@@ -14,11 +17,20 @@ func UpdateTest() {
 	defer func() {
 		switch {
 		case err != nil:
+			fmt.Println("rollback error")
 			tx.Rollback()
 		default:
+			fmt.Println("commit ")
 			err = tx.Commit()
 		}
 	}()
 
-	dao.UpdateTxTesting(10, "a", "b", tx)
+	user := dao.User{}
+
+	user.Id = 999
+	user.Name = "testUserName"
+	user.RealName = "testUssssss"
+
+	err = dao.InsertTxTest(&user, tx)
+
 }
