@@ -1,9 +1,10 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"testdb/controller"
 	"testdb/dao"
-	"testdb/services"
 )
 
 //文档
@@ -15,6 +16,16 @@ func main() {
 	//services.RetriveUserInfo(1)
 	//services.RetriveUserInfo(2)
 	//services.RetriveUserInfo(3)
-	services.InsertTestWithOutTx()
+	//services.InsertTestWithOutTx()
+
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+
+	r.GET("/someGet", controller.SimpleLogin)
+	r.Run() // listen and serve on 0.0.0.0:8080
 
 }
