@@ -19,13 +19,16 @@ func main() {
 	//services.InsertTestWithOutTx()
 
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
+
+	api := r.Group("/simple-api")
+
+	api.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
 	})
 
-	r.GET("/someGet", controller.SimpleLogin)
+	api.GET("/someGet", controller.SimpleLogin)
 	r.Run() // listen and serve on 0.0.0.0:8080
 
 }
