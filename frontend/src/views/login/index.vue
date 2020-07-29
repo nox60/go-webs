@@ -76,6 +76,7 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
+import { checkLogin } from '@/api/user'
 
 export default {
   name: 'Login',
@@ -158,16 +159,28 @@ export default {
           this.loading = true
           //登录判断逻辑
 
+          new Promise((resolve, reject) => {
+            checkLogin(this.loginForm)
+              .then(res => {
+                console.log(res)
+                resolve();
+              })
+              .catch(error => {
+                console.log(error)
+                reject(error);
+              });
+          }).catch(error => {
+            console.log(error)
+          });
 
-
-          this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
+          // this.$store.dispatch('user/login', this.loginForm)
+          //   .then(() => {
+          //     this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+          //     this.loading = false
+          //   })
+          //   .catch(() => {
+          //     this.loading = false
+          //   })
         } else {
           console.log('error submit!!')
           return false

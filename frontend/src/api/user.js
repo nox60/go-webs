@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import qs from 'qs';
 
 export function login(data) {
   return request({
@@ -12,7 +13,7 @@ export function getInfo(token) {
   return request({
     url: '/vue-element-admin/user/info',
     method: 'get',
-    params: { token }
+    params: {token}
   })
 }
 
@@ -22,3 +23,15 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function checkLogin(data) {
+  return request({
+    url: '/checkLogin',
+    method: 'post',
+    data: {
+      username:data.username,
+      password:data.password
+    }
+  })
+}
+

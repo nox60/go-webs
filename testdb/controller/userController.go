@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"testdb/dao"
@@ -10,7 +11,10 @@ import (
 func JsonLogin(c *gin.Context) {
 	var json models.LoginBody
 
+	fmt.Println(json)
+
 	if err := c.ShouldBindJSON(&json); err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

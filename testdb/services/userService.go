@@ -50,6 +50,6 @@ func InsertTestWithOutTx() {
 	fmt.Println(err)
 }
 
-func RetriveUserByUserNameAndPassword(loginBody *models.LoginBody) (user dao.User) {
+func RetriveUserByUserNameAndPassword(loginBody *models.LoginBody) (user *dao.User) {
 	return dao.RetrieveUserByUserNameAndPassword(loginBody)
 }
