@@ -4,7 +4,6 @@
       safasfasf
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
 </template>
 
@@ -37,12 +36,36 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.fetchUpdateLaboratoryData()
   },
   methods: {
+
+
+    fetchUpdateLaboratoryData() {
+      new Promise((resolve, reject) => {
+        getGolangData()
+          .then(res => {
+            if (res.code == "200") {
+              console.log(res.data)
+              // this.$message({
+              //   message: res.msg,
+              //   type: "success"
+              // });
+            }
+            resolve();
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error);
+          });
+      }).catch(error => {
+        console.log(error)
+      });
+    },
+
     getList() {
       this.listLoading = true
-      getGolangData(this.listQuery).then(response => {
+      getGolangData().then(response => {
         console.log(response)
         this.listLoading = false
       })

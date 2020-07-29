@@ -40,10 +40,9 @@ export function updateArticle(data) {
   })
 }
 
-export function getGolangData(data) {
+export function getGolangData() {
   return request({
     url: '/someGet',
     method: 'get',
-    data
   })
 }
