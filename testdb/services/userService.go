@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"testdb/dao"
+	"testdb/models"
 )
 
 func RetriveUserInfo(accountId int) {
@@ -47,4 +48,8 @@ func InsertTestWithOutTx() {
 	err := dao.InsertWithOutTxTest(&user)
 
 	fmt.Println(err)
+}
+
+func RetriveUserByUserNameAndPassword(loginBody *models.LoginBody) (user dao.User) {
+	return dao.RetrieveUserByUserNameAndPassword(loginBody)
 }

@@ -3,6 +3,7 @@ package dao
 import (
 	"database/sql"
 	"fmt"
+	"testdb/models"
 )
 
 // 用户表结构体
@@ -68,4 +69,21 @@ func InsertWithOutTxTest(user *User) (err error) {
 	}
 
 	return
+}
+
+// 使用user, password进行查询
+func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *User) {
+
+	user1 := new(User)
+	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where userName = ? AND password = ? ", userInfo.UserName, userInfo.Password)
+
+	if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
+		//fmt.Printf("scan failed, err:%v", err)
+		//fmt.Println("")
+		//return user1
+	}
+
+	//fmt.Println(user1.Id, user1.Name, user1.Age)
+
+	return user1
 }
