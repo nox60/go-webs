@@ -27,6 +27,7 @@ func JsonLogin(c *gin.Context) {
 		//登录成功
 		resultMsg.ResultCode = 100
 		resultMsg.Msg = "登录成功"
+		resultMsg.Token = "temp_token"
 		c.JSON(200, gin.H{
 			"code":    20000,
 			"status":  "success",
