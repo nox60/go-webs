@@ -1,13 +1,13 @@
 import request from '@/utils/request'
 import qs from 'qs';
 
-export function login(data) {
-  return request({
-    url: '/vue-element-admin/user/login',
-    method: 'post',
-    data
-  })
-}
+// export function login(data) {
+//   return request({
+//     url: '/vue-element-admin/user/login',
+//     method: 'post',
+//     data
+//   })
+// }
 
 export function getInfo(token) {
   return request({
@@ -35,3 +35,10 @@ export function checkLogin(data) {
   })
 }
 
+export function login(data) {
+  return request({
+    url: '/login',
+    method: 'post',
+    data
+  })
+}

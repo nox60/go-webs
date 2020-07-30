@@ -77,6 +77,7 @@
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 import { checkLogin } from '@/api/user'
+import {Message} from "element-ui";
 
 export default {
   name: 'Login',
@@ -165,6 +166,7 @@ export default {
 
                 if ( res.data.resultCode == 100 ){
                   console.log('login successed')
+                  console.log(this.redirect)
                   this.$store.dispatch('user/login', this.loginForm)
                     .then(() => {
                       this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
@@ -174,7 +176,12 @@ export default {
                       this.loading = false
                     })
                 } else {
-                  console.log('login failedee!!111')
+                  console.log('login failed')
+                  Message({
+                    message: res.data.msg || 'Error',
+                    type: 'error',
+                    duration: 1 * 1000
+                  })
                   this.loading = false
                   return false
                 }
