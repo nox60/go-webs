@@ -77,7 +77,7 @@
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 import { checkLogin } from '@/api/user'
-import {Message} from "element-ui";
+import { Message } from 'element-ui'
 
 export default {
   name: 'Login',
@@ -158,17 +158,19 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          //登录判断逻辑
+          // 登录判断逻辑
           new Promise((resolve, reject) => {
+            // 这里的checkLogin没写对，是应该用token去看用户的token是否过期，后面再重构。
             checkLogin(this.loginForm)
               .then(res => {
                 console.log(res.data)
 
-                if ( res.data.resultCode == 100 ){
+                if (res.data.resultCode == 100) {
                   console.log('login successed')
                   console.log(this.redirect)
-                  this.$store.dispatch('user/login', this.loginForm)
+                  this.$store.dispatch('user/loginInfo', this.loginForm)
                     .then(() => {
+                      console.log('-----++++++')
                       this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
                       this.loading = false
                     })
@@ -186,15 +188,15 @@ export default {
                   return false
                 }
 
-                resolve();
+                resolve()
               })
               .catch(error => {
                 console.log(error)
-                reject(error);
-              });
+                reject(error)
+              })
           }).catch(error => {
             console.log(error)
-          });
+          })
 
           // this.$store.dispatch('user/login', this.loginForm)
           //   .then(() => {
