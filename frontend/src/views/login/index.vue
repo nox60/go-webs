@@ -168,7 +168,7 @@ export default {
                 if (res.data.resultCode == 100) {
                   console.log('login successed')
                   console.log(this.redirect)
-                  this.$store.dispatch('user/loginInfo', this.loginForm)
+                  this.$store.dispatch('user/login', this.loginForm)
                     .then(() => {
                       console.log('-----++++++')
                       this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
