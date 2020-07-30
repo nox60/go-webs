@@ -21,21 +21,27 @@ func JsonLogin(c *gin.Context) {
 
 	result := dao.RetrieveUserByUserNameAndPassword(&json)
 
+	resultMsg := new(models.SimpleCode)
+
 	if result.Id > 0 {
 		//登录成功
+		resultMsg.ResultCode = 100
+		resultMsg.Msg = "登录成功"
 		c.JSON(200, gin.H{
 			"code":    20000,
-			"status":  "login Successed",
-			"message": "login Successed",
-			"data":    "",
+			"status":  "success",
+			"message": "success",
+			"data":    resultMsg,
 		})
 	} else {
 		//用户名或密码错误
+		resultMsg.ResultCode = 101
+		resultMsg.Msg = "登录失败"
 		c.JSON(200, gin.H{
-			"code":    20001,
-			"status":  "login failed",
-			"message": "login failed",
-			"data":    "",
+			"code":    20000,
+			"status":  "success",
+			"message": "success",
+			"data":    resultMsg,
 		})
 	}
 }

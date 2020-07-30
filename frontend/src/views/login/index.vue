@@ -158,11 +158,27 @@ export default {
         if (valid) {
           this.loading = true
           //登录判断逻辑
-
           new Promise((resolve, reject) => {
             checkLogin(this.loginForm)
               .then(res => {
-                console.log(res)
+                console.log(res.data)
+
+                if ( res.data.resultCode == 100 ){
+                  console.log('login successed')
+                  this.$store.dispatch('user/login', this.loginForm)
+                    .then(() => {
+                      this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                      this.loading = false
+                    })
+                    .catch(() => {
+                      this.loading = false
+                    })
+                } else {
+                  console.log('login failedee!!111')
+                  this.loading = false
+                  return false
+                }
+
                 resolve();
               })
               .catch(error => {
