@@ -20,8 +20,9 @@ router.beforeEach(async(to, from, next) => {
 
   // determine whether the user has logged in
   const hasToken = getToken()
-
+  console.log(hasToken)
   if (hasToken) {
+    console.log('........................')
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
@@ -57,6 +58,7 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
+    console.log('---------------------=======================》')
 
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
