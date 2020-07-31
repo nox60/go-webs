@@ -28,7 +28,7 @@ func JsonLogin(c *gin.Context) {
 		//登录成功
 		resultMsg.ResultCode = 100
 		resultMsg.Msg = "登录成功"
-		resultMsg.Token = "temp_token"
+		resultMsg.Token = "4"
 		//硬编码，先暂时未测试
 		resultMsg.Roles = "['admin']"
 		resultMsg.Introduction = "I am a super administrator"
@@ -55,7 +55,7 @@ func JsonLogin(c *gin.Context) {
 }
 
 func Info(c *gin.Context) {
-	accountId, _ := strconv.Atoi(c.Param("accountId"))
+	accountId, _ := strconv.Atoi(c.Query("token"))
 
 	result := dao.RetrieveUserByAccountId(accountId)
 

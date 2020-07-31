@@ -30,6 +30,7 @@ func main() {
 
 	api.POST("/login", controller.Login)
 	api.POST("/checkLogin", controller.JsonLogin)
+	api.GET("/info", controller.Info)
 	r.Run() // listen and serve on 0.0.0.0:8080
 
 }

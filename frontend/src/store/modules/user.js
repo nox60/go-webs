@@ -37,10 +37,10 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         console.log('0000000-------------')
         const { data } = response
-        console.log(response.data.token)
+        console.log(response.data.accountId)
         console.log(data)
         console.log('222')
-        commit('SET_TOKEN', data.token)
+        commit('SET_TOKEN', data.accountId)
         console.log('.............write cookie')
         setToken(data.token)
         console.log('--------------write cookie done')
