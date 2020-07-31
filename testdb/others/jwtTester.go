@@ -9,34 +9,39 @@ import (
 
 func main() {
 	fmt.Println("test")
-	JwtSign()
+	signedStr := JwtSign("ddddd")
+
+	token, _ := jwt.Parse(signedStr, func(token *jwt.Token) (interface{}, error) {
+		// Don't forget to validate the alg is what you expect:
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+
+		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
+		return []byte("testkey"), nil
+	})
+
+	fmt.Println("-----")
+	fmt.Println(token)
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		fmt.Println(claims["sub"])
+	} else {
+		fmt.Println("error")
+	}
 }
 
-func JwtSign() {
+func JwtSign(subject string) (signedStr string) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := make(jwt.MapClaims)
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
 	claims["iat"] = time.Now().Unix()
-	claims["sub"] = "kkkkkkkkkkkkkkkkkkkkkkkkkksadfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasfdasfasdfasdfasdfasdfasfasdfasdfasdf"
+	claims["sub"] = subject
 	token.Claims = claims
-
-	fmt.Println(claims)
-	fmt.Println(token.Claims)
 
 	tokenString, _ := token.SignedString([]byte("testkey"))
 
 	fmt.Println(tokenString)
 
-	//if err != nil {
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	fmt.Fprintln(w, "Error extracting the key")
-	//	fatal(err)
-	//}
-
-	//tokenString, err := token.SignedString([]byte(SecretKey))
-	//if err != nil {
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	fmt.Fprintln(w, "Error while signing the token")
-	//	fatal(err)
-	//}
+	return tokenString
 }
