@@ -8,7 +8,7 @@ import (
 
 // 用户表结构体
 type User struct {
-	Id       int64  `db:"id"`
+	Id       int    `db:"id"`
 	Name     string `db:"name"`
 	Age      int    `db:"age"`
 	RealName string `db:"realName"`
@@ -84,6 +84,19 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *User) 
 	}
 
 	//fmt.Println(user1.Id, user1.Name, user1.Age)
+
+	return user1
+}
+
+// 使用accountId获取用户信息
+func RetrieveUserByAccountId(accountId int) (user *User) {
+
+	user1 := new(User)
+
+	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where accountId = ? ", accountId)
+
+	if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
+	}
 
 	return user1
 }

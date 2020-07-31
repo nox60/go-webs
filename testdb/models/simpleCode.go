@@ -8,4 +8,5 @@ type SimpleCode struct {
 	Introduction string `json:"introduction" binding:"required"`
 	Avatar       string `json:"avatar" binding:"required"`
 	Name         string `json:"name" binding:"required"`
+	AccountId    int    `json:"accountId"  binding:"required"`
 }

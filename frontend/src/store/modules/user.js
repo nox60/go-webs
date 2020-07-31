@@ -36,7 +36,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         console.log('0000000-------------')
-        const { data } = response.data
+        const { data } = response
         console.log(response.data.token)
         console.log(data)
         console.log('222')
@@ -53,8 +53,10 @@ const actions = {
 
   // get user info
   getInfo({ commit, state }) {
+    console.log('55555555555555555555555555555555')
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
+        console.log(response)
         const { data } = response
 
         if (!data) {
