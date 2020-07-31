@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"testdb/dao"
 	"testdb/models"
+	"testdb/utils"
 )
 
 func JsonLogin(c *gin.Context) {
@@ -21,19 +22,21 @@ func JsonLogin(c *gin.Context) {
 
 	result := dao.RetrieveUserByUserNameAndPassword(&json)
 
-	resultMsg := new(models.SimpleCode)
+	resultMsg := new(models.HttpResult)
+
+	rsultMap := utils.StructToMap(resultMsg)
 
 	if result.Id > 0 {
 		//登录成功
-		resultMsg.ResultCode = 100
+		resultMsg.Code = 100
 		resultMsg.Msg = "登录成功"
 		resultMsg.Token = "4"
 		//硬编码，先暂时未测试
-		resultMsg.Roles = "['admin']"
-		resultMsg.Introduction = "I am a super administrator"
-		resultMsg.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
-		resultMsg.Name = "Super Admin"
-		resultMsg.AccountId = result.Id
+		//resultMsg.Roles = "['admin']"
+		//resultMsg.Introduction = "I am a super administrator"
+		//resultMsg.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+		//resultMsg.Name = "Super Admin"
+		//resultMsg.AccountId = result.Id
 		c.JSON(200, gin.H{
 			"code":    20000,
 			"status":  "success",
@@ -42,7 +45,7 @@ func JsonLogin(c *gin.Context) {
 		})
 	} else {
 		//用户名或密码错误
-		resultMsg.ResultCode = 101
+		//resultMsg.ResultCode = 101
 		resultMsg.Msg = "登录失败"
 		c.JSON(200, gin.H{
 			"code":    20000,
