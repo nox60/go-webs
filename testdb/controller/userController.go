@@ -6,12 +6,11 @@ import (
 	"net/http"
 	"testdb/dao"
 	"testdb/models"
-	"testdb/utils"
 )
 
 func JsonLogin(c *gin.Context) {
-	var json models.LoginBody
 
+	var json models.LoginBody
 	fmt.Println(json)
 
 	if err := c.ShouldBindJSON(&json); err != nil {
@@ -24,25 +23,21 @@ func JsonLogin(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)
 
-	rsultMap := utils.StructToMap(resultMsg)
+	//resultMap := utils.StructToMap(resultMsg)
 
 	if result.Id > 0 {
 		//登录成功
-		resultMsg.Code = 100
+		resultMsg.Code = 20000
 		resultMsg.Msg = "登录成功"
 		resultMsg.Token = "4"
+		resultMsg.Data = ""
 		//硬编码，先暂时未测试
 		//resultMsg.Roles = "['admin']"
 		//resultMsg.Introduction = "I am a super administrator"
 		//resultMsg.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
 		//resultMsg.Name = "Super Admin"
 		//resultMsg.AccountId = result.Id
-		c.JSON(200, gin.H{
-			"code":    20000,
-			"status":  "success",
-			"message": "success",
-			"data":    resultMsg,
-		})
+		c.JSON(200, resultMsg)
 	} else {
 		//用户名或密码错误
 		//resultMsg.ResultCode = 101
@@ -80,11 +75,8 @@ func Info(c *gin.Context) {
 }
 
 func Login(c *gin.Context) {
-
-	c.JSON(200, gin.H{
-		"code":    20000,
-		"status":  "posted",
-		"message": "test message",
-		"data":    "hello world",
-	})
+	resultMsg := new(models.HttpResult)
+	resultMsg.Token = "test"
+	fmt.Println("login method")
+	c.JSON(200, resultMsg)
 }
