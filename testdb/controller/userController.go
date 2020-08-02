@@ -84,7 +84,6 @@ func Login(c *gin.Context) {
 func Info2(c *gin.Context) {
 
 	resultMsg := new(models.SimpleCode)
-
 	//登录成功
 	resultMsg.ResultCode = 100
 	resultMsg.Msg = "登录成功"
@@ -102,4 +101,47 @@ func Info2(c *gin.Context) {
 		"data":    resultMsg,
 	})
 
+}
+
+func JsonLogOut(c *gin.Context) {
+
+	var json models.LoginBody
+	fmt.Println(json)
+
+	if err := c.ShouldBindJSON(&json); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	result := dao.RetrieveUserByUserNameAndPassword(&json)
+
+	resultMsg := new(models.HttpResult)
+
+	//resultMap := utils.StructToMap(resultMsg)
+
+	if result.Id > 0 {
+		//登录成功
+		resultMsg.Code = 20000
+		resultMsg.Msg = "登录成功"
+		resultMsg.Token = "4"
+		resultMsg.Data = ""
+		//硬编码，先暂时未测试
+		//resultMsg.Roles = "['admin']"
+		//resultMsg.Introduction = "I am a super administrator"
+		//resultMsg.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+		//resultMsg.Name = "Super Admin"
+		//resultMsg.AccountId = result.Id
+		c.JSON(200, resultMsg)
+	} else {
+		//用户名或密码错误
+		//resultMsg.ResultCode = 101
+		resultMsg.Msg = "登录失败"
+		c.JSON(200, gin.H{
+			"code":    20000,
+			"status":  "success",
+			"message": "success",
+			"data":    resultMsg,
+		})
+	}
 }
