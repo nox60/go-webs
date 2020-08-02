@@ -80,3 +80,26 @@ func Login(c *gin.Context) {
 	fmt.Println("login method")
 	c.JSON(200, resultMsg)
 }
+
+func Info2(c *gin.Context) {
+
+	resultMsg := new(models.SimpleCode)
+
+	//登录成功
+	resultMsg.ResultCode = 100
+	resultMsg.Msg = "登录成功"
+	resultMsg.Token = "temp_token"
+	//硬编码，先暂时未测试
+	resultMsg.Roles = "['admin']"
+	resultMsg.Introduction = "I am a super administrator"
+	resultMsg.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+	resultMsg.Name = "Super Admin"
+	resultMsg.AccountId = 4
+	c.JSON(200, gin.H{
+		"code":    20000,
+		"status":  "success",
+		"message": "success",
+		"data":    resultMsg,
+	})
+
+}
