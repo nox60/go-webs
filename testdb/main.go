@@ -44,6 +44,16 @@ func main() {
 
 func Authorize() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
+		// 首先判断token解析是否合法，如果不合法则提示访问未授权
+		xToken := c.Request.Header.Get("X-Token")
+
+		if xToken == "" {
+			fmt.Println("need x_token")
+		}
+
+		// 判断用户是否有请求相关接口的权限
+
 		fmt.Println("before login......")
 		test := c.Query("test")
 		if test == "1" {
