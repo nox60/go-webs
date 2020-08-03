@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -10,16 +11,16 @@ import (
 
 func JsonLogin(c *gin.Context) {
 
-	var json models.LoginBody
-	fmt.Println(json)
+	var loginBody models.LoginBody
+	fmt.Println(loginBody)
 
-	if err := c.ShouldBindJSON(&json); err != nil {
+	if err := c.ShouldBindJSON(&loginBody); err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	result := dao.RetrieveUserByUserNameAndPassword(&json)
+	result := dao.RetrieveUserByUserNameAndPassword(&loginBody)
 
 	resultMsg := new(models.HttpResult)
 
@@ -30,6 +31,14 @@ func JsonLogin(c *gin.Context) {
 		resultMsg.Code = 20000
 		resultMsg.Msg = "登录成功"
 		resultMsg.Token = "4"
+
+		//登录成功之后将用户能够使用的菜单权限信息，和其他信息一起编码放入token
+		tokenPayload := new(models.TokenPayload)
+		tokenPayload.AccountId = result.Id
+		tokenPayload.MenuItems = "|001|002|003|004|"
+		tokenJson, _ := json.Marshal(tokenPayload)
+		jwtSignedToken := JwtSign(tokenJson)
+
 		resultMsg.Data = ""
 		//硬编码，先暂时未测试
 		//resultMsg.Roles = "['admin']"
