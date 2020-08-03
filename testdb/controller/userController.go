@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"testdb/dao"
 	"testdb/models"
+	"testdb/utils"
 )
 
 func JsonLogin(c *gin.Context) {
@@ -30,14 +31,14 @@ func JsonLogin(c *gin.Context) {
 		//登录成功
 		resultMsg.Code = 20000
 		resultMsg.Msg = "登录成功"
-		resultMsg.Token = "4"
 
 		//登录成功之后将用户能够使用的菜单权限信息，和其他信息一起编码放入token
 		tokenPayload := new(models.TokenPayload)
 		tokenPayload.AccountId = result.Id
 		tokenPayload.MenuItems = "|001|002|003|004|"
 		tokenJson, _ := json.Marshal(tokenPayload)
-		jwtSignedToken := JwtSign(tokenJson)
+		jwtSignedToken := utils.JwtSign(string(tokenJson))
+		resultMsg.Token = jwtSignedToken
 
 		resultMsg.Data = ""
 		//硬编码，先暂时未测试
