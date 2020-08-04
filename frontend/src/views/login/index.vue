@@ -163,20 +163,11 @@ export default {
             // 这里的checkLogin没写对，是应该用token去看用户的token是否过期，后面再重构。
             checkLogin(this.loginForm)
               .then(res => {
-                console.log("------->")
-                console.log(res)
-                console.log(res.data)
-                console.log(res.data.code)
-                // let userInfo = res.data.parseJSON(); //由JSON字符串转换为JSON对象
-                //
-                // console.log(userInfo["code"])
-
                 if (res.data.code == 100) {
                   console.log('login successed')
                   console.log(this.redirect)
-                  this.$store.dispatch('user/login', this.loginForm)
+                  this.$store.dispatch('user/loginInfo', res.token)
                     .then(() => {
-                      console.log('-----++++++')
                       this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
                       this.loading = false
                     })
