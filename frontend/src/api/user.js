@@ -9,11 +9,10 @@ import qs from 'qs'
 //   })
 // }
 
-export function getInfo(token) {
+export function getInfo() {
   return request({
     url: '/info',
     method: 'get',
-    params: { token }
   })
 }
 
