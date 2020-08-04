@@ -42,11 +42,15 @@ func JsonLogin(c *gin.Context) {
 
 		resultMsg.Data = ""
 		//硬编码，先暂时未测试
-		//resultMsg.Roles = "['admin']"
-		//resultMsg.Introduction = "I am a super administrator"
-		//resultMsg.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
-		//resultMsg.Name = "Super Admin"
-		//resultMsg.AccountId = result.Id
+		userInfo := new(models.UserInfo)
+		userInfo.Introduction = "I am a super administrator"
+		userInfo.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+		userInfo.Name = "Super Admin"
+
+		userInfoJson, _ := json.Marshal(userInfo)
+
+		resultMsg.Data = string(userInfoJson)
+
 		c.JSON(200, resultMsg)
 	} else {
 		//用户名或密码错误
@@ -63,18 +67,14 @@ func JsonLogin(c *gin.Context) {
 
 func Info(c *gin.Context) {
 
-	resultMsg := new(models.SimpleCode)
+	resultMsg := new(models.UserInfo)
 
 	//登录成功
-	resultMsg.ResultCode = 100
-	resultMsg.Msg = "登录成功"
-	resultMsg.Token = "temp_token"
+
 	//硬编码，先暂时未测试
-	resultMsg.Roles = "['admin']"
 	resultMsg.Introduction = "I am a super administrator"
 	resultMsg.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
 	resultMsg.Name = "Super Admin"
-	resultMsg.AccountId = 4
 	c.JSON(200, gin.H{
 		"code":    20000,
 		"status":  "success",
