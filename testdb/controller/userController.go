@@ -46,10 +46,13 @@ func JsonLogin(c *gin.Context) {
 		userInfo.Introduction = "I am a super administrator"
 		userInfo.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
 		userInfo.Name = "Super Admin"
+		userInfo.Code = 100
 
-		userInfoJson, _ := json.Marshal(userInfo)
+		//userInfoJson, _ := json.Marshal(userInfo)
 
-		resultMsg.Data = string(userInfoJson)
+		resultMsg.Data = userInfo
+
+		//resultMsg.Data = string(userInfoJson)
 
 		c.JSON(200, resultMsg)
 	} else {
