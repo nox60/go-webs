@@ -65,6 +65,7 @@ func Authorize() gin.HandlerFunc {
 		} else {
 			fmt.Println("允许通过")
 			c.Next()
+			fmt.Println("after process.......")
 		}
 	}
 }

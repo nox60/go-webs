@@ -70,21 +70,20 @@ func JsonLogin(c *gin.Context) {
 
 func Info(c *gin.Context) {
 
-	resultMsg := new(models.UserInfo)
-
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "登录成功"
 	//登录成功
 
-	//硬编码，先暂时未测试
-	resultMsg.Introduction = "I am a super administrator"
-	resultMsg.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
-	resultMsg.Name = "Super Admin"
-	c.JSON(200, gin.H{
-		"code":    20000,
-		"status":  "success",
-		"message": "success",
-		"data":    resultMsg,
-	})
+	userInfo := new(models.UserInfo)
+	userInfo.Introduction = "I am a super administrator"
+	userInfo.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+	userInfo.Name = "Super Admin"
+	userInfo.Code = 100
 
+	resultMsg.Data = userInfo
+
+	c.JSON(200, resultMsg)
 }
 
 func Login(c *gin.Context) {
