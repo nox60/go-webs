@@ -11,7 +11,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
-  console.log('------------------------------------->')
+  //console.log('------------------------------------->')
   // start progress bar
   NProgress.start()
 
@@ -22,22 +22,22 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
   console.log(hasToken)
   if (hasToken) {
-    console.log('........................')
+    //console.log('........................')
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
-      console.log('-----------------------------------------: ' + to.path)
+      //console.log('-----------------------------------------: ' + to.path)
       next({ path: '/' })
       NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
     } else {
-      console.log('-------------------------------------ELSE: ' + to.path)
+      //console.log('-------------------------------------ELSE: ' + to.path)
       // determine whether the user has obtained his permission roles through getInfo
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
       if (hasRoles) {
-        console.log('-------------------------------------NEXT: ' + to.path)
+        //console.log('-------------------------------------NEXT: ' + to.path)
 
         next()
       } else {
-        console.log('-------------------------------------ELSE2: ' + to.path)
+        //console.log('-------------------------------------ELSE2: ' + to.path)
 
         try {
           // get user info
@@ -64,7 +64,7 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-    console.log('---------------------=======================》')
+    //console.log('---------------------=======================》')
 
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
