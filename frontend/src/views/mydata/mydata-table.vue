@@ -147,7 +147,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
+import { getSampleData } from '@/api/data-list'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -187,7 +187,7 @@ export default {
       tableKey: 0,
       list: null,
       total: 0,
-      listLoading: true,
+      listLoading: false,
       listQuery: {
         page: 1,
         limit: 20,
@@ -227,13 +227,13 @@ export default {
     }
   },
   created() {
-    // this.getList()
+    this.getList()
   },
   methods: {
     getList() {
       console.log("-----------0000000000000000000000000000000000000000000000000000000000")
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      getSampleData(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
 
