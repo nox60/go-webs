@@ -36,9 +36,10 @@ func main() {
 	//以下接口不需要鉴权
 	api.POST("/login", controller.Login)
 	api.POST("/checkLogin", controller.JsonLogin)
+
 	api.Use(Authorize())
 	// 以下接口都需要鉴权，验证token的正确性
-	api.GET("/info", controller.Info)
+	api.GET("/userInfo", controller.UserInfo)
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
 

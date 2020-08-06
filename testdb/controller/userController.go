@@ -68,7 +68,7 @@ func JsonLogin(c *gin.Context) {
 	}
 }
 
-func Info(c *gin.Context) {
+func UserInfo(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
@@ -76,6 +76,7 @@ func Info(c *gin.Context) {
 	//登录成功
 
 	userInfo := new(models.UserInfo)
+
 	userInfo.Introduction = "I am a super administrator"
 	userInfo.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
 	userInfo.Name = "Super Admin"

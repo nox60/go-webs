@@ -11,7 +11,7 @@ import qs from 'qs'
 
 export function getInfo() {
   return request({
-    url: '/info',
+    url: '/userInfo',
     method: 'get',
   })
 }
