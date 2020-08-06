@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"testdb/controller"
 	"testdb/dao"
+	"testdb/utils"
 	"time"
 )
 
@@ -34,10 +35,9 @@ func main() {
 
 	//以下接口不需要鉴权
 	api.POST("/login", controller.Login)
-
+	api.POST("/checkLogin", controller.JsonLogin)
 	api.Use(Authorize())
 	// 以下接口都需要鉴权，验证token的正确性
-	api.POST("/checkLogin", controller.JsonLogin)
 	api.GET("/info", controller.Info)
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
@@ -48,24 +48,24 @@ func Authorize() gin.HandlerFunc {
 		// 首先判断token解析是否合法，如果不合法则提示访问未授权
 		xToken := c.Request.Header.Get("X-Token")
 
-		if xToken == "" {
-			fmt.Println("need x_token")
-		}
+		parsedToken, err := utils.JwtParse(xToken)
 
-		// 判断用户是否有请求相关接口的权限
-
-		fmt.Println("before login......")
-		test := c.Query("test")
-		if test == "1" {
+		if err != nil {
 			fmt.Println("拦截，不让通过")
 			c.Abort()
 			c.JSON(http.StatusUnauthorized, gin.H{"message": "访问未授权"})
 			// return可省略, 只要前面执行Abort()就可以让后面的handler函数不再执行
 			return
 		} else {
+			fmt.Println(parsedToken)
+			refreshedToken := utils.RefreshToken(parsedToken)
+			fmt.Println(refreshedToken)
+
 			fmt.Println("允许通过")
+			//刷新token
+			c.Writer.Header().Set("x-token-rep", refreshedToken)
 			c.Next()
-			fmt.Println("after process.......")
+
 		}
 	}
 }

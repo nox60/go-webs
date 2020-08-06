@@ -26,11 +26,33 @@ func JwtSign(subject string) (signedStr string) {
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
 	claims["iat"] = time.Now().Unix()
 	claims["sub"] = subject
+
+	fmt.Println(claims["exp"])
+	fmt.Println(claims["iat"])
 	token.Claims = claims
 
 	tokenString, _ := token.SignedString([]byte("testkey"))
-
 	fmt.Println(tokenString)
-
 	return tokenString
+}
+
+func RefreshToken(jwtToken *jwt.Token) (signedStr string) {
+	//jwtToken.Claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
+	//currentClaims := jwtToken.Claims
+	//currentClaims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
+
+	claim, err := jwtToken.Claims.(jwt.MapClaims)
+	if !err {
+		//err = errors.New("cannot convert claim to mapclaim")
+		fmt.Println("cannot convert claim to mapclaim")
+		return
+	}
+	fmt.Println("--------------------------------")
+	fmt.Println(claim["exp"])
+	fmt.Println(claim["iat"])
+	fmt.Println(claim["sub"])
+	subject := claim["sub"]
+	fmt.Println("................................")
+	return JwtSign(subject.(string))
+
 }
