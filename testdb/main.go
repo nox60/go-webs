@@ -2,14 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"net/http"
 	"testdb/controller"
 	"testdb/dao"
 	"testdb/utils"
-	"time"
 )
 
 //文档
@@ -34,7 +32,6 @@ func main() {
 	})
 
 	//以下接口不需要鉴权
-	api.POST("/login", controller.Login)
 	api.POST("/checkLogin", controller.JsonLogin)
 
 	api.Use(Authorize())
@@ -59,6 +56,7 @@ func Authorize() gin.HandlerFunc {
 			return
 		} else {
 			fmt.Println(parsedToken)
+			//每次请求只有要刷新token
 			refreshedToken := utils.RefreshToken(parsedToken)
 			fmt.Println(refreshedToken)
 
@@ -69,25 +67,4 @@ func Authorize() gin.HandlerFunc {
 
 		}
 	}
-}
-
-func JwtSign() {
-	token := jwt.New(jwt.SigningMethodHS256)
-	claims := make(jwt.MapClaims)
-	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
-	claims["iat"] = time.Now().Unix()
-	token.Claims = claims
-
-	//if err != nil {
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	fmt.Fprintln(w, "Error extracting the key")
-	//	fatal(err)
-	//}
-
-	//tokenString, err := token.SignedString([]byte(SecretKey))
-	//if err != nil {
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	fmt.Fprintln(w, "Error while signing the token")
-	//	fatal(err)
-	//}
 }

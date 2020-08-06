@@ -72,7 +72,7 @@ func UserInfo(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
-	resultMsg.Msg = "登录成功"
+	resultMsg.Msg = "获取用户信息成功"
 	//登录成功
 
 	userInfo := new(models.UserInfo)
@@ -81,7 +81,7 @@ func UserInfo(c *gin.Context) {
 	userInfo.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
 	userInfo.Name = "Super Admin"
 	userInfo.Code = 100
-
+	userInfo.Roles = "[admin]"
 	resultMsg.Data = userInfo
 
 	c.JSON(200, resultMsg)
@@ -90,6 +90,5 @@ func UserInfo(c *gin.Context) {
 func Login(c *gin.Context) {
 	resultMsg := new(models.HttpResult)
 	resultMsg.Token = "test"
-	fmt.Println("login method")
 	c.JSON(200, resultMsg)
 }

@@ -35,12 +35,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        console.log(response.data.accountId)
-        console.log(data)
         commit('SET_TOKEN', data.accountId)
-        console.log('.............write cookie')
         setToken(data.token)
-        console.log('--------------write cookie done')
         resolve()
       }).catch(error => {
         reject(error)
@@ -57,7 +53,6 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
-        console.log(response)
         const { data } = response
 
         if (!data) {
