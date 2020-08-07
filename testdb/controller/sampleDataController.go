@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"testdb/dao"
 	"testdb/models"
 )
 
@@ -17,6 +18,10 @@ func ListSampleData(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	results := dao.RetrieveSampleData(&fetchDataRequestBody)
+
+	fmt.Println(results)
 
 	//resultMsg := new(models.HttpResult)
 	//resultMsg.Code = 20000
