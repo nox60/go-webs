@@ -107,7 +107,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="createTime" prop="createTime">
-          <el-date-picker v-model="itemForm.createTime" type="datetime" placeholder="Please pick a date" />
+          <el-date-picker v-model="itemForm.createTime" type="date" value-format="yyyy-MM-dd" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item label="Title" prop="itemTitle">
           <el-input v-model="itemForm.itemTitle" />
