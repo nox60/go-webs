@@ -15,7 +15,7 @@ func ListSampleData(c *gin.Context) {
 	resultMsg.Msg = "获取数据成功"
 
 	var fetchDataRequestBody models.FetchDataRequestBody
-	fmt.Println(fetchDataRequestBody)
+	var dataLists models.PageListDataResult
 
 	if err := c.ShouldBindJSON(&fetchDataRequestBody); err != nil {
 		fmt.Println(err)
@@ -23,12 +23,15 @@ func ListSampleData(c *gin.Context) {
 		return
 	}
 
-	results, err := dao.RetrieveSampleData(&fetchDataRequestBody)
+	results, totalCount, err := dao.RetrieveSampleData(&fetchDataRequestBody)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	resultMsg.Data = results
+	dataLists.TotalCounts = totalCount
+	dataLists.DataLists = results
+
+	resultMsg.Data = dataLists
 	c.JSON(200, resultMsg)
 }

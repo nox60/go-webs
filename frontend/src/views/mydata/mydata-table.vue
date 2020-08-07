@@ -234,7 +234,7 @@ export default {
       console.log("-----------0000000000000000000000000000000000000000000000000000000000")
       this.listLoading = true
       getSampleData(this.listQuery).then(response => {
-        this.list = response.data.items
+        this.list = response.data.dataLists
         this.total = response.data.total
 
         // Just to simulate the time of the request

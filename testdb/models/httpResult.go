@@ -6,3 +6,8 @@ type HttpResult struct {
 	Token string      `json:"token" binding:"required"`
 	Data  interface{} `json:"data" binding:"required"`
 }
+
+type PageListDataResult struct {
+	TotalCounts int         `json:"totalCounts"  binding:"required"`
+	DataLists   interface{} `json:"dataLists" binding:"required"`
+}

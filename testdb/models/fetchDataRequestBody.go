@@ -1,10 +1,11 @@
 package models
 
 type FetchDataRequestBody struct {
-	Page  int    `json:"page"  `
-	Limit int    `json:"limit" `
-	Title string `json:"title"`
-	Sort  string `json:"sort"`
+	Page     int    `json:"page"  `
+	Limit    int    `json:"limit" `
+	Title    string `json:"title"`
+	Sort     string `json:"sort"`
+	ForCount bool
 }
 
 func (reqBody *FetchDataRequestBody) GetStartByPageAndLimit() int {
