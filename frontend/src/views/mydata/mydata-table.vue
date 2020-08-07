@@ -101,7 +101,7 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="itemForm" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="Type" prop="itemType">
+        <el-form-item label="类别" prop="itemType">
           <el-select v-model="itemForm.itemType" class="filter-item" placeholder="Please select">
             <el-option v-for="item in typeValuesArray" :key="item.typeValue" :label="item.typeName" :value="item.typeValue" />
           </el-select>
@@ -117,8 +117,8 @@
             <el-option v-for="item in statusOptions" :key="item.statusValue" :label="item.statusName" :value="item.statusValue" />
           </el-select>
         </el-form-item>
-        <el-form-item label="Star">
-          <el-rate v-model="itemForm.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
+        <el-form-item label="星级">
+          <el-rate v-model="itemForm.itemStar" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
         </el-form-item>
         <el-form-item label="Content">
           <el-input v-model="itemForm.itemContent" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
@@ -297,14 +297,14 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
+          this.itemForm.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          this.itemForm.author = 'vue-element-admin'
           console.log("---------------------------------------------->")
-          console.log(this.temp)
+          console.log(this.itemForm)
           console.log("----------------------------------------------<")
 
-          addItem(this.temp).then(() => {
-            this.list.unshift(this.temp)
+          addItem(this.itemForm).then(() => {
+            this.list.unshift(this.itemForm)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
