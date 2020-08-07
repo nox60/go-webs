@@ -5,17 +5,17 @@ import (
 )
 
 // 使用accountId获取用户信息
-func RetrieveSampleData(accountId int) (dataResBody []models.DataResponseBody) {
+func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody []models.DataResponseBody) {
 
 	// 通过切片存储
 	results := make([]models.DataResponseBody, 0)
 
 	var user1 models.DataResponseBody
 
-	queryResults, _ := MysqlDb.Query("select accountId, userName, age from tb_users where accountId = ? ", accountId)
+	queryResults, _ := MysqlDb.Query("SELECT itemId, itemTilte, itemPrice FROM tb_items LIMIT ?,? ", fetchDataBody.Page, fetchDataBody.Limit)
 
 	for queryResults.Next() {
-		queryResults.Scan(&user1.Id, &user1.Author, &user1.Importance)
+		queryResults.Scan(&user1.ItemId, &user1.ItemTilte, &user1.ItemPrice)
 		results = append(results, user1)
 	}
 

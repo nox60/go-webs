@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 import qs from 'qs'
 
+//     data
 // export function login(data) {
 //   return request({
 //     url: '/vue-element-admin/user/login',
 //     method: 'post',
-//     data
 //   })
 // }
 
