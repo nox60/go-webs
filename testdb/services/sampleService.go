@@ -19,6 +19,7 @@ func AddItem(itemData *models.ItemDataBody) {
 	defer func() {
 		switch {
 		case err != nil:
+			fmt.Println(err)
 			fmt.Println("rollback error")
 		default:
 			fmt.Println("commit ")
