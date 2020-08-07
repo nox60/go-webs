@@ -7,3 +7,11 @@ export function getSampleData(query) {
     data: query
   })
 }
+
+export function addItem(data) {
+  return request({
+    url: '/AddItem',
+    method: 'post',
+    data: data
+  })
+}

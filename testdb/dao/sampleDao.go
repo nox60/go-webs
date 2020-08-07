@@ -6,12 +6,12 @@ import (
 )
 
 // 使用accountId获取用户信息
-func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody []models.DataResponseBody, totalCount int, err error) {
+func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody []models.ItemDataBody, totalCount int, err error) {
 
 	// 通过切片存储
-	results := make([]models.DataResponseBody, 0)
+	results := make([]models.ItemDataBody, 0)
 
-	var dataObj models.DataResponseBody
+	var dataObj models.ItemDataBody
 
 	//startValue := fetchDataBody.GetStartByPageAndLimit()
 	//

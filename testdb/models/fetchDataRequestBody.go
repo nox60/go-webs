@@ -13,9 +13,14 @@ func (reqBody *FetchDataRequestBody) GetStartByPageAndLimit() int {
 	return result
 }
 
-type DataResponseBody struct {
-	ItemId    int    `json:"itemId"  `
-	ItemTitle string `json:"itemTitle"  `
-	ItemPrice string `json:"itemPrice"  `
-	ItemDesc  string `json:"itemDesc"  `
+type ItemDataBody struct {
+	ItemId      int    `json:"itemId"  `
+	ItemTitle   string `json:"itemTitle"  `
+	ItemPrice   string `json:"itemPrice"  `
+	ItemDesc    string `json:"itemDesc"  `
+	ItemStatus  int    `json:"itemStatus"`
+	ItemType    int    `json:"itemType"`
+	CreateTime  string `json:"createTime"`
+	ItemContent string `json: "itemContent"`
+	ItemStar    int    `json:"itemStar"`
 }
