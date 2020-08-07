@@ -47,12 +47,14 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 
 func AddItem(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
 
-	_, err = tx.Exec("INSERT INTO `tb_items` (`createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemDesc`) values (?,?,?) ",
+	_, err = tx.Exec("INSERT INTO `tb_items` (`createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc`) "+
+		"values (?,?,?,?,?,?,?) ",
 		itemData.CreateTime,
 		itemData.ItemContent,
 		itemData.ItemStar,
 		itemData.ItemType,
 		itemData.ItemTitle,
+		itemData.ItemStatus,
 		itemData.ItemDesc)
 	if err != nil {
 		return err
