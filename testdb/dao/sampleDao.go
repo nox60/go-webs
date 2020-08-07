@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"database/sql"
 	"fmt"
 	"testdb/models"
 )
@@ -42,4 +43,20 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	fmt.Println(totalCount)
 
 	return results, totalCount, err
+}
+
+func AddItem(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
+
+	_, err = tx.Exec("INSERT INTO `tb_items` (`createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemDesc`) values (?,?,?) ",
+		itemData.CreateTime,
+		itemData.ItemContent,
+		itemData.ItemStar,
+		itemData.ItemType,
+		itemData.ItemTitle,
+		itemData.ItemDesc)
+	if err != nil {
+		return err
+	}
+
+	return
 }
