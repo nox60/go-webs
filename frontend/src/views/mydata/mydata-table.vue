@@ -37,7 +37,7 @@
     >
       <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
+          <span>{{ row.itemId }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Date" width="150px" align="center">
@@ -61,11 +61,11 @@
           <span style="color:red;">{{ row.reviewer }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Imp" width="80px">
-        <template slot-scope="{row}">
-          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="Imp" width="80px">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="Readings" align="center" width="95">
         <template slot-scope="{row}">
           <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
@@ -231,12 +231,11 @@ export default {
   },
   methods: {
     getList() {
-      console.log("-----------0000000000000000000000000000000000000000000000000000000000")
       this.listLoading = true
       getSampleData(this.listQuery).then(response => {
         this.list = response.data.dataLists
-        this.total = response.data.total
-
+        this.total = response.data.totalCounts
+        console.log(this.list)
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
