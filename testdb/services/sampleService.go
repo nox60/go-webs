@@ -5,6 +5,6 @@ import (
 	"testdb/models"
 )
 
-func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody []models.DataResponseBody) {
+func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody []models.DataResponseBody, err error) {
 	return dao.RetrieveSampleData(fetchDataBody)
 }

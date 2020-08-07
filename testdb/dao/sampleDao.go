@@ -11,9 +11,13 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	// 通过切片存储
 	results := make([]models.DataResponseBody, 0)
 
-	var user1 models.DataResponseBody
+	var dataObj models.DataResponseBody
 
-	queryResults, err := MysqlDb.Query("SELECT itemId, itemTilte, itemPrice FROM tb_items LIMIT ?,? ", fetchDataBody.Page, fetchDataBody.Limit)
+	startValue := fetchDataBody.GetStartByPageAndLimit()
+
+	fmt.Println("))))))))))))))))))))))))))    " + string(startValue))
+
+	queryResults, err := MysqlDb.Query("SELECT itemId, itemTitle, itemPrice FROM tb_items LIMIT ?,? ", fetchDataBody.GetStartByPageAndLimit(), fetchDataBody.Limit)
 
 	if err != nil {
 		fmt.Println(err)
@@ -21,8 +25,8 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	}
 
 	for queryResults.Next() {
-		queryResults.Scan(&user1.ItemId, &user1.ItemTilte, &user1.ItemPrice)
-		results = append(results, user1)
+		queryResults.Scan(&dataObj.ItemId, &dataObj.ItemTitle, &dataObj.ItemPrice)
+		results = append(results, dataObj)
 	}
 
 	return results, err

@@ -7,9 +7,14 @@ type FetchDataRequestBody struct {
 	Sort  string `json:"sort"`
 }
 
+func (reqBody *FetchDataRequestBody) GetStartByPageAndLimit() int {
+	result := (reqBody.Page - 1) * reqBody.Limit
+	return result
+}
+
 type DataResponseBody struct {
 	ItemId    int    `json:"itemId"  `
-	ItemTilte string `json:"itemTilte"  `
+	ItemTitle string `json:"itemTitle"  `
 	ItemPrice string `json:"itemPrice"  `
 	ItemDesc  string `json:"itemDesc"  `
 }
