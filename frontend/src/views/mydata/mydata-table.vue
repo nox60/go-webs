@@ -166,10 +166,10 @@ const statusOptions = [
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
-// const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-//   acc[cur.key] = cur.display_name
-//   return acc
-// }, {})
+const itemTypeKeyValue = typeValuesArray.reduce((acc, cur) => {
+  acc[cur.key] = cur.display_name
+  return acc
+}, {})
 
 export default {
   name: 'ComplexTable',
@@ -184,9 +184,9 @@ export default {
       }
       return statusMap[status]
     },
-    // typeFilter(type) {
-    //   return calendarTypeKeyValue[type]
-    // }
+    typeFilter(type) {
+      return itemTypeKeyValue[type]
+    }
   },
   data() {
     return {
