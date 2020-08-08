@@ -42,7 +42,7 @@
       </el-table-column>
       <el-table-column label="Date" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Title" min-width="150px">
@@ -147,16 +147,16 @@
 </template>
 
 <script>
-import { getSampleData,addItem } from '@/api/data-list'
+import { getSampleData, addItem } from '@/api/data-list'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 const typeValuesArray = [
-  { typeValue: 0, typeName: 'China' },
-  { typeValue: 1, typeName: 'USA' },
-  { typeValue: 2, typeName: 'Japan' },
-  { typeValue: 3, typeName: 'Eurozone' }
+  { typeValue: 0, typeName: '小说' },
+  { typeValue: 1, typeName: '散文' },
+  { typeValue: 2, typeName: '科技论文' },
+  { typeValue: 3, typeName: '其他' }
 ]
 
 const statusOptions = [
