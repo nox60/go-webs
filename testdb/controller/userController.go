@@ -48,11 +48,7 @@ func JsonLogin(c *gin.Context) {
 		userInfo.Name = "Super Admin"
 		userInfo.Code = 100
 
-		//userInfoJson, _ := json.Marshal(userInfo)
-
 		resultMsg.Data = userInfo
-
-		//resultMsg.Data = string(userInfoJson)
 
 		c.JSON(200, resultMsg)
 	} else {
