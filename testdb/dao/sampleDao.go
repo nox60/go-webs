@@ -66,9 +66,9 @@ func AddItem(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
 	return
 }
 
-func DeleteItem(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
+func DeleteItem(itemId int, tx *sql.Tx) (err error) {
 	_, err = tx.Exec("DELETE FROM `tb_items` WHERE itemId = ? ",
-		itemData.ItemId)
+		itemId)
 	if err != nil {
 		return err
 	}

@@ -39,7 +39,7 @@ func main() {
 	api.GET("/userInfo", controller.UserInfo)
 	api.POST("/listSampleData", controller.ListSampleData)
 	api.POST("/addItem", controller.AddItem)
-	api.DELETE("/deleteItem", controller.DeleteItem)
+	api.DELETE("/deleteItem/:itemId", controller.DeleteItem)
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
 

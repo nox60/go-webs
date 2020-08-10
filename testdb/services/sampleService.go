@@ -30,7 +30,7 @@ func AddItem(itemData *models.ItemDataBody) {
 	err = dao.AddItem(itemData, tx)
 }
 
-func DeleteItem(itemData *models.ItemDataBody) {
+func DeleteItem(itemId int) {
 	tx, err := dao.MysqlDb.Begin()
 
 	if err != nil {
@@ -47,5 +47,5 @@ func DeleteItem(itemData *models.ItemDataBody) {
 		}
 	}()
 
-	err = dao.DeleteItem(itemData, tx)
+	err = dao.DeleteItem(itemId, tx)
 }
