@@ -56,3 +56,21 @@ func AddItem(c *gin.Context) {
 	resultMsg.Msg = "新增数据成功"
 	c.JSON(200, resultMsg)
 }
+
+func DeleteItem(c *gin.Context) {
+
+	var itemDataBody models.ItemDataBody
+
+	if err := c.ShouldBindJSON(&itemDataBody); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	services.DeleteItem(&itemDataBody)
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "删除数据成功"
+	c.JSON(200, resultMsg)
+}

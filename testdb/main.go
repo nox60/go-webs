@@ -38,7 +38,8 @@ func main() {
 	// 以下接口都需要鉴权，验证token的正确性
 	api.GET("/userInfo", controller.UserInfo)
 	api.POST("/listSampleData", controller.ListSampleData)
-	api.POST("/AddItem", controller.AddItem)
+	api.POST("/addItem", controller.AddItem)
+	api.DELETE("/deleteItem", controller.DeleteItem)
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
 

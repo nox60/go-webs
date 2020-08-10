@@ -10,8 +10,16 @@ export function getSampleData(query) {
 
 export function addItem(data) {
   return request({
-    url: '/AddItem',
+    url: '/addItem',
     method: 'post',
+    data: data
+  })
+}
+
+export function deleteItem(data) {
+  return request({
+    url: '/deleteItem',
+    method: 'delete',
     data: data
   })
 }

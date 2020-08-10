@@ -29,3 +29,23 @@ func AddItem(itemData *models.ItemDataBody) {
 
 	err = dao.AddItem(itemData, tx)
 }
+
+func DeleteItem(itemData *models.ItemDataBody) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	err = dao.DeleteItem(itemData, tx)
+}
