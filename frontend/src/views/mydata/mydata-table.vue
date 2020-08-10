@@ -42,42 +42,35 @@
       </el-table-column>
       <el-table-column label="Date" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.createTime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Title" min-width="150px">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <span>{{ row.itemTitle }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Author" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.author }}</span>
-        </template>
+      <el-table-column label="类型" width="110px" align="center" :formatter="formatType">
+
       </el-table-column>
-      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span style="color:red;">{{ row.reviewer }}</span>
-        </template>
-      </el-table-column>
+<!--      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span style="color:red;">{{ row.reviewer }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
 <!--      <el-table-column label="Imp" width="80px">-->
 <!--        <template slot-scope="{row}">-->
 <!--          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-      <el-table-column label="Readings" align="center" width="95">
-        <template slot-scope="{row}">
-          <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
-          <span v-else>0</span>
+      <el-table-column label="星级" align="center" width="95">
+        <template slot-scope="scope" >
+          <!-- <el-rate v-model="scope.row.evaValue" :allow-half="true"  disabled show-score text-color="#ff9900" score-template="{value}"></el-rate> -->
+          <el-rate v-model="scope.row.itemStar" :allow-half="true"  disabled text-color="#ff9900"></el-rate>
         </template>
       </el-table-column>
-      <el-table-column label="Status" class-name="status-col" width="100">
-        <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
-          </el-tag>
-        </template>
+      <el-table-column label="状态" class-name="status-col" width="100" :formatter="statusType">
+
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
@@ -160,16 +153,16 @@ const typeValuesArray = [
 ]
 
 const statusOptions = [
-  { statusValue: 0, statusName: 'CREATED' },
-  { statusValue: 1, statusName: 'PUBLISHED' },
-  { statusValue: 2, statusName: 'OTHER' }
+  { statusValue: 0, statusName: '编辑中' },
+  { statusValue: 1, statusName: '审核中' },
+  { statusValue: 2, statusName: '已发布' }
 ]
 
-// arr to obj, such as { CN : "China", US : "USA" }
-const itemTypeKeyValue = typeValuesArray.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
+// // arr to obj, such as { CN : "China", US : "USA" }
+// const itemTypeKeyValue = typeValuesArray.reduce((acc, cur) => {
+//   acc[cur.key] = cur.typeName
+//   return acc
+// }, {})
 
 export default {
   name: 'ComplexTable',
@@ -184,9 +177,9 @@ export default {
       }
       return statusMap[status]
     },
-    typeFilter(type) {
-      return itemTypeKeyValue[type]
-    }
+    // typeFilter(type) {
+    //   return itemTypeKeyValue[type]
+    // }
   },
   data() {
     return {
@@ -249,6 +242,12 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
+    },
+    formatType(row, column) {
+      return typeValuesArray[row['itemType']].typeName
+    },
+    statusType(row){
+      return statusOptions[row['itemStatus']].statusName
     },
     handleFilter() {
       this.listQuery.page = 1
