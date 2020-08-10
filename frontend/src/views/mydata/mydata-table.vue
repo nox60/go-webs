@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import { getSampleData, addItem } from '@/api/data-list'
+import { getSampleData, addItem, deleteItem } from '@/api/data-list'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -300,12 +300,14 @@ export default {
           addItem(this.itemForm).then(() => {
             this.list.unshift(this.itemForm)
             this.dialogFormVisible = false
+
             this.$notify({
               title: 'Success',
               message: 'Created Successfully',
               type: 'success',
               duration: 2000
             })
+
           })
         }
       })
@@ -347,10 +349,21 @@ export default {
       })
       this.list.splice(index, 1)
     },
-    handleDeleteConfirm(row, index) {
+    handleDeleteConfirm(row) {
       this.$confirm('确认删除？')
         .then(_ => {
           console.log('点击了确认')
+          console.log(row['itemId'])
+          deleteItem(row['itemId']).then(() => {
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: '删除数据成功！',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList()
+          })
           done();
         })
         .catch(_ => {});

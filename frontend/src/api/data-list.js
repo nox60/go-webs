@@ -18,8 +18,7 @@ export function addItem(data) {
 
 export function deleteItem(data) {
   return request({
-    url: '/deleteItem',
+    url: '/deleteItem/'+data,
     method: 'delete',
-    data: data
   })
 }
