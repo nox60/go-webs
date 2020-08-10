@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"testdb/dao"
 	"testdb/models"
 	"testdb/services"
@@ -58,16 +59,9 @@ func AddItem(c *gin.Context) {
 }
 
 func DeleteItem(c *gin.Context) {
-
-	var itemDataBody models.ItemDataBody
-
-	if err := c.ShouldBindJSON(&itemDataBody); err != nil {
-		fmt.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	services.DeleteItem(&itemDataBody)
+	itemIdStr := c.Param("itemId")
+	itemId, _ := strconv.Atoi(itemIdStr)
+	services.DeleteItem(itemId)
 
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
