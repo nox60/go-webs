@@ -74,17 +74,14 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            Edit
+          <el-button v-if="row.itemStatus=='0'" type="primary" size="mini" @click="handleUpdate(row)">
+            编辑
           </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-            Publish
+          <el-button v-if="row.itemStatus=='0'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
+            申请审核
           </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-            Draft
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            Delete
+          <el-button v-if="row.itemStatus=='0'" size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">
+            删除
           </el-button>
         </template>
       </el-table-column>
@@ -349,6 +346,14 @@ export default {
         duration: 2000
       })
       this.list.splice(index, 1)
+    },
+    handleDeleteConfirm(row, index) {
+      this.$confirm('确认删除？')
+        .then(_ => {
+          console.log('点击了确认')
+          done();
+        })
+        .catch(_ => {});
     },
     // handleFetchPv(pv) {
     //   fetchPv(pv).then(response => {

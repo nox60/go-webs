@@ -65,3 +65,12 @@ func AddItem(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
 
 	return
 }
+
+func DeleteItem(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("DELETE FROM `tb_items` WHERE itemId = ? ",
+		itemData.ItemId)
+	if err != nil {
+		return err
+	}
+	return
+}
