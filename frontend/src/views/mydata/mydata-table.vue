@@ -298,15 +298,16 @@ export default {
           console.log(this.itemForm)
 
           addItem(this.itemForm).then(() => {
-            this.list.unshift(this.itemForm)
+            //this.list.unshift(this.itemForm)
             this.dialogFormVisible = false
 
             this.$notify({
               title: 'Success',
-              message: 'Created Successfully',
+              message: '新增成功',
               type: 'success',
               duration: 2000
             })
+            this.getList()
 
           })
         }
@@ -340,15 +341,6 @@ export default {
     //     }
     //   })
     // },
-    handleDelete(row, index) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
-      })
-      this.list.splice(index, 1)
-    },
     handleDeleteConfirm(row) {
       this.$confirm('确认删除？')
         .then(_ => {
