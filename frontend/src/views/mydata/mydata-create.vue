@@ -1,14 +1,14 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
+    <el-form ref="itemForm" :model="itemForm" :rules="rules" class="form-container">
 
 
       <div class="createPost-main-container">
         <el-row>
 
           <el-col :span="24">
-            <el-form-item style="margin-bottom: 40px;" prop="title">
-              <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
+            <el-form-item style="margin-bottom: 40px;" prop="itemTitle">
+              <MDinput v-model="itemForm.itemTitle" :maxlength="100" name="name" required>
                 标题
               </MDinput>
             </el-form-item>
@@ -29,14 +29,14 @@
         </el-row>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.content" :height="400" />
+          <Tinymce ref="editor" v-model="itemForm.content" :height="400" />
         </el-form-item>
 
         <el-row>
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
             取消
           </el-button>
-          <el-button v-loading="loading" type="warning" @click="draftForm">
+          <el-button v-loading="loading" type="warning" @click="createData" :disabled="disableSubmit">
             提交
           </el-button>
         </el-row>
@@ -54,6 +54,7 @@
   import { validURL } from '@/utils/validate'
   import { fetchArticle } from '@/api/article'
   import { searchUser } from '@/api/remote-search'
+  import { addItem } from '@/api/data-list'
 
   const typeValuesArray = [
     { typeValue: 0, typeName: '小说' },
@@ -104,21 +105,23 @@
           itemType: 0,
           itemContent: '',
         },
+        disableSubmit: false,
         typeValuesArray,
         loading: false,
         userListOptions: [],
         rules: {
+          itemTitle: [
+            {required:true, message:'please input', trigger:'blur'},
+            {min:2, max:10, message:'长度2-10', trigger: 'blur'}
+          ],
           image_uri: [{ validator: validateRequire }],
-          title: [{ validator: validateRequire }],
-          content: [{ validator: validateRequire }],
-          source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
         },
         tempRoute: {}
       }
     },
     computed: {
       contentShortLength() {
-        return this.postForm.content_short.length
+        return this.itemForm.content_short.length
       },
       displayTime: {
         // set and get is useful when the data
@@ -126,10 +129,10 @@
         // back end return => "2013-06-25 06:59:25"
         // front end need timestamp => 1372114765000
         get() {
-          return (+new Date(this.postForm.display_time))
+          return (+new Date(this.itemForm.display_time))
         },
         set(val) {
-          this.postForm.display_time = new Date(val)
+          this.itemForm.display_time = new Date(val)
         }
       }
     },
@@ -147,11 +150,11 @@
     methods: {
       fetchData(id) {
         fetchArticle(id).then(response => {
-          this.postForm = response.data
+          this.itemForm = response.data
 
           // just for test
-          this.postForm.title += `   Article Id:${this.postForm.id}`
-          this.postForm.content_short += `   Article Id:${this.postForm.id}`
+          this.itemForm.title += `   Article Id:${this.itemForm.id}`
+          this.itemForm.content_short += `   Article Id:${this.itemForm.id}`
 
           // set tagsview title
           this.setTagsViewTitle()
@@ -164,16 +167,35 @@
       },
       setTagsViewTitle() {
         const title = 'Edit Article'
-        const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm.id}` })
+        const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.itemForm.id}` })
         this.$store.dispatch('tagsView/updateVisitedView', route)
       },
       setPageTitle() {
         const title = 'Edit Article'
-        document.title = `${title} - ${this.postForm.id}`
+        document.title = `${title} - ${this.itemForm.id}`
+      },
+      createData() {
+        this.$refs['itemForm'].validate((valid) => {
+          if (valid) {
+            this.disableSubmit = true
+            console.log(this.itemForm)
+            addItem(this.itemForm).then(() => {
+              //this.list.unshift(this.itemForm)
+              this.$notify({
+                title: 'Success',
+                message: '新增成功',
+                type: 'success',
+                duration: 2000
+              })
+              //跳转回到列表界面
+
+            })
+          }
+        })
       },
       submitForm() {
-        console.log(this.postForm)
-        this.$refs.postForm.validate(valid => {
+        console.log(this.itemForm)
+        this.$refs.itemForm.validate(valid => {
           if (valid) {
             this.loading = true
             this.$notify({
@@ -182,7 +204,7 @@
               type: 'success',
               duration: 2000
             })
-            this.postForm.status = 'published'
+            this.itemForm.status = 'published'
             this.loading = false
           } else {
             console.log('error submit!!')
@@ -191,7 +213,7 @@
         })
       },
       draftForm() {
-        if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
+        if (this.itemForm.content.length === 0 || this.itemForm.title.length === 0) {
           this.$message({
             message: '请填写必要的标题和内容',
             type: 'warning'
@@ -204,7 +226,7 @@
           showClose: true,
           duration: 1000
         })
-        this.postForm.status = 'draft'
+        this.itemForm.status = 'draft'
       },
       getRemoteUserList(query) {
         searchUser(query).then(response => {
