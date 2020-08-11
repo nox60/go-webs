@@ -20,15 +20,12 @@
 
           <el-col :span="10">
             <el-form-item style="margin-bottom: 40px;" label="Title" prop="title">
-              <el-input />
+              <el-select v-model="itemForm.itemType" placeholder="Type" class="filter-item" style="width: 130px">
+                <el-option v-for="item in typeValuesArray" :key="item.typeValue" :label="item.typeName" :value="item.typeValue" />
+              </el-select>
             </el-form-item>
           </el-col>
 
-          <el-col :span="10">
-            <el-form-item style="margin-bottom: 40px;" label="Title" prop="类型">
-              <el-input />
-            </el-form-item>
-          </el-col>
         </el-row>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
@@ -57,6 +54,13 @@
   import { validURL } from '@/utils/validate'
   import { fetchArticle } from '@/api/article'
   import { searchUser } from '@/api/remote-search'
+
+  const typeValuesArray = [
+    { typeValue: 0, typeName: '小说' },
+    { typeValue: 1, typeName: '散文' },
+    { typeValue: 2, typeName: '科技论文' },
+    { typeValue: 3, typeName: '其他' }
+  ]
 
   const defaultForm = {
     status: 'draft',
@@ -93,23 +97,14 @@
           callback()
         }
       }
-      const validateSourceUri = (rule, value, callback) => {
-        if (value) {
-          if (validURL(value)) {
-            callback()
-          } else {
-            this.$message({
-              message: '外链url填写不正确',
-              type: 'error'
-            })
-            callback(new Error('外链url填写不正确'))
-          }
-        } else {
-          callback()
-        }
-      }
       return {
-        postForm: Object.assign({}, defaultForm),
+        itemForm: {
+          id: undefined,
+          itemTitle: '',
+          itemType: 0,
+          itemContent: '',
+        },
+        typeValuesArray,
         loading: false,
         userListOptions: [],
         rules: {
