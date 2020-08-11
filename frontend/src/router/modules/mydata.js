@@ -18,7 +18,19 @@ const mydatasRouter = {
       component: () => import('@/views/mydata/mydata-table'),
       name: 'mydataList',
       meta: { title: 'mydataList' }
-    }
+    }, {
+      path: 'edit/:id(\\d+)',
+      component: () => import('@/views/example/edit'),
+      name: 'EditArticle',
+      meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+      hidden: true
+    }, {
+      path: 'create',
+      component: () => import('@/views/mydata/mydata-create'),
+      name: 'CreateArticle',
+      meta: { title: 'Create Article' },
+      hidden: true
+    },
   ]
 }
 
