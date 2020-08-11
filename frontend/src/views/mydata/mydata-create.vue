@@ -188,7 +188,7 @@
                 duration: 2000
               })
               //跳转回到列表界面
-
+              this.$router.push({path:'/mydatas/mydataList/'})
             })
           }
         })
