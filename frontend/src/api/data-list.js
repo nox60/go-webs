@@ -8,6 +8,14 @@ export function getSampleData(query) {
   })
 }
 
+export function getItemById(itemId) {
+  return request({
+    url: '/listSampleData',
+    method: 'post',
+    data: query
+  })
+}
+
 export function addItem(data) {
   return request({
     url: '/addItem',

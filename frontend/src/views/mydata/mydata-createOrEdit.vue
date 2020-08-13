@@ -100,7 +100,7 @@
       }
       return {
         itemForm: {
-          id: undefined,
+          itemId: -1,
           itemTitle: '',
           itemType: 0,
           itemContent: '',
@@ -141,10 +141,13 @@
       console.log(this.$route.params.itemId)
       console.log("--------------------------------,,   :")
 
+      let itemId = this.$route.params.itemId
+
       //如果itemId == -1 代表是新增，反之则是更新
-      if (this.isEdit) {
-        const id = this.$route.params && this.$route.params.id
-        this.fetchData(id)
+      if (itemId > -1) {
+        this.itemForm.itemId = itemId
+        this.fetchData(itemId)
+
       }
 
       // Why need to make a copy of this.$route here?
@@ -153,7 +156,7 @@
       this.tempRoute = Object.assign({}, this.$route)
     },
     methods: {
-      fetchData(id) {
+      fetchData(itemId) {
         fetchArticle(id).then(response => {
           this.itemForm = response.data
 

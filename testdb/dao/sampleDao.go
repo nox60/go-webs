@@ -15,7 +15,11 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	var dataObj models.ItemDataBody
 
 	//分页查询记录
-	queryResults, err := MysqlDb.Query("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items LIMIT ?,? ", fetchDataBody.GetStartByPageAndLimit(), fetchDataBody.Limit)
+	//queryResults, err := MysqlDb.Query("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items LIMIT ?,? ", params)
+	stmt, _ := MysqlDb.Prepare("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items LIMIT ?,?")
+	defer stmt.Close()
+
+	queryResults, err := stmt.Query(fetchDataBody.GetStartByPageAndLimit(), fetchDataBody.Limit)
 
 	if err != nil {
 		fmt.Println(err)
