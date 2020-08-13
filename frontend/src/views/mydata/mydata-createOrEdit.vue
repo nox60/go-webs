@@ -137,6 +137,11 @@
       }
     },
     created() {
+      console.log("--------------------------------++   :")
+      console.log(this.$route.params.itemId)
+      console.log("--------------------------------,,   :")
+
+      //如果itemId == -1 代表是新增，反之则是更新
       if (this.isEdit) {
         const id = this.$route.params && this.$route.params.id
         this.fetchData(id)
