@@ -25,8 +25,9 @@ const mydatasRouter = {
       meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
       hidden: true
     }, {
-      path: 'create',
-      component: () => import('@/views/mydata/mydata-create'),
+      // path: 'create/:id(\\d+)',
+      path: 'createOrEdit/:itemId(\\d+)',
+      component: () => import('@/views/mydata/mydata-createOrEdit'),
       name: 'CreateArticle',
       meta: { title: 'Create Article' },
       hidden: true
