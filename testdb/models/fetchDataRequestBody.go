@@ -5,7 +5,7 @@ type FetchDataRequestBody struct {
 	Limit    int    `json:"limit" `
 	Title    string `json:"title"`
 	Sort     string `json:"sort"`
-	itemId   int    `json:"itemId"`
+	ItemId   int    `json:"itemId"`
 	ForCount bool
 }
 

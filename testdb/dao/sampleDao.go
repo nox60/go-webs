@@ -3,6 +3,7 @@ package dao
 import (
 	"database/sql"
 	"fmt"
+	"strings"
 	"testdb/models"
 )
 
@@ -14,9 +15,18 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 
 	var dataObj models.ItemDataBody
 
+	var queryStm strings.Builder
+
+	queryStm.WriteString("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items WHERE 1=1 ")
+
+	if fetchDataBody.ItemId > -1 {
+		queryStm.WriteString(" AND itemId = ? ")
+	}
+	queryStm.WriteString("LIMIT ?,? ")
+
 	//分页查询记录
 	//queryResults, err := MysqlDb.Query("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items LIMIT ?,? ", params)
-	stmt, _ := MysqlDb.Prepare("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items LIMIT ?,?")
+	stmt, _ := MysqlDb.Prepare(queryStm.String())
 	defer stmt.Close()
 
 	queryResults, err := stmt.Query(fetchDataBody.GetStartByPageAndLimit(), fetchDataBody.Limit)
