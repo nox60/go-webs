@@ -16,23 +16,24 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	var dataObj models.ItemDataBody
 
 	var queryStm strings.Builder
+	var fetchArgs = make([]interface{}, 0)
+
+	fetchArgs = append(fetchArgs, fetchDataBody.GetStartByPageAndLimit())
+	fetchArgs = append(fetchArgs, fetchDataBody.Limit)
 
 	queryStm.WriteString("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items WHERE 1=1 ")
 
 	if fetchDataBody.ItemId > -1 {
 		queryStm.WriteString(" AND itemId = ? ")
+		fetchArgs = append(fetchArgs, fetchDataBody.ItemId)
 	}
+
 	queryStm.WriteString("LIMIT ?,? ")
 
 	//分页查询记录
 	//queryResults, err := MysqlDb.Query("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items LIMIT ?,? ", params)
 	stmt, _ := MysqlDb.Prepare(queryStm.String())
 	defer stmt.Close()
-
-	var fetchArgs = make([]interface{}, 0)
-
-	fetchArgs = append(fetchArgs, fetchDataBody.GetStartByPageAndLimit())
-	fetchArgs = append(fetchArgs, fetchDataBody.Limit)
 
 	queryResults, err := stmt.Query(fetchArgs...)
 
