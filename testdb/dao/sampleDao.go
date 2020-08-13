@@ -29,7 +29,12 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	stmt, _ := MysqlDb.Prepare(queryStm.String())
 	defer stmt.Close()
 
-	queryResults, err := stmt.Query(fetchDataBody.GetStartByPageAndLimit(), fetchDataBody.Limit)
+	var fetchArgs = make([]interface{}, 0)
+
+	fetchArgs = append(fetchArgs, fetchDataBody.GetStartByPageAndLimit())
+	fetchArgs = append(fetchArgs, fetchDataBody.Limit)
+
+	queryResults, err := stmt.Query(fetchArgs...)
 
 	if err != nil {
 		fmt.Println(err)

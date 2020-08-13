@@ -25,6 +25,8 @@ func ListSampleData(c *gin.Context) {
 		return
 	}
 
+	fetchDataRequestBody.ItemId = -1
+
 	results, totalCount, err := dao.RetrieveSampleData(&fetchDataRequestBody)
 
 	if err != nil {
