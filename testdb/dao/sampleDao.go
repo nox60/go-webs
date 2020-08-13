@@ -34,6 +34,7 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	stmt, _ := MysqlDb.Prepare(queryStm.String())
 	stmtCount, _ := MysqlDb.Prepare(countQueryStm.String())
 	defer stmt.Close()
+	defer stmtCount.Close()
 
 	//先查询总条数count(*)
 	countResult := stmtCount.QueryRow(fetchArgs...)
