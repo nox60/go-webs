@@ -16,25 +16,35 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	var dataObj models.ItemDataBody
 
 	var queryStm strings.Builder
+	var countQueryStm strings.Builder
 	var fetchArgs = make([]interface{}, 0)
 
-	fetchArgs = append(fetchArgs, fetchDataBody.GetStartByPageAndLimit())
-	fetchArgs = append(fetchArgs, fetchDataBody.Limit)
-
-	queryStm.WriteString("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items WHERE 1=1 ")
-
+	queryStm.WriteString(" SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items WHERE 1=1 ")
+	countQueryStm.WriteString(" SELECT count(*) AS totalCount FROM tb_items WHERE 1=1 ")
+	// 查询条件.
 	if fetchDataBody.ItemId > -1 {
 		queryStm.WriteString(" AND itemId = ? ")
+		countQueryStm.WriteString(" AND itemId = ? ")
 		fetchArgs = append(fetchArgs, fetchDataBody.ItemId)
 	}
 
 	queryStm.WriteString("LIMIT ?,? ")
 
 	//分页查询记录
-	//queryResults, err := MysqlDb.Query("SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items LIMIT ?,? ", params)
 	stmt, _ := MysqlDb.Prepare(queryStm.String())
+	stmtCount, _ := MysqlDb.Prepare(countQueryStm.String())
 	defer stmt.Close()
 
+	//先查询总条数count(*)
+	countResult := stmtCount.QueryRow(fetchArgs...)
+
+	if err := countResult.Scan(&totalCount); err != nil {
+		fmt.Printf("scan failed, err:%v", err)
+	}
+
+	// 查询分页数据
+	fetchArgs = append(fetchArgs, fetchDataBody.GetStartByPageAndLimit())
+	fetchArgs = append(fetchArgs, fetchDataBody.Limit)
 	queryResults, err := stmt.Query(fetchArgs...)
 
 	if err != nil {
@@ -53,17 +63,6 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 			&dataObj.ItemDesc)
 		results = append(results, dataObj)
 	}
-
-	//查询总条数
-	countResult := MysqlDb.QueryRow("SELECT count(*) AS totalCount FROM tb_items ")
-
-	totalCount = 0
-
-	if err := countResult.Scan(&totalCount); err != nil {
-		fmt.Printf("scan failed, err:%v", err)
-	}
-
-	fmt.Println(totalCount)
 
 	return results, totalCount, err
 }
