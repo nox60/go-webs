@@ -15,7 +15,7 @@
         Search
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" >
-        <router-link to="/mydatas/create">
+        <router-link to="/mydatas/createOrEdit/-1">
           新建文章
         </router-link>
       </el-button>
@@ -324,13 +324,26 @@ export default {
       })
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+      // this.temp = Object.assign({}, row) // copy obj
+      // this.temp.timestamp = new Date(this.temp.timestamp)
+      // this.dialogStatus = 'update'
+      // this.dialogFormVisible = true
+      // this.$nextTick(() => {
+      //   this.$refs['dataForm'].clearValidate()
+      // })
+
+      console.log("--------------------------------->>>")
+      console.log(row['itemId'])
+
+      //              this.$router.push({path:'/mydatas/mydataList/'})
+
+      let editUrl = '/mydatas/createOrEdit/'+row['itemId']
+
+      console.log(editUrl)
+
+      this.$router.push({path:editUrl})
+      //              this.$router.push({path:'/mydatas/mydataList/'})
+
     },
     // updateData() {
     //   this.$refs['dataForm'].validate((valid) => {
