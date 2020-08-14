@@ -36,7 +36,7 @@
           <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
             取消
           </el-button>
-          <el-button v-loading="loading" type="warning" @click="createData" :disabled="disableSubmit">
+          <el-button v-loading="loading" type="warning" @click="addOrUpdateData" :disabled="disableSubmit">
             提交
           </el-button>
         </el-row>
@@ -54,7 +54,7 @@
   import { validURL } from '@/utils/validate'
   import { fetchArticle } from '@/api/article'
   import { searchUser } from '@/api/remote-search'
-  import { addItem,getItem } from '@/api/data-list'
+  import { addOrUpdateItem,getItem } from '@/api/data-list'
 
   const typeValuesArray = [
     { typeValue: 0, typeName: '小说' },
@@ -112,7 +112,7 @@
         rules: {
           itemTitle: [
             {required:true, message:'please input', trigger:'blur'},
-            {min:2, max:10, message:'长度2-10', trigger: 'blur'}
+            {min:2, max:100, message:'长度2-100', trigger: 'blur'}
           ],
           image_uri: [{ validator: validateRequire }],
         },
@@ -137,9 +137,6 @@
       }
     },
     created() {
-      console.log("--------------------------------++   :")
-      console.log(this.$route.params.itemId)
-      console.log("--------------------------------,,   :")
 
       let itemId = this.$route.params.itemId
 
@@ -158,7 +155,6 @@
     methods: {
       fetchData(itemId) {
         getItem(itemId).then(response => {
-          console.log(response.data)
           this.itemForm = response.data
           //
           // // just for test
@@ -183,16 +179,14 @@
         const title = 'Edit Article'
         document.title = `${title} - ${this.itemForm.id}`
       },
-      createData() {
+      addOrUpdateData() {
         this.$refs['itemForm'].validate((valid) => {
           if (valid) {
             this.disableSubmit = true
-            console.log(this.itemForm)
-            addItem(this.itemForm).then(() => {
-              //this.list.unshift(this.itemForm)
+            addOrUpdateItem(this.itemForm).then(() => {
               this.$notify({
                 title: 'Success',
-                message: '新增成功',
+                message: '操作成功',
                 type: 'success',
                 duration: 2000
               })

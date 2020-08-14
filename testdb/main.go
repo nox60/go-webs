@@ -38,7 +38,7 @@ func main() {
 	// 以下接口都需要鉴权，验证token的正确性
 	api.GET("/userInfo", controller.UserInfo)
 	api.POST("/listSampleData", controller.ListSampleData)
-	api.POST("/addItem", controller.AddItem)
+	api.POST("/addOrUpdateItem", controller.AddOrUpdateItem)
 	api.DELETE("/deleteItem/:itemId", controller.DeleteItem)
 	api.GET("/getItem/:itemId", controller.GetItem)
 

@@ -40,7 +40,7 @@ func ListSampleData(c *gin.Context) {
 	c.JSON(200, resultMsg)
 }
 
-func AddItem(c *gin.Context) {
+func AddOrUpdateItem(c *gin.Context) {
 
 	var itemDataBody models.ItemDataBody
 
@@ -50,9 +50,13 @@ func AddItem(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(itemDataBody)
-
-	services.AddItem(&itemDataBody)
+	if itemDataBody.ItemId == -1 {
+		// 新增
+		services.AddItem(&itemDataBody)
+	} else {
+		// 更新
+		services.UpdateItemById(&itemDataBody)
+	}
 
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
