@@ -10,6 +10,10 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	return dao.RetrieveSampleData(fetchDataBody)
 }
 
+func getData(fetchDataBody *models.FetchDataRequestBody) (dataResBody models.ItemDataBody, err error) {
+	return dao.GetData(fetchDataBody)
+}
+
 func AddItem(itemData *models.ItemDataBody) {
 	tx, err := dao.MysqlDb.Begin()
 

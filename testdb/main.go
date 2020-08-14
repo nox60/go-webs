@@ -40,6 +40,8 @@ func main() {
 	api.POST("/listSampleData", controller.ListSampleData)
 	api.POST("/addItem", controller.AddItem)
 	api.DELETE("/deleteItem/:itemId", controller.DeleteItem)
+	api.GET("/getItem/:itemId", controller.GetItem)
+
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
 

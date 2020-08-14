@@ -26,7 +26,7 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	var fetchArgs = make([]interface{}, 0)
 
 	queryStm.WriteString(" SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items WHERE 1=1 ")
-	countQueryStm.WriteString(" SELECT count(*) AS totalCount FROM tb_items WHERE 1=1 ")
+	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_items WHERE 1=1 ")
 	// 查询条件.
 	if fetchDataBody.ItemId > -1 {
 		queryStm.WriteString(" AND itemId = ? ")
@@ -72,6 +72,49 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	}
 
 	return results, totalCount, err
+}
+
+func GetData(fetchDataBody *models.FetchDataRequestBody) (dataResBody models.ItemDataBody, err error) {
+
+	// 获取数据的临时对象
+	var dataObj models.ItemDataBody
+
+	// 查询条件
+	var queryStm strings.Builder
+
+	// 查询条件
+	var fetchArgs = make([]interface{}, 0)
+
+	queryStm.WriteString(" SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items WHERE 1=1 ")
+
+	// 查询条件.
+	if fetchDataBody.ItemId > -1 {
+		queryStm.WriteString(" AND itemId = ? ")
+		fetchArgs = append(fetchArgs, fetchDataBody.ItemId)
+	}
+
+	// 分页查询记录
+	stmt, _ := MysqlDb.Prepare(queryStm.String())
+	defer stmt.Close()
+
+	// 查询
+	queryResults := stmt.QueryRow(fetchArgs...)
+
+	if err != nil {
+		fmt.Println(err)
+		return dataObj, err
+	}
+
+	queryResults.Scan(&dataObj.ItemId,
+		&dataObj.CreateTime,
+		&dataObj.ItemContent,
+		&dataObj.ItemStar,
+		&dataObj.ItemType,
+		&dataObj.ItemTitle,
+		&dataObj.ItemStatus,
+		&dataObj.ItemDesc)
+
+	return dataObj, err
 }
 
 func AddItem(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
