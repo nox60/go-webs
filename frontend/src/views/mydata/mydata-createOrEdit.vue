@@ -54,7 +54,7 @@
   import { validURL } from '@/utils/validate'
   import { fetchArticle } from '@/api/article'
   import { searchUser } from '@/api/remote-search'
-  import { addItem } from '@/api/data-list'
+  import { addItem,getItem } from '@/api/data-list'
 
   const typeValuesArray = [
     { typeValue: 0, typeName: '小说' },
@@ -157,18 +157,19 @@
     },
     methods: {
       fetchData(itemId) {
-        fetchArticle(id).then(response => {
+        getItem(itemId).then(response => {
+          console.log(response.data)
           this.itemForm = response.data
-
-          // just for test
-          this.itemForm.title += `   Article Id:${this.itemForm.id}`
-          this.itemForm.content_short += `   Article Id:${this.itemForm.id}`
-
-          // set tagsview title
-          this.setTagsViewTitle()
-
-          // set page title
-          this.setPageTitle()
+          //
+          // // just for test
+          // this.itemForm.title += `   Article Id:${this.itemForm.id}`
+          // this.itemForm.content_short += `   Article Id:${this.itemForm.id}`
+          //
+          // // set tagsview title
+          // this.setTagsViewTitle()
+          //
+          // // set page title
+          // this.setPageTitle()
         }).catch(err => {
           console.log(err)
         })

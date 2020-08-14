@@ -8,11 +8,10 @@ export function getSampleData(query) {
   })
 }
 
-export function getItemById(itemId) {
+export function getItem(itemId) {
   return request({
-    url: '/listSampleData',
-    method: 'post',
-    data: query
+    url: '/getItem/'+itemId,
+    method: 'get',
   })
 }
 

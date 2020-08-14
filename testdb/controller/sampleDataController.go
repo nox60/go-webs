@@ -81,12 +81,6 @@ func GetItem(c *gin.Context) {
 
 	var fetchDataRequestBody models.FetchDataRequestBody
 
-	if err := c.ShouldBindJSON(&fetchDataRequestBody); err != nil {
-		fmt.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
 	itemId, err := strconv.Atoi(itemIdStr)
 
 	fetchDataRequestBody.ItemId = itemId
