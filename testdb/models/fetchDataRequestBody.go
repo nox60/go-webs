@@ -22,6 +22,6 @@ type ItemDataBody struct {
 	ItemStatus  int    `json:"itemStatus"`
 	ItemType    int    `json:"itemType"`
 	CreateTime  string `json:"createTime"`
-	ItemContent string `json: "itemContent"`
+	ItemContent string `json:"itemContent"`
 	ItemStar    int    `json:"itemStar"`
 }

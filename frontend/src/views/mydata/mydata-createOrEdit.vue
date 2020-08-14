@@ -29,7 +29,7 @@
         </el-row>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="itemForm.content" :height="400" />
+          <Tinymce ref="editor" v-model="itemForm.itemContent" :height="400" />
         </el-form-item>
 
         <el-row>
