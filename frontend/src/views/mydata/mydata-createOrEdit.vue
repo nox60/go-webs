@@ -156,16 +156,6 @@
       fetchData(itemId) {
         getItem(itemId).then(response => {
           this.itemForm = response.data
-          //
-          // // just for test
-          // this.itemForm.title += `   Article Id:${this.itemForm.id}`
-          // this.itemForm.content_short += `   Article Id:${this.itemForm.id}`
-          //
-          // // set tagsview title
-          // this.setTagsViewTitle()
-          //
-          // // set page title
-          // this.setPageTitle()
         }).catch(err => {
           console.log(err)
         })
