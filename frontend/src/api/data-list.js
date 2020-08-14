@@ -15,9 +15,9 @@ export function getItem(itemId) {
   })
 }
 
-export function addItem(data) {
+export function addOrUpdateItem(data) {
   return request({
-    url: '/addItem',
+    url: '/addOrUpdateItem',
     method: 'post',
     data: data
   })
