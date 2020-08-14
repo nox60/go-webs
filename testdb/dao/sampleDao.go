@@ -13,10 +13,16 @@ func RetrieveSampleData(fetchDataBody *models.FetchDataRequestBody) (dataResBody
 	// 通过切片存储
 	results := make([]models.ItemDataBody, 0)
 
+	//获取数据的临时对象
 	var dataObj models.ItemDataBody
 
+	//查询条件
 	var queryStm strings.Builder
+
+	//总记录条数查询条件
 	var countQueryStm strings.Builder
+
+	//查询条件
 	var fetchArgs = make([]interface{}, 0)
 
 	queryStm.WriteString(" SELECT `itemId`, `createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc` FROM tb_items WHERE 1=1 ")
