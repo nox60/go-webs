@@ -204,13 +204,3 @@ func UserInfo(c *gin.Context) {
 
 	c.JSON(200, resultMsg)
 }
-
-func Login(c *gin.Context) {
-	resultMsg := new(models.HttpResult)
-	resultMsg.Token = "test"
-	c.JSON(200, resultMsg)
-}
-
-
-
-
