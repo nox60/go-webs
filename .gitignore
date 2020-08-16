@@ -40,3 +40,6 @@ frontend/selenium-debug.log
 
 frontend/package-lock.json
 frontend/yarn.lock
+
+
+**/go.mod
