@@ -180,6 +180,15 @@
                 type: 'success',
                 duration: 2000
               })
+              console.log("-------------------------------------------->>")
+              console.log(this.$route)
+              console.log("--------------------------------------------11")
+
+              // 调用全局挂载的方法,关闭当前标签页
+              this.$store.dispatch("tagsView/delView", 'mydata-createOrEdit');
+              // // 返回上一步路由，返回上一个标签页
+              // this.$router.go(-1);
+              //
               //跳转回到列表界面
               this.$router.push({path:'/mydatas/mydataList/'})
             })

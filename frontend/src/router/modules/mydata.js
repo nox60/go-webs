@@ -21,15 +21,15 @@ const mydatasRouter = {
     }, {
       path: 'edit/:id(\\d+)',
       component: () => import('@/views/example/edit'),
-      name: 'EditArticle',
-      meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+      name: 'EditSample',
+      meta: { title: 'Edit Data', noCache: true, activeMenu: '/example/list' },
       hidden: true
     }, {
       // path: 'create/:id(\\d+)',
       path: 'createOrEdit/:itemId(\\d+)',
       component: () => import('@/views/mydata/mydata-createOrEdit'),
-      name: 'CreateArticle',
-      meta: { title: 'Create Article' },
+      name: 'CreateSample',
+      meta: { title: 'Create Data' },
       hidden: true
     },
   ]

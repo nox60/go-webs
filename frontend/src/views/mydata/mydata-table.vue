@@ -342,7 +342,8 @@ export default {
       console.log(editUrl)
 
       this.$router.push({path:editUrl})
-      //              this.$router.push({path:'/mydatas/mydataList/'})
+      this.$store.dispatch('tagsView/updateVisitedView', 'mydata-createOrEdit')
+      //this.$router.push({path:'/mydatas/mydataList/'})
 
     },
     // updateData() {
