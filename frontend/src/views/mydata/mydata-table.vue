@@ -347,9 +347,12 @@ export default {
 
       console.log(this.tempRoute)
       console.log("---------0000000000000000000000000000000")
-      const title = 'Create Data'
-      const route = Object.assign({}, this.tempRoute, { title: `${title}-${row['itemId']}` })
-      this.$store.dispatch('tagsView/updateVisitedView', route)
+      //const title = 'Update Sample Data'
+      //const route = Object.assign({}, this.tempRoute, { title: `${title}` })
+
+      //先关闭已经打开的
+      // this.$store.dispatch('tagsView/delView', route)
+      //this.$store.dispatch('tagsView/updateVisitedView', route)
       //this.$router.push({path:'/mydatas/mydataList/'})
 
     },

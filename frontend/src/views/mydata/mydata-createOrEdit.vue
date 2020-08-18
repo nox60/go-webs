@@ -184,12 +184,11 @@
               console.log(this.$route)
               console.log("--------------------------------------------11")
 
-
-
               console.log(this.tempRoute)
               console.log("---------0000000000000000000000000000000")
-              const title = 'Create Data'
-              const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.itemForm.itemId}` })
+              const title = 'Update Sample Data'
+              const route = Object.assign({}, this.tempRoute, { title: `${title}` })
+
               this.$store.dispatch('tagsView/delView', route)
 
               console.log("------------------------00111111111111")
