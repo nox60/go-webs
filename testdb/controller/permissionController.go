@@ -11,7 +11,7 @@ func ListFunctionsData(c *gin.Context) {
 	resultMsg.Code = 20000
 	resultMsg.Msg = "获取数据成功"
 
-	var dataLists models.PageListDataResult
+	//var dataLists models.PageListDataResult
 	functions := make([]models.FunctionNode, 0)
 
 	//build mock data for test
