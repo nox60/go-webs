@@ -150,7 +150,6 @@
       // Why need to make a copy of this.$route here?
       // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
       // https://github.com/PanJiaChen/vue-element-admin/issues/1221
-      this.tempRoute = Object.assign({}, this.$route)
     },
     methods: {
       fetchData(itemId) {
@@ -180,18 +179,6 @@
                 type: 'success',
                 duration: 2000
               })
-              console.log("-------------------------------------------->>")
-              console.log(this.$route)
-              console.log("--------------------------------------------11")
-
-              console.log(this.tempRoute)
-              console.log("---------0000000000000000000000000000000")
-              const title = 'Update Sample Data'
-              const route = Object.assign({}, this.tempRoute, { title: `${title}` })
-
-              this.$store.dispatch('tagsView/delView', route)
-
-              console.log("------------------------00111111111111")
 
               // 调用全局挂载的方法,关闭当前标签页
               //this.$store.dispatch("tagsView/delView", 'mydata-createOrEdit');

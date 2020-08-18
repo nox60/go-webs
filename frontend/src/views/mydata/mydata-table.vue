@@ -228,7 +228,6 @@ export default {
   },
   created() {
     this.getList()
-    this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
     getList() {
@@ -340,13 +339,8 @@ export default {
 
       let editUrl = '/mydatas/createOrEdit/'+row['itemId']
 
-      console.log(editUrl)
-
       this.$router.push({path:editUrl})
 
-
-      console.log(this.tempRoute)
-      console.log("---------0000000000000000000000000000000")
       //const title = 'Update Sample Data'
       //const route = Object.assign({}, this.tempRoute, { title: `${title}` })
 
