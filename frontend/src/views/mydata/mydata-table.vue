@@ -228,6 +228,7 @@ export default {
   },
   created() {
     this.getList()
+    this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
     getList() {
@@ -342,7 +343,13 @@ export default {
       console.log(editUrl)
 
       this.$router.push({path:editUrl})
-      this.$store.dispatch('tagsView/updateVisitedView', 'mydata-createOrEdit')
+
+
+      console.log(this.tempRoute)
+      console.log("---------0000000000000000000000000000000")
+      const title = 'Create Data'
+      const route = Object.assign({}, this.tempRoute, { title: `${title}-${row['itemId']}` })
+      this.$store.dispatch('tagsView/updateVisitedView', route)
       //this.$router.push({path:'/mydatas/mydataList/'})
 
     },

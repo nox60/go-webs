@@ -184,8 +184,19 @@
               console.log(this.$route)
               console.log("--------------------------------------------11")
 
+
+
+              console.log(this.tempRoute)
+              console.log("---------0000000000000000000000000000000")
+              const title = 'Create Data'
+              const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.itemForm.itemId}` })
+              this.$store.dispatch('tagsView/delView', route)
+
+              console.log("------------------------00111111111111")
+
               // 调用全局挂载的方法,关闭当前标签页
-              this.$store.dispatch("tagsView/delView", 'mydata-createOrEdit');
+              //this.$store.dispatch("tagsView/delView", 'mydata-createOrEdit');
+
               // // 返回上一步路由，返回上一个标签页
               // this.$router.go(-1);
               //
