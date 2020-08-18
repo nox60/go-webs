@@ -169,6 +169,15 @@ export const asyncRoutes = [
           title: 'Role Permission',
           roles: ['admin']
         }
+      },
+      {
+        path: 'functions',
+        component: () => import('@/views/permission/functions'),
+        name: 'functions',
+        meta: {
+          title: '功能点管理',
+          roles: ['admin']
+        }
       }
     ]
   },
