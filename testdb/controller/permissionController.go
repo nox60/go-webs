@@ -29,6 +29,6 @@ func ListFunctionsData(c *gin.Context) {
 
 	//results, totalCount, err := dao.RetrieveSampleData(&fetchDataRequestBody)
 
-	resultMsg.Data = dataLists
+	resultMsg.Data = functions
 	c.JSON(200, resultMsg)
 }
