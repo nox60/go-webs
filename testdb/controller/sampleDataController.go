@@ -50,7 +50,7 @@ func AddOrUpdateItem(c *gin.Context) {
 		return
 	}
 
-	if itemDataBody.ItemId == -1 {
+	if itemDataBody.ItemId == 0 {
 		// 新增
 		services.AddItem(&itemDataBody)
 	} else {

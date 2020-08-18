@@ -14,10 +14,8 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" >
-        <router-link to="/mydatas/createOrEdit/-1">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleAdd">
           新建文章
-        </router-link>
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         Export
@@ -139,7 +137,7 @@
 </template>
 
 <script>
-import { getSampleData, addItem, deleteItem } from '@/api/data-list'
+import { getSampleData, deleteItem } from '@/api/data-list'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -300,29 +298,35 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.itemForm.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.itemForm.author = 'vue-element-admin'
-          console.log(this.itemForm)
-
-          addItem(this.itemForm).then(() => {
-            //this.list.unshift(this.itemForm)
-            this.dialogFormVisible = false
-
-            this.$notify({
-              title: 'Success',
-              message: '新增成功',
-              type: 'success',
-              duration: 2000
-            })
-            this.getList()
-
-          })
-        }
-      })
+    // createData() {
+    //   this.$refs['dataForm'].validate((valid) => {
+    //     if (valid) {
+    //       this.itemForm.id = parseInt(Math.random() * 100) + 1024 // mock a id
+    //       this.itemForm.author = 'vue-element-admin'
+    //       console.log(this.itemForm)
+    //
+    //       addItem(this.itemForm).then(() => {
+    //         //this.list.unshift(this.itemForm)
+    //         this.dialogFormVisible = false
+    //
+    //         this.$notify({
+    //           title: 'Success',
+    //           message: '新增成功',
+    //           type: 'success',
+    //           duration: 2000
+    //         })
+    //         this.getList()
+    //
+    //       })
+    //     }
+    //   })
+    // },
+    handleAdd() {
+      console.log('handler addd........................................................')
+      let editUrl = '/mydatas/createOrEdit/0'
+      this.$router.push({path:editUrl})
     },
+
     handleUpdate(row) {
       // this.temp = Object.assign({}, row) // copy obj
       // this.temp.timestamp = new Date(this.temp.timestamp)
@@ -335,7 +339,7 @@ export default {
       console.log("--------------------------------->>>")
       console.log(row['itemId'])
 
-      //              this.$router.push({path:'/mydatas/mydataList/'})
+      //this.$router.push({path:'/mydatas/mydataList/'})
 
       let editUrl = '/mydatas/createOrEdit/'+row['itemId']
 
