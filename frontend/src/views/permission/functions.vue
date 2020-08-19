@@ -31,6 +31,8 @@
       style="width: 100%;margin-bottom: 20px;"
       row-key="id"
       border
+      lazy
+      :load="loadNode"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column
         prop="id"
@@ -135,7 +137,7 @@
 
       getFunctions() {
         //getFunctions()
-        getFunctions().then(response => {
+        getFunctions(id).then(response => {
           this.tableData = response.data
           // console.log(this.list)
           // Just to simulate the time of the request
