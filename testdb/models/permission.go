@@ -4,5 +4,5 @@ type FunctionNode struct {
 	FunctionId    int         `json:"id"`
 	FunctionName  string      `json:"name"`
 	FunctionPath  string      `json:"path"`
-	FunctionChild interface{} `json:"child"`
+	FunctionChild interface{} `json:"children"`
 }

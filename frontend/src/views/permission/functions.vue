@@ -34,8 +34,8 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column
-        prop="date"
-        label="日期"
+        prop="id"
+        label="id"
         sortable
         width="180">
       </el-table-column>
@@ -46,8 +46,8 @@
         width="180">
       </el-table-column>
       <el-table-column
-        prop="address"
-        label="地址">
+        prop="path"
+        label="路径">
       </el-table-column>
     </el-table>
 
@@ -101,6 +101,7 @@
   export default {
     data() {
       return {
+        tableData:'',
         role: Object.assign({}, defaultRole),
         routes: [],
         rolesList: [],
@@ -134,7 +135,15 @@
       },
 
       getFunctions() {
-        getFunctions()
+        //getFunctions()
+        getFunctions().then(response => {
+          this.tableData = response.data
+          // console.log(this.list)
+          // Just to simulate the time of the request
+          setTimeout(() => {
+            this.listLoading = false
+          }, 1.5 * 1000)
+        })
       },
 
       // Reshape the routes structure so that it looks the same as the sidebar
