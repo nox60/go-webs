@@ -41,7 +41,7 @@ func main() {
 	api.POST("/addOrUpdateItem", controller.AddOrUpdateItem)
 	api.DELETE("/deleteItem/:itemId", controller.DeleteItem)
 	api.GET("/getItem/:itemId", controller.GetItem)
-	api.GET("/getFunctions", controller.ListFunctionsData)
+	api.GET("/getFunctions/:parentId", controller.ListFunctionsData)
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
