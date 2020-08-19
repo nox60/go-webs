@@ -15,14 +15,26 @@ func ListFunctionsData(c *gin.Context) {
 	parentIdStr := c.Param("parentId")
 	parentId, _ := strconv.Atoi(parentIdStr)
 
+	functions := make([]models.FunctionNode, 0)
+
 	if parentId == 0 {
 		//build mock data for test
-		function1 := models.FunctionNode{1, "test1", "/a/11", ""}
-		function2 := models.FunctionNode{2, "test2", "/a/22", ""}
-		function3 := models.FunctionNode{3, "test3", "/a/33", ""}
-		function4 := models.FunctionNode{4, "test4", "/a/44", ""}
-		function5 := models.FunctionNode{5, "test5", "/a/55", ""}
+		function1 := models.FunctionNode{1, "test1", "/a/11", 0, false}
+		function2 := models.FunctionNode{2, "test2", "/a/22", 0, false}
+		function3 := models.FunctionNode{3, "test3", "/a/33", 0, false}
+		function4 := models.FunctionNode{4, "test4", "/a/44", 0, true}
+		function5 := models.FunctionNode{5, "test5", "/a/55", 0, true}
+
+		functions = append(functions, function1)
+		functions = append(functions, function2)
+		functions = append(functions, function3)
+		functions = append(functions, function4)
+		functions = append(functions, function5)
 	}
+
+	resultMsg.Data = functions
+	c.JSON(200, resultMsg)
+
 	//
 	////var dataLists models.PageListDataResult
 	//functions := make([]models.FunctionNode, 0)
