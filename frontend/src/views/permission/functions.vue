@@ -112,6 +112,9 @@
         defaultProps: {
           children: 'children',
           label: 'title'
+        },
+        rootParent:{
+          id: 0
         }
       }
     },
@@ -122,7 +125,7 @@
     },
     created() {
       // Mock: get all routes and roles list from server
-      this.getFunctions()
+      this.getFunctions(this.rootParent)
     },
     methods: {
       async getRoutes() {
@@ -135,9 +138,9 @@
         this.rolesList = res.data
       },
 
-      getFunctions(id) {
+      getFunctions(parent) {
         //getFunctions()
-        getFunctions(id).then(response => {
+        getFunctions(parent.id).then(response => {
           this.tableData = response.data
           // console.log(this.list)
           // Just to simulate the time of the request

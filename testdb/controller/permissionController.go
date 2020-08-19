@@ -23,7 +23,7 @@ func ListFunctionsData(c *gin.Context) {
 		function2 := models.FunctionNode{2, "test2", "/a/22", 0, false}
 		function3 := models.FunctionNode{3, "test3", "/a/33", 0, false}
 		function4 := models.FunctionNode{4, "test4", "/a/44", 0, true}
-		function5 := models.FunctionNode{5, "test5", "/a/55", 0, true}
+		function5 := models.FunctionNode{5, "test5", "/a/55", 0, false}
 
 		functions = append(functions, function1)
 		functions = append(functions, function2)
