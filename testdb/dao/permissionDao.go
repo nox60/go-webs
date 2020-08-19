@@ -74,6 +74,51 @@ func RetrievePermissionData(fetchDataBody *models.FetchDataRequestBody) (dataRes
 	return results, totalCount, err
 }
 
+func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []models.FunctionNode, err error) {
+	// 通过切片存储
+	results := make([]models.FunctionNode, 0)
+
+	// 获取数据的临时对象
+	var dataObj models.FunctionNode
+
+	// 查询条件
+	var queryStm strings.Builder
+
+	// 查询条件
+	var fetchArgs = make([]interface{}, 0)
+
+	queryStm.WriteString(" SELECT `function_id`,`number`,`order`,`name`,`path`,`parent_function_id` FROM tb_functions WHERE 1=1 ")
+	// 查询条件.
+	if fetchDataBody.ParentFunctionId > 0 {
+		queryStm.WriteString(" parent_function_id = ? ")
+		fetchArgs = append(fetchArgs, fetchDataBody.ParentFunctionId)
+	}
+
+	// 查询记录
+	stmt, _ := MysqlDb.Prepare(queryStm.String())
+	defer stmt.Close()
+
+	// 查询数据
+	queryResults, err := stmt.Query(fetchArgs...)
+
+	if err != nil {
+		fmt.Println(err)
+		return results, err
+	}
+
+	for queryResults.Next() {
+		queryResults.Scan(&dataObj.FunctionId,
+			&dataObj.Number,
+			&dataObj.Order,
+			&dataObj.Name,
+			&dataObj.Path,
+			&dataObj.ParentFunctionId)
+		results = append(results, dataObj)
+	}
+
+	return results, err
+}
+
 func GetPermissionData(fetchDataBody *models.FetchDataRequestBody) (dataResBody models.ItemDataBody, err error) {
 
 	// 获取数据的临时对象
