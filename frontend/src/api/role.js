@@ -37,9 +37,9 @@ export function deleteRole(id) {
   })
 }
 
-export function getFunctions() {
+export function getFunctions(id) {
   return request({
-    url: '/getFunctions',
+    url: `/getFunctions/${id}`,
     method: 'get',
   })
 }

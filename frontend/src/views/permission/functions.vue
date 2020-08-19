@@ -32,7 +32,7 @@
       row-key="id"
       border
       lazy
-      :load="loadNode"
+      :load="getFunctions"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column
         prop="id"
@@ -135,7 +135,7 @@
         this.rolesList = res.data
       },
 
-      getFunctions() {
+      getFunctions(id) {
         //getFunctions()
         getFunctions(id).then(response => {
           this.tableData = response.data
