@@ -36,3 +36,10 @@ export function deleteRole(id) {
     method: 'delete'
   })
 }
+
+export function getFunctions() {
+  return request({
+    url: '/getFunctions',
+    method: 'get',
+  })
+}

@@ -2,29 +2,55 @@
   <div class="app-container">
     <el-button type="primary" @click="handleAddRole">New Role</el-button>
 
-    <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="Role Key" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.key }}
-        </template>
+<!--    <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>-->
+<!--      <el-table-column align="center" label="Role Key" width="220">-->
+<!--        <template slot-scope="scope">-->
+<!--          {{ scope.row.key }}-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column align="center" label="Role Name" width="220">-->
+<!--        <template slot-scope="scope">-->
+<!--          {{ scope.row.name }}-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column align="header-center" label="Description">-->
+<!--        <template slot-scope="scope">-->
+<!--          {{ scope.row.description }}-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column align="center" label="Operations">-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>-->
+<!--          <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--    </el-table>-->
+
+    <el-table
+      :data="tableData"
+      style="width: 100%;margin-bottom: 20px;"
+      row-key="id"
+      border
+      default-expand-all
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+      <el-table-column
+        prop="date"
+        label="日期"
+        sortable
+        width="180">
       </el-table-column>
-      <el-table-column align="center" label="Role Name" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        sortable
+        width="180">
       </el-table-column>
-      <el-table-column align="header-center" label="Description">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="Operations">
-        <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
-        </template>
+      <el-table-column
+        prop="address"
+        label="地址">
       </el-table-column>
     </el-table>
+
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="role" label-width="80px" label-position="left">
@@ -63,7 +89,7 @@
 <script>
   import path from 'path'
   import { deepClone } from '@/utils'
-  import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
+  import { getRoutes, getRoles, addRole, deleteRole, updateRole, getFunctions } from '@/api/role'
 
   const defaultRole = {
     key: '',
@@ -94,8 +120,7 @@
     },
     created() {
       // Mock: get all routes and roles list from server
-      this.getRoutes()
-      this.getRoles()
+      this.getFunctions()
     },
     methods: {
       async getRoutes() {
@@ -106,6 +131,10 @@
       async getRoles() {
         const res = await getRoles()
         this.rolesList = res.data
+      },
+
+      getFunctions() {
+        getFunctions()
       },
 
       // Reshape the routes structure so that it looks the same as the sidebar
