@@ -125,7 +125,18 @@
     },
     created() {
       // Mock: get all routes and roles list from server
-      this.getFunctions(this.rootParent)
+      //this.getFunctions([],this.rootParent)
+      getFunctions(0).then(response => {
+        //this.tableData = response.data
+        // console.log(this.list)
+        // Just to simulate the time of the request
+        this.tableData = response.data
+        // setTimeout(() => {
+        //   resolve(
+        //     response.data
+        //   )
+        // }, 1000)
+      })
     },
     methods: {
       async getRoutes() {
@@ -138,16 +149,28 @@
         this.rolesList = res.data
       },
 
-      getFunctions(parent) {
+      getFunctions(tree, treeNode, resolve) {
         //getFunctions()
-        getFunctions(parent.id).then(response => {
-          this.tableData = response.data
+        console.log('-------------------')
+        console.log(tree)
+        console.log(treeNode)
+        console.log('0000000000000000000')
+        getFunctions(tree.id).then(response => {
+          //this.tableData = response.data
           // console.log(this.list)
           // Just to simulate the time of the request
+
           setTimeout(() => {
-            this.listLoading = false
-          }, 1.5 * 1000)
+            resolve(
+              response.data
+            )
+          }, 1000)
         })
+
+        //   setTimeout(() => {
+        //     this.listLoading = false
+        //   }, 1.5 * 1000)
+        // })
       },
 
       // Reshape the routes structure so that it looks the same as the sidebar

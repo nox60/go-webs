@@ -30,6 +30,12 @@ func ListFunctionsData(c *gin.Context) {
 		functions = append(functions, function3)
 		functions = append(functions, function4)
 		functions = append(functions, function5)
+	} else {
+		function1 := models.FunctionNode{7, "test7", "/a/77", 0, false}
+		function2 := models.FunctionNode{8, "test8", "/a/88", 0, false}
+
+		functions = append(functions, function1)
+		functions = append(functions, function2)
 	}
 
 	resultMsg.Data = functions
