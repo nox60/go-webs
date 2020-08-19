@@ -16,6 +16,8 @@ func ListFunctionsData(c *gin.Context) {
 
 	functions1 := make([]models.FunctionNode, 0)
 
+	functions2 := make([]models.FunctionNode, 0)
+
 	//build mock data for test
 	function1 := models.FunctionNode{1, "test1", "/a/11", ""}
 	function2 := models.FunctionNode{2, "test2", "/a/22", ""}
@@ -23,8 +25,14 @@ func ListFunctionsData(c *gin.Context) {
 	function4 := models.FunctionNode{4, "test4", "/a/44", ""}
 	function5 := models.FunctionNode{5, "test5", "/a/55", ""}
 
-	function6 := models.FunctionNode{6, "test5", "/a/55", ""}
-	function7 := models.FunctionNode{7, "test5", "/a/55", ""}
+	function6 := models.FunctionNode{6, "test6", "/a/66", ""}
+	function7 := models.FunctionNode{7, "test7", "/a/77", ""}
+
+	function8 := models.FunctionNode{8, "test8", "/a/88", ""}
+
+	functions2 = append(functions2, function8)
+
+	function7.FunctionChild = functions2
 
 	functions1 = append(functions1, function6)
 	functions1 = append(functions1, function7)
