@@ -95,16 +95,24 @@ func ListNodesData(c *gin.Context) {
 	resultMsg.Code = 20000
 	resultMsg.Msg = "获取数据成功"
 
-	parentIdStr := c.Param("parentId")
-	parentId, _ := strconv.Atoi(parentIdStr)
+	//parentIdStr := c.Param("parentId")
+	//parentId, _ := strconv.Atoi(parentIdStr)
 
-	functions := make([]models.FunctionNode, 0)
+	functions := make([]models.TreeNode, 0)
 
-	fetchBody := new(models.FunctionNode)
+	//fetchBody := new(models.FunctionNode)
 
-	fetchBody.ParentFunctionId = parentId
+	//fetchBody.ParentFunctionId = parentId
 
-	functions, _ = services.GetFunctionsByParentId(fetchBody)
+	//functions, _ = services.GetFunctionsByParentId(fetchBody)
+
+	node1 := models.TreeNode{"test1", "adasdf", false}
+	node2 := models.TreeNode{"test2", "asdfasf", true}
+	node3 := models.TreeNode{"test3", "asdf", false}
+
+	functions = append(functions, node1)
+	functions = append(functions, node2)
+	functions = append(functions, node3)
 
 	resultMsg.Data = functions
 	c.JSON(200, resultMsg)

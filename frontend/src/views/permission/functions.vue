@@ -98,7 +98,7 @@
 <script>
   import path from 'path'
   import { deepClone } from '@/utils'
-  import { getRoutes, getRoles, addRole, deleteRole, updateRole, getFunctions } from '@/api/role'
+  import { getRoutes, getRoles, addRole, deleteRole, updateRole, getFunctions, getNodes } from '@/api/role'
 
   const defaultRole = {
     key: '',
@@ -191,7 +191,7 @@
 
         console.log(node.id)
 
-        getFunctions(node.id).then(response => {
+        getNodes(node.id).then(response => {
           //this.tableData = response.data
           // console.log(this.list)
           // Just to simulate the time of the request

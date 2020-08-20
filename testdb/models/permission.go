@@ -9,3 +9,9 @@ type FunctionNode struct {
 	ParentFunctionId int    `json:"parentId"`
 	HasChildren      bool   `json:"hasChildren"`
 }
+
+type TreeNode struct {
+	Name  string `json:"name"`
+	Other string `json:"testColumn"`
+	Leaf  bool   `json:"leaf"`
+}
