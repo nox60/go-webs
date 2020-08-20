@@ -90,7 +90,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	queryStm.WriteString(" SELECT `function_id`,`number`,`order`,`name`,`path`,`parent_function_id` FROM tb_functions WHERE 1=1 ")
 	// 查询条件.
 	if fetchDataBody.ParentFunctionId > 0 {
-		queryStm.WriteString(" parent_function_id = ? ")
+		queryStm.WriteString(" AND parent_function_id = ? ")
 		fetchArgs = append(fetchArgs, fetchDataBody.ParentFunctionId)
 	}
 

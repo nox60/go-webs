@@ -68,15 +68,23 @@
           />
         </el-form-item>
         <el-form-item label="Menus">
+<!--          <el-tree-->
+<!--            ref="tree"-->
+<!--            :check-strictly="checkStrictly"-->
+<!--            :data="routesData"-->
+<!--            :props="defaultProps"-->
+<!--            show-checkbox-->
+<!--            node-key="path"-->
+<!--            class="permission-tree"-->
+<!--          />-->
+
           <el-tree
-            ref="tree"
-            :check-strictly="checkStrictly"
-            :data="routesData"
-            :props="defaultProps"
-            show-checkbox
-            node-key="path"
-            class="permission-tree"
-          />
+            :props="treeNodes"
+            :load="getTreeNodes"
+            lazy
+            show-checkbox>
+          </el-tree>
+
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -115,7 +123,12 @@
         },
         rootParent:{
           id: 0
-        }
+        },
+        treeNodes: {
+          label: 'name',
+          children: 'zones',
+          isLeaf: 'leaf'
+        },
       }
     },
     computed: {
@@ -172,6 +185,61 @@
         //   }, 1.5 * 1000)
         // })
       },
+
+      getTreeNodes(node, resolve) {
+
+
+        console.log(node.id)
+
+        getFunctions(node.id).then(response => {
+          //this.tableData = response.data
+          // console.log(this.list)
+          // Just to simulate the time of the request
+
+          setTimeout(() => {
+            console.log(response.data)
+            resolve(
+              response.data
+            )
+          }, 1000)
+        })
+
+        // if (node.level === 0) {
+        //   return resolve([{ name: 'region' }]);
+        // }
+        // if (node.level > 1) return resolve([]);
+        //
+        // setTimeout(() => {
+        //   const data = [{
+        //     name: 'leaf',
+        //     leaf: true
+        //   }, {
+        //     name: 'zone'
+        //   }];
+        //
+        //   resolve(data);
+        // }, 500);
+
+      },
+
+      // getTreeNodes(node, resolve) {
+      //   if (node.level === 0) {
+      //     return resolve([{ name: 'region' }]);
+      //   }
+      //   if (node.level > 1) return resolve([]);
+      //
+      //   setTimeout(() => {
+      //     const data = [{
+      //       name: 'leaf',
+      //       leaf: true
+      //     }, {
+      //       name: 'zone'
+      //     }];
+      //
+      //     resolve(data);
+      //   }, 500);
+      //
+      // },
 
       // Reshape the routes structure so that it looks the same as the sidebar
       generateRoutes(routes, basePath = '/') {
