@@ -195,7 +195,6 @@
 
       getTreeNodes(node, resolve) {
 
-
         console.log(node.id)
 
         getFunctions(node.id).then(response => {
@@ -230,11 +229,6 @@
       },
 
       handleNodeClick(data, checked, node) {
-        console.log("---------------------------------------")
-        console.log(data)
-        console.log(node)
-        console.log(this.treeForm)
-        console.log(this.treeData)
         if(checked === true) {
           this.checkedId = data.id;
           this.$refs.treeForm.setCheckedKeys([data.id]);
@@ -243,51 +237,8 @@
             this.$refs.treeForm.setCheckedKeys([data.id]);
           }
         }
-
-        console.log(this.treeData)
-        console.log("-000000000000000000000000000000000000000")
-
-        // this.i++;
-        // if (this.i % 2 === 0) {
-        //   if (checked) {
-        //     this.$refs.treeForm.setCheckedNodes([]);
-        //     this.$refs.treeForm.setCheckedNodes([data]);
-        //     //交叉点击节点
-        //   } else {
-        //     this.$refs.treeForm.setCheckedNodes([]);
-        //     //点击已经选中的节点，置空
-        //   }
-        // }
-        // //将获取的值赋值给输入框
-        // let res = this.$refs.treeForm.getCheckedNodes()
-        // let arr = []
-        // res.forEach((item) => {
-        //   arr.push(item.label)
-        // })
-        // console.log(arr.toString())
-        // this.form.sort = arr.toString();
-
-
       },
 
-      // getTreeNodes(node, resolve) {
-      //   if (node.level === 0) {
-      //     return resolve([{ name: 'region' }]);
-      //   }
-      //   if (node.level > 1) return resolve([]);
-      //
-      //   setTimeout(() => {
-      //     const data = [{
-      //       name: 'leaf',
-      //       leaf: true
-      //     }, {
-      //       name: 'zone'
-      //     }];
-      //
-      //     resolve(data);
-      //   }, 500);
-      //
-      // },
 
       // Reshape the routes structure so that it looks the same as the sidebar
       generateRoutes(routes, basePath = '/') {
