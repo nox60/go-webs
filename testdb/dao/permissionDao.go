@@ -87,12 +87,22 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT `function_id`,`number`,`order`,`name`,`path`,`parent_function_id` FROM tb_functions WHERE 1=1 ")
+	/*
+		SELECT a.function_id, a.name, b.function_id, IF(b.function_id IS NULL,0,1) AS leaf FROM tb_functions a
+		LEFT JOIN tb_functions b ON a.function_id = b.parent_function_id
+		WHERE
+		a.parent_function_id = 0;
+	*/
+
+	queryStm.WriteString(" SELECT a.`function_id`,a.`number`,a.`order`,a.`name`,a.`path`,a.`parent_function_id`, ")
+	queryStm.WriteString(" IF(b.function_id IS NULL,1,0) AS leaf, ")
+	queryStm.WriteString(" IF(b.function_id IS NULL,0,1) AS hasChildren ")
+	queryStm.WriteString(" FROM tb_functions AS a  ")
+	queryStm.WriteString(" LEFT JOIN tb_functions AS b ON a.function_id = b.parent_function_id ")
+	queryStm.WriteString(" WHERE 1=1 ")
 	// 查询条件.
-	if fetchDataBody.ParentFunctionId > 0 {
-		queryStm.WriteString(" AND parent_function_id = ? ")
-		fetchArgs = append(fetchArgs, fetchDataBody.ParentFunctionId)
-	}
+	queryStm.WriteString(" AND a.parent_function_id = ? ")
+	fetchArgs = append(fetchArgs, fetchDataBody.ParentFunctionId)
 
 	// 查询记录
 	stmt, _ := MysqlDb.Prepare(queryStm.String())
@@ -112,7 +122,10 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.Order,
 			&dataObj.Name,
 			&dataObj.Path,
-			&dataObj.ParentFunctionId)
+			&dataObj.ParentFunctionId,
+			&dataObj.Leaf,
+			&dataObj.HasChildren,
+		)
 		results = append(results, dataObj)
 	}
 

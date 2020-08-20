@@ -191,7 +191,7 @@
 
         console.log(node.id)
 
-        getNodes(node.id).then(response => {
+        getFunctions(node.id).then(response => {
           //this.tableData = response.data
           // console.log(this.list)
           // Just to simulate the time of the request
