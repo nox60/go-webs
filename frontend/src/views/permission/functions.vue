@@ -239,7 +239,6 @@
         }
       },
 
-
       // Reshape the routes structure so that it looks the same as the sidebar
       generateRoutes(routes, basePath = '/') {
         const res = []
