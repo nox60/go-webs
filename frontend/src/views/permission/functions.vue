@@ -79,10 +79,15 @@
 <!--          />-->
 
           <el-tree
+            :data="treeData"
             :props="treeNodes"
             :load="getTreeNodes"
             lazy
-            show-checkbox>
+            show-checkbox
+            node-key="id"
+            check-strictly
+            ref="treeForm"
+            @check-change="handleNodeClick">
           </el-tree>
 
         </el-form-item>
@@ -111,6 +116,8 @@
     data() {
       return {
         tableData:'',
+        treeData:'',
+        treeForm:'',
         role: Object.assign({}, defaultRole),
         routes: [],
         rolesList: [],
@@ -219,6 +226,47 @@
         //
         //   resolve(data);
         // }, 500);
+
+      },
+
+      handleNodeClick(data, checked, node) {
+        console.log("---------------------------------------")
+        console.log(data)
+        console.log(node)
+        console.log(this.treeForm)
+        console.log(this.treeData)
+        if(checked === true) {
+          this.checkedId = data.id;
+          this.$refs.treeForm.setCheckedKeys([data.id]);
+        } else {
+          if (this.checkedId == data.id) {
+            this.$refs.treeForm.setCheckedKeys([data.id]);
+          }
+        }
+
+        console.log(this.treeData)
+        console.log("-000000000000000000000000000000000000000")
+
+        // this.i++;
+        // if (this.i % 2 === 0) {
+        //   if (checked) {
+        //     this.$refs.treeForm.setCheckedNodes([]);
+        //     this.$refs.treeForm.setCheckedNodes([data]);
+        //     //交叉点击节点
+        //   } else {
+        //     this.$refs.treeForm.setCheckedNodes([]);
+        //     //点击已经选中的节点，置空
+        //   }
+        // }
+        // //将获取的值赋值给输入框
+        // let res = this.$refs.treeForm.getCheckedNodes()
+        // let arr = []
+        // res.forEach((item) => {
+        //   arr.push(item.label)
+        // })
+        // console.log(arr.toString())
+        // this.form.sort = arr.toString();
+
 
       },
 
