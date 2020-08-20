@@ -43,3 +43,10 @@ export function getFunctions(id) {
     method: 'get',
   })
 }
+
+export function getNodes(id) {
+  return request({
+    url: `/getNodes/${id}`,
+    method: 'get',
+  })
+}
