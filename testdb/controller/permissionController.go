@@ -88,3 +88,25 @@ func ListFunctionsData(c *gin.Context) {
 	//resultMsg.Data = functions
 	//c.JSON(200, resultMsg)
 }
+
+func ListNodesData(c *gin.Context) {
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "获取数据成功"
+
+	parentIdStr := c.Param("parentId")
+	parentId, _ := strconv.Atoi(parentIdStr)
+
+	functions := make([]models.FunctionNode, 0)
+
+	fetchBody := new(models.FunctionNode)
+
+	fetchBody.ParentFunctionId = parentId
+
+	functions, _ = services.GetFunctionsByParentId(fetchBody)
+
+	resultMsg.Data = functions
+	c.JSON(200, resultMsg)
+
+}
