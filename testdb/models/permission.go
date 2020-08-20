@@ -8,10 +8,12 @@ type FunctionNode struct {
 	Path             string `json:"path"`
 	ParentFunctionId int    `json:"parentId"`
 	HasChildren      bool   `json:"hasChildren"`
+	Leaf             bool   `json:"leaf"`
 }
 
 type TreeNode struct {
-	Name  string `json:"name"`
+	Id    int    `json:"id"`
 	Other string `json:"testColumn"`
+	Name  string `json:"name"`
 	Leaf  bool   `json:"leaf"`
 }

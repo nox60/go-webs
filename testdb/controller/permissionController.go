@@ -98,7 +98,7 @@ func ListNodesData(c *gin.Context) {
 	//parentIdStr := c.Param("parentId")
 	//parentId, _ := strconv.Atoi(parentIdStr)
 
-	functions := make([]models.TreeNode, 0)
+	functions := make([]models.FunctionNode, 0)
 
 	//fetchBody := new(models.FunctionNode)
 
@@ -106,9 +106,9 @@ func ListNodesData(c *gin.Context) {
 
 	//functions, _ = services.GetFunctionsByParentId(fetchBody)
 
-	node1 := models.TreeNode{"test1", "adasdf", false}
-	node2 := models.TreeNode{"test2", "asdfasf", true}
-	node3 := models.TreeNode{"test3", "asdf", false}
+	node1 := models.FunctionNode{1, 1, 1, "test1", "adasdf", 0, false, true}
+	node2 := models.FunctionNode{2, 3, 2, "test2", "asdfasf", 0, true, false}
+	node3 := models.FunctionNode{3, 4, 3, "test3", "asdf", 0, false, true}
 
 	functions = append(functions, node1)
 	functions = append(functions, node2)
