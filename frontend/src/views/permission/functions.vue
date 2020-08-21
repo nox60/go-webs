@@ -80,21 +80,23 @@
 
   export default {
     data() {
-      var checkNumber = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('编号不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value > 100) {
-              callback(new Error('编号不能超过100000'));
-            } else {
-              callback();
+      let checkNumber = (rule, value, callback) => {
+        console.log(value)
+        if(!value) {
+          return new Error('必填信息')
+        }else {
+          if(!Number.isInteger(value)) {
+            callback(new Error('请输入数字值'))
+          }else{
+            if(value < 0) {
+              callback(new Error('不能小于0'))
+            }else if(value > 20){
+              callback(new Error('不能大于20'))
+            }else {
+              callback()
             }
           }
-        }, 1000);
+        }
       };
       return {
         functionForm:{
@@ -104,7 +106,7 @@
           description: 'title'
         },
         tableData:'',
-        treeData:'',
+        treeData:[],
         treeForm:'',
         // role: Object.assign({}, defaultRole),
         // routes: [],
