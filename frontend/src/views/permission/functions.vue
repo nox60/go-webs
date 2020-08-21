@@ -30,14 +30,20 @@
 
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form :model="functionForm" label-width="80px" label-position="left">
+      <el-form :model="functionForm" label-width="120px" label-position="left">
+        <el-form-item label="编号">
+          <el-input v-model="functionForm.number" placeholder="Number" />
+        </el-form-item>
+        <el-form-item label="菜单内次序">
+          <el-input v-model="functionForm.number" placeholder="菜单内次序，值越大越靠前" />
+        </el-form-item>
         <el-form-item label="菜单名称">
           <el-input v-model="functionForm.name" placeholder="Role Name" />
         </el-form-item>
         <el-form-item label="请求路径">
           <el-input v-model="functionForm.path" placeholder="abc" />
         </el-form-item>
-        <el-form-item label="父级菜单节点">
+        <el-form-item label="父级菜单">
           <el-tree
             :data="treeData"
             :props="treeNodes"
@@ -99,6 +105,11 @@
           label: 'name',
           children: 'zones',
           isLeaf: 'leaf'
+        },
+        rules: {
+          type: [{ required: true, message: 'type is required', trigger: 'change' }],
+          timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+          title: [{ required: true, message: 'title is required', trigger: 'blur' }]
         },
       }
     },
