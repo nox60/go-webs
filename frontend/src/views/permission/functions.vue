@@ -37,7 +37,7 @@
         <el-form-item label="请求路径">
           <el-input v-model="functionForm.path" placeholder="abc" />
         </el-form-item>
-        <el-form-item label="父级节点">
+        <el-form-item label="父级菜单节点">
           <el-tree
             :data="treeData"
             :props="treeNodes"
