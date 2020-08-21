@@ -32,7 +32,7 @@
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form  ref="functionForm" :model="functionForm" :rules="rules"  label-width="120px" label-position="left">
         <el-form-item label="编号" prop="number">
-          <el-input v-model="functionForm.number"  placeholder="编号" />
+          <el-input v-model.number="functionForm.number"  placeholder="编号" />
         </el-form-item>
         <el-form-item label="菜单内次序">
           <el-input v-model="functionForm.order" placeholder="菜单内次序，值越大越靠前" />
