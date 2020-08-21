@@ -30,12 +30,12 @@
 
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form :model="functionForm" label-width="120px" label-position="left">
+      <el-form  ref="functionForm" :model="functionForm" :rules="rules"  label-width="120px" label-position="left">
         <el-form-item label="编号">
-          <el-input v-model="functionForm.number" placeholder="Number" />
+          <el-input v-model="functionForm.number"  placeholder="编号" />
         </el-form-item>
         <el-form-item label="菜单内次序">
-          <el-input v-model="functionForm.number" placeholder="菜单内次序，值越大越靠前" />
+          <el-input v-model="functionForm.order" placeholder="菜单内次序，值越大越靠前" />
         </el-form-item>
         <el-form-item label="菜单名称">
           <el-input v-model="functionForm.name" placeholder="Role Name" />
@@ -83,6 +83,8 @@
       return {
         functionForm:{
           name: '',
+          number: '',
+          order:'',
           description: 'title'
         },
         tableData:'',
@@ -107,9 +109,12 @@
           isLeaf: 'leaf'
         },
         rules: {
-          type: [{ required: true, message: 'type is required', trigger: 'change' }],
           timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-          title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+          title: [{ required: true, message: 'title is required', trigger: 'blur' }],
+          number: [
+            {required:true, message:'编号是必填项', trigger:'blur'},
+            {min:1, max:3, message:'长度1-3', trigger: 'blur'}
+          ],
         },
       }
     },
