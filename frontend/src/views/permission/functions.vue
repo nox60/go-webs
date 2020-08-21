@@ -31,18 +31,13 @@
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="functionForm" label-width="80px" label-position="left">
-        <el-form-item label="Name">
+        <el-form-item label="菜单名称">
           <el-input v-model="functionForm.name" placeholder="Role Name" />
         </el-form-item>
-        <el-form-item label="Desc">
-          <el-input
-            v-model="functionForm.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Role Description"
-          />
+        <el-form-item label="请求路径">
+          <el-input v-model="functionForm.path" placeholder="abc" />
         </el-form-item>
-        <el-form-item label="Menus">
+        <el-form-item label="父级节点">
           <el-tree
             :data="treeData"
             :props="treeNodes"
@@ -114,6 +109,11 @@
       getFunctions(0).then(response => {
         this.tableData = response.data
       })
+
+      var jsonstr = '{id: 0, number: 0, order: 0, name: "根节点", path: "/", parentId: 0, hasChildren: true, leaf: false}';
+
+      treeData = JSON.parse(jsonstr);
+
     },
     methods: {
       getFunctions(tree, treeNode, resolve) {
@@ -127,14 +127,21 @@
       },
 
       getTreeNodes(node, resolve) {
-        getFunctions(node.id).then(response => {
-          setTimeout(() => {
-            console.log(response.data)
-            resolve(
-              response.data
-            )
-          }, 1000)
-        })
+
+        if (node.level === 0) {
+          return resolve([{ id: 0, number: 0, order: 0, name: "根节点", path: "/", parentId: 0, hasChildren: true, leaf: false }]);
+        } else {
+          getFunctions(node.data.id).then(response => {
+            setTimeout(() => {
+              console.log(response.data)
+              resolve(
+                response.data
+              )
+            }, 1000)
+          })
+        }
+
+
       },
       handleAddRole() {
         this.role = Object.assign({}, defaultRole)
