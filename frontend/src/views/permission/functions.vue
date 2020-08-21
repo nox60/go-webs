@@ -31,7 +31,7 @@
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form  ref="functionForm" :model="functionForm" :rules="rules"  label-width="120px" label-position="left">
-        <el-form-item label="编号">
+        <el-form-item label="编号" prop="number">
           <el-input v-model="functionForm.number"  placeholder="编号" />
         </el-form-item>
         <el-form-item label="菜单内次序">
@@ -80,6 +80,22 @@
 
   export default {
     data() {
+      var checkNumber = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('编号不能为空'));
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('请输入数字值'));
+          } else {
+            if (value > 100) {
+              callback(new Error('编号不能超过100000'));
+            } else {
+              callback();
+            }
+          }
+        }, 1000);
+      };
       return {
         functionForm:{
           name: '',
@@ -112,8 +128,7 @@
           timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
           title: [{ required: true, message: 'title is required', trigger: 'blur' }],
           number: [
-            {required:true, message:'编号是必填项', trigger:'blur'},
-            {min:1, max:3, message:'长度1-3', trigger: 'blur'}
+            {validator: checkNumber, trigger:'blur'}
           ],
         },
       }
