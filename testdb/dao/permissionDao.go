@@ -190,22 +190,3 @@ func AddFunction(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
 	}
 	return
 }
-
-func DeleteFunction(itemId int, tx *sql.Tx) (err error) {
-	_, err = tx.Exec("DELETE FROM `tb_items` WHERE itemId = ? ",
-		itemId)
-	if err != nil {
-		return err
-	}
-	return
-}
-
-func UpdateFunctionById(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
-
-	_, err = tx.Exec("UPDATE `tb_items` SET itemContent = ?, itemTitle = ?, itemType = ? WHERE itemId = ? ", itemData.ItemContent, itemData.ItemTitle, itemData.ItemType, itemData.ItemId)
-	if err != nil {
-		return err
-	}
-
-	return
-}
