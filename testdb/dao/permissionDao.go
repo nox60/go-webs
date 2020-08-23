@@ -377,19 +377,3 @@ func GetPermissionData(fetchDataBody *models.FetchDataRequestBody) (dataResBody 
 
 	return dataObj, err
 }
-
-func AddFunction(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
-
-	_, err = tx.Exec("INSERT INTO `tb_items` (`createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc`) "+
-		"values (now(),?,?,?,?,?,?) ",
-		itemData.ItemContent,
-		itemData.ItemStar,
-		itemData.ItemType,
-		itemData.ItemTitle,
-		itemData.ItemStatus,
-		itemData.ItemDesc)
-	if err != nil {
-		return err
-	}
-	return
-}
