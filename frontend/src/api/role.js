@@ -50,3 +50,11 @@ export function getNodes(id) {
     method: 'get',
   })
 }
+
+export function addOrUpdateFunction(data) {
+  return request({
+    url: '/addOrUpdateFunction',
+    method: 'post',
+    data: data
+  })
+}
