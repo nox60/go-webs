@@ -70,7 +70,7 @@
 <script>
   import path from 'path'
   import { deepClone } from '@/utils'
-  import { getRoutes, getRoles, addRole, deleteRole, updateRole, getFunctions, getNodes } from '@/api/role'
+  import { getRoutes, getRoles, addRole, deleteRole, updateRole, getFunctions, getNodes, addOrUpdateFunction } from '@/api/role'
 
   const defaultRole = {
     key: '',
@@ -177,6 +177,32 @@
           })
         }
       },
+
+      addOrUpdateData() {
+        this.$refs['functionForm'].validate((valid) => {
+          if (valid) {
+            this.disableSubmit = true
+            addOrUpdateFunction(this.functionForm).then(() => {
+              this.$notify({
+                title: 'Success',
+                message: '操作成功',
+                type: 'success',
+                duration: 2000
+              })
+
+              // 调用全局挂载的方法,关闭当前标签页
+              //this.$store.dispatch("tagsView/delView", 'mydata-createOrEdit');
+
+              // // 返回上一步路由，返回上一个标签页
+              // this.$router.go(-1);
+              //
+              //跳转回到列表界面
+             // this.$router.push({path:'/mydatas/mydataList/'})
+            })
+          }
+        })
+      },
+
       handleAddRole() {
         this.role = Object.assign({}, defaultRole)
         if (this.$refs.tree) {
