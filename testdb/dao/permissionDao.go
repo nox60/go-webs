@@ -175,16 +175,15 @@ func GetPermissionData(fetchDataBody *models.FetchDataRequestBody) (dataResBody 
 	return dataObj, err
 }
 
-func AddFunction(itemData *models.FunctionNode, tx *sql.Tx) (err error) {
+func AddFunction(function *models.FunctionNode, tx *sql.Tx) (err error) {
 
-	_, err = tx.Exec("INSERT INTO `tb_functions` (`createTime`,`itemContent`,`itemStar`,`itemType`,`itemTitle`,`itemStatus`,`itemDesc`) "+
-		"values (now(),?,?,?,?,?,?) ",
-		itemData.Name,
-		itemData.ItemStar,
-		itemData.ItemType,
-		itemData.ItemTitle,
-		itemData.ItemStatus,
-		itemData.ItemDesc)
+	_, err = tx.Exec("INSERT INTO `tb_functions` (`createTime`,`number`,`order`,`name`,`path`,`parent_function_id`) "+
+		"values (now(),?,?,?,?,?) ",
+		function.Number,
+		function.Order,
+		function.Name,
+		function.Path,
+		function.ParentFunctionId)
 	if err != nil {
 		return err
 	}
