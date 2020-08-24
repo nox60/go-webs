@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"strconv"
 	"testdb/models"
 	"testdb/services"
@@ -47,4 +49,28 @@ func ListNodesData(c *gin.Context) {
 	resultMsg.Data = functions
 	c.JSON(200, resultMsg)
 
+}
+
+func AddOrUpdateFunction(c *gin.Context) {
+
+	var funcionReq models.FunctionNode
+
+	if err := c.ShouldBindJSON(&funcionReq); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if funcionReq.FunctionId == 0 {
+		// 新增
+		services.AddFunction(&funcionReq)
+	} else {
+		// 更新
+		// services.UpdateItemById(&funcionReq)
+	}
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "新增功能点成功"
+	c.JSON(200, resultMsg)
 }

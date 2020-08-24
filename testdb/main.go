@@ -43,6 +43,7 @@ func main() {
 	api.GET("/getItem/:itemId", controller.GetItem)
 	api.GET("/getFunctions/:parentId", controller.ListFunctionsData)
 	api.GET("/getNodes/:parentId", controller.ListNodesData)
+	api.POST("/addOrUpdateFunction", controller.AddOrUpdateFunction)
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
