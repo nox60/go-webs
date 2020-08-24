@@ -36,7 +36,7 @@
           <el-input v-model.number="functionForm.number"  placeholder="编号" />
         </el-form-item>
         <el-form-item label="菜单内次序">
-          <el-input v-model="functionForm.order" placeholder="菜单内次序，值越大越靠前" />
+          <el-input v-model.number="functionForm.order" placeholder="菜单内次序，值越大越靠前" />
         </el-form-item>
         <el-form-item label="菜单名称">
           <el-input v-model="functionForm.name" placeholder="Role Name" />
@@ -61,7 +61,7 @@
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-        <el-button type="primary" @click="confirmRole">Confirm</el-button>
+        <el-button type="primary" @click="addOrUpdateData">Confirm</el-button>
       </div>
     </el-dialog>
   </div>

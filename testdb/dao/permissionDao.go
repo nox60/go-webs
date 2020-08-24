@@ -177,8 +177,8 @@ func GetPermissionData(fetchDataBody *models.FetchDataRequestBody) (dataResBody 
 
 func AddFunction(function *models.FunctionNode, tx *sql.Tx) (err error) {
 
-	_, err = tx.Exec("INSERT INTO `tb_functions` (`createTime`,`number`,`order`,`name`,`path`,`parent_function_id`) "+
-		"values (now(),?,?,?,?,?) ",
+	_, err = tx.Exec("INSERT INTO `tb_functions` (`number`,`order`,`name`,`path`,`parent_function_id`) "+
+		"values (?,?,?,?,?) ",
 		function.Number,
 		function.Order,
 		function.Name,
