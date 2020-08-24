@@ -7,6 +7,7 @@
       style="width: 100%;margin-bottom: 20px;"
       row-key="id"
       border
+      v-loading="listLoading"
       lazy
       :load="getFunctions"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
@@ -105,9 +106,10 @@
           order:'',
           description: 'title'
         },
-        tableData:'',
+        tableData:[],
         treeData:[],
         treeForm:'',
+        listLoading: false,
         // role: Object.assign({}, defaultRole),
         // routes: [],
         // rolesList: [],
@@ -143,18 +145,19 @@
         this.tableData = response.data
       })
 
-      var jsonstr = '{id: 0, number: 0, order: 0, name: "根节点", path: "/", parentId: 0, hasChildren: true, leaf: false}';
-
-      treeData = JSON.parse(jsonstr);
-
+      // let jsonstr = '{"id": 0, "number": 0, "order": 0, "name": "根节点", "path": "/", "parentId": 0, "hasChildren": true, "leaf": false}';
+      // this.treeData = JSON.parse(jsonstr);
+      // console.log(this.treeData)
     },
     methods: {
       getFunctions(tree, treeNode, resolve) {
+        this.listLoading = true
         getFunctions(tree.id).then(response => {
           setTimeout(() => {
             resolve(
               response.data
             )
+            this.listLoading = false
           }, 1000)
         })
       },
@@ -166,15 +169,13 @@
         } else {
           getFunctions(node.data.id).then(response => {
             setTimeout(() => {
-              console.log(response.data)
+              // console.log(response.data)
               resolve(
                 response.data
               )
             }, 1000)
           })
         }
-
-
       },
       handleAddRole() {
         this.role = Object.assign({}, defaultRole)
