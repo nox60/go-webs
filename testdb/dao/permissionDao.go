@@ -376,27 +376,3 @@ func GetPermissionData(fetchDataBody *models.FetchDataRequestBody) (dataResBody 
 
 	return dataObj, err
 }
-
-func AddFunction(function *models.FunctionNode, tx *sql.Tx) (err error) {
-
-	_, err = tx.Exec("INSERT INTO `tb_functions` (`number`,`order`,`name`,`path`,`parent_function_id`) "+
-		"values (?,?,?,?,?) ",
-		function.Number,
-		function.Order,
-		function.Name,
-		function.Path,
-		function.ParentFunctionId)
-	if err != nil {
-		return err
-	}
-	return
-}
-
-func DeleteFunction(itemId int, tx *sql.Tx) (err error) {
-	_, err = tx.Exec("DELETE FROM `tb_items` WHERE itemId = ? ",
-		itemId)
-	if err != nil {
-		return err
-	}
-	return
-}
