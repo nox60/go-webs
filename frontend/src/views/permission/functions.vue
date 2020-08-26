@@ -54,8 +54,8 @@
             node-key="id"
             check-strictly
             ref="treeForm"
-            :default-expanded-keys="[0, 4]"
-            :default-checked-keys="[4]"
+            :default-expanded-keys="defaultExpandedNodes"
+            :default-checked-keys="defaultSelectedNode"
             @check-change="handleNodeClick">
           </el-tree>
 
@@ -109,6 +109,8 @@
           description: 'title',
           parentId:''
         },
+        defaultExpandedNodes:[],
+        defaultSelectedNode:[],
         tableData:[],
         treeData:[],
         treeForm:'',
