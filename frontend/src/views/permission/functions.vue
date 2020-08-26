@@ -181,7 +181,7 @@
       addOrUpdateData() {
         this.$refs['functionForm'].validate((valid) => {
           if (valid) {
-            this.disableSubmit = true
+            this.listLoading = true
             addOrUpdateFunction(this.functionForm).then(() => {
               this.$notify({
                 title: 'Success',
@@ -189,6 +189,13 @@
                 type: 'success',
                 duration: 2000
               })
+
+              getFunctions(0).then(response => {
+                this.tableData = response.data
+              })
+
+              this.listLoading = false
+              this.dialogVisible = false
 
               // 调用全局挂载的方法,关闭当前标签页
               //this.$store.dispatch("tagsView/delView", 'mydata-createOrEdit');
