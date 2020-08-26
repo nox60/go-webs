@@ -162,7 +162,8 @@
           this.functionForm.order = ''
           this.functionForm.path = ''
         } else {//编辑数据
-
+          this.defaultExpandedNodes = '[0,5]'
+          this.defaultSelectedNode = '[4]'
         }
 
 
@@ -170,16 +171,19 @@
         let rootNode = { id: 0, level: 0 }
        // this.getTreeNodes(rootNode)
 
-        new Promise(function(resolve, reject){
-          //做一些异步操作
-          setTimeout(function(){
-            console.log('处理根节点');
-            //this.$options.methods.getTreeNodes(rootNode, resolve)
-            console.log(this.treeNodes)
-            console.log(this.treeData)
-            console.log('---------------------------------------------------------')
-          }, 2000);
-        });
+        this.defaultExpandedNodes = '[0,5]'
+        this.defaultSelectedNode = '[4]'
+
+        // new Promise(function(resolve, reject){
+        //   //做一些异步操作
+        //   setTimeout(function(){
+        //     console.log('处理根节点');
+        //     //this.$options.methods.getTreeNodes(rootNode, resolve)
+        //     console.log(this.treeNodes)
+        //     console.log(this.treeData)
+        //     console.log('---------------------------------------------------------')
+        //   }, 2000);
+        // });
 
         // let node1 = { id: 2, level: 1}
         // this.getTreeNodes( node1)
