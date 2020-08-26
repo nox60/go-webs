@@ -104,7 +104,8 @@
           name: '',
           number: '',
           order:'',
-          description: 'title'
+          description: 'title',
+          parentId:''
         },
         tableData:[],
         treeData:[],
@@ -222,6 +223,7 @@
         if(checked === true) {
           this.checkedId = data.id;
           this.$refs.treeForm.setCheckedKeys([data.id]);
+          this.functionForm.parentId = data.id
         } else {
           if (this.checkedId == data.id) {
             this.$refs.treeForm.setCheckedKeys([data.id]);
@@ -231,7 +233,6 @@
       async confirmRole() {
 
       },
-
     }
   }
 </script>
