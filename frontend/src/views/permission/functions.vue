@@ -54,6 +54,8 @@
             node-key="id"
             check-strictly
             ref="treeForm"
+            :default-expanded-keys="[0, 4]"
+            :default-checked-keys="[4]"
             @check-change="handleNodeClick">
           </el-tree>
 
@@ -164,9 +166,21 @@
 
         // 循环请求节点的父级节点，将树渲染完成
         let rootNode = { id: 0, level: 0 }
-        this.getTreeNodes(rootNode)
-        let node1 = { id: 2, level: 1}
-        this.getTreeNodes( node1)
+       // this.getTreeNodes(rootNode)
+
+        new Promise(function(resolve, reject){
+          //做一些异步操作
+          setTimeout(function(){
+            console.log('处理根节点');
+            //this.$options.methods.getTreeNodes(rootNode, resolve)
+            console.log(this.treeNodes)
+            console.log(this.treeData)
+            console.log('---------------------------------------------------------')
+          }, 2000);
+        });
+
+        // let node1 = { id: 2, level: 1}
+        // this.getTreeNodes( node1)
 
       },
       initData(){ //初始化表内数据
