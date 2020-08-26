@@ -110,6 +110,7 @@
         tableData:[],
         treeData:[],
         treeForm:'',
+        forEdit:0,
         listLoading: false,
         // role: Object.assign({}, defaultRole),
         // routes: [],
@@ -142,16 +143,38 @@
 
     },
     created() {
-      getFunctions(0).then(response => {
+      getFunctions(0).then(response => { //表内数据
         this.tableData = response.data
       })
-
-      // let jsonstr = '{"id": 0, "number": 0, "order": 0, "name": "根节点", "path": "/", "parentId": 0, "hasChildren": true, "leaf": false}';
-      // this.treeData = JSON.parse(jsonstr);
-      // console.log(this.treeData)
     },
     methods: {
-      getFunctions(tree, treeNode, resolve) {
+      initFormData(){
+
+        if(this.forEdit == 0){//新增数据
+          this.functionForm.parentId = 0
+          this.functionForm.description = ''
+          this.functionForm.name = ''
+          this.functionForm.number = ''
+          this.functionForm.order = ''
+          this.functionForm.path = ''
+        } else {//编辑数据
+
+        }
+
+
+        // 循环请求节点的父级节点，将树渲染完成
+        let rootNode = { id: 0, level: 0 }
+        this.getTreeNodes(rootNode)
+        let node1 = { id: 2, level: 1}
+        this.getTreeNodes( node1)
+
+      },
+      initData(){ //初始化表内数据
+        getFunctions(0).then(response => {
+          this.tableData = response.data
+        })
+      },
+      getFunctions(tree, treeNode, resolve) { //用于懒加载表内数据
         this.listLoading = true
         getFunctions(tree.id).then(response => {
           setTimeout(() => {
@@ -162,8 +185,10 @@
           }, 1000)
         })
       },
-
-      getTreeNodes(node, resolve) {
+      getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
+        console.log('---------------------0000')
+        console.log(node)
+        console.log('---------------------1111')
 
         if (node.level === 0) {
           return resolve([{ id: 0, number: 0, order: 0, name: "根节点", path: "/", parentId: 0, hasChildren: true, leaf: false }]);
@@ -178,7 +203,6 @@
           })
         }
       },
-
       addOrUpdateData() {
         this.$refs['functionForm'].validate((valid) => {
           if (valid) {
@@ -191,10 +215,7 @@
                 duration: 2000
               })
 
-              getFunctions(0).then(response => {
-                this.tableData = response.data
-              })
-
+              this.initData()
               this.listLoading = false
               this.dialogVisible = false
 
@@ -218,8 +239,10 @@
         }
         this.dialogType = 'new'
         this.dialogVisible = true
+        this.forEdit = 0
+        this.initFormData()
       },
-      handleNodeClick(data, checked, node) {
+      handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
         if(checked === true) {
           this.checkedId = data.id;
           this.$refs.treeForm.setCheckedKeys([data.id]);
