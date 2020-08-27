@@ -58,3 +58,10 @@ export function addOrUpdateFunction(data) {
     data: data
   })
 }
+
+export function getFunctionById(id) {
+  return request({
+    url: `/getFunctionById/${id}`,
+    method: 'get',
+  })
+}

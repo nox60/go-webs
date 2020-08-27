@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddRole">New Role</el-button>
+    <el-button type="primary" @click="handleAddOrUpdate({ id: 0})">New Role</el-button>
 
     <el-table
       :data="tableData"
@@ -30,7 +30,7 @@
 
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button  type="primary" size="mini" @click="handleUpdate(row)">
+          <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
             编辑
           </el-button>
           <el-button  size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">
@@ -285,8 +285,10 @@
           }
         }
       },
-      handleUpdate(row) {
+      handleAddOrUpdate(row) {
+        console.log('--------------------------------------????')
         console.log(row['id'])
+
       },
 
       async confirmRole() {
