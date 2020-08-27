@@ -208,3 +208,44 @@ func UpdateFunctionById(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
 
 	return
 }
+
+func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.FunctionNode, err error) {
+
+	// 获取数据的临时对象
+	var dataObj models.FunctionNode
+
+	// 查询条件
+	var queryStm strings.Builder
+
+	// 查询条件
+	var fetchArgs = make([]interface{}, 0)
+
+	queryStm.WriteString(" SELECT a.`function_id`,a.`number`,a.`order`,a.`name`,a.`path`,a.`parent_function_id` ")
+	queryStm.WriteString(" FROM tb_functions AS a  ")
+	queryStm.WriteString(" WHERE 1=1 ")
+	// 查询条件.
+	queryStm.WriteString(" AND a.`function_id` = ? ")
+	fetchArgs = append(fetchArgs, fetchDataBody.FunctionId)
+
+	// 查询记录
+	stmt, _ := MysqlDb.Prepare(queryStm.String())
+	defer stmt.Close()
+
+	// 查询数据
+	queryResults, err := stmt.Query(fetchArgs...)
+
+	if err != nil {
+		fmt.Println(err)
+		return dataObj, err
+	}
+
+	queryResults.Scan(&dataObj.FunctionId,
+		&dataObj.Number,
+		&dataObj.Order,
+		&dataObj.Name,
+		&dataObj.Path,
+		&dataObj.ParentFunctionId,
+	)
+
+	return dataObj, err
+}

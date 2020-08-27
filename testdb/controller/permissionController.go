@@ -74,3 +74,24 @@ func AddOrUpdateFunction(c *gin.Context) {
 	resultMsg.Msg = "新增功能点成功"
 	c.JSON(200, resultMsg)
 }
+
+func GetFunctionById(c *gin.Context) {
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "获取数据成功"
+
+	idStr := c.Param("id")
+
+	id, _ := strconv.Atoi(idStr)
+
+	fetchBody := new(models.FunctionNode)
+
+	fetchBody.FunctionId = id
+
+	resultBody, _ := services.GetFunctionById(fetchBody)
+
+	resultMsg.Data = resultBody
+
+	c.JSON(200, resultMsg)
+}

@@ -285,11 +285,8 @@
           }
         }
       },
-
       handleUpdate(row) {
-
         console.log(row['id'])
-
       },
 
       async confirmRole() {

@@ -29,3 +29,7 @@ func AddFunction(function *models.FunctionNode) {
 
 	err = dao.AddFunction(function, tx)
 }
+
+func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.FunctionNode, err error) {
+	return dao.GetFunctionById(fetchDataBody)
+}
