@@ -234,20 +234,28 @@ func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.Fun
 	defer stmt.Close()
 
 	// 查询数据
-	queryResults, err := stmt.Query(fetchArgs...)
+	queryResult := stmt.QueryRow(fetchArgs...)
 
 	if err != nil {
 		fmt.Println(err)
 		return dataObj, err
 	}
 
-	queryResults.Scan(&dataObj.FunctionId,
+	fmt.Println("---------------------------------------+++")
+	fmt.Println(queryStm.String())
+	fmt.Println(fetchDataBody.FunctionId)
+	fmt.Println(queryResult)
+
+	queryResult.Scan(&dataObj.FunctionId,
 		&dataObj.Number,
 		&dataObj.Order,
 		&dataObj.Name,
 		&dataObj.Path,
 		&dataObj.ParentFunctionId,
 	)
+
+	fmt.Println(dataObj)
+	fmt.Println("---------------------------------------!!!")
 
 	return dataObj, err
 }

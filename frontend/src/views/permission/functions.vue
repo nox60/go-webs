@@ -178,9 +178,7 @@
 
           getFunctionById(this.functionForm.id).then(response => {
             setTimeout(() => {
-                resolve(
-                  this.functionForm = response.data
-              )
+              this.functionForm = response.data
               this.defaultExpandedNodes = '[0,5]'
               this.defaultSelectedNode = '[4]'
               this.dialogVisible = true
