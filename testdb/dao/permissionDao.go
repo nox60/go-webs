@@ -104,6 +104,8 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	queryStm.WriteString(" AND a.parent_function_id = ? ")
 	fetchArgs = append(fetchArgs, fetchDataBody.ParentFunctionId)
 
+	queryStm.WriteString(" GROUP BY a.`function_id`")
+
 	// 查询记录
 	stmt, _ := MysqlDb.Prepare(queryStm.String())
 	defer stmt.Close()

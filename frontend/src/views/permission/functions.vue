@@ -12,14 +12,14 @@
       :load="getFunctions"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column
-        prop="id"
-        label="id"
+        prop="number"
+        label="编号"
         sortable
         width="180">
       </el-table-column>
       <el-table-column
         prop="name"
-        label="姓名"
+        label="功能点"
         sortable
         width="180">
       </el-table-column>
@@ -54,7 +54,7 @@
           <el-input v-model="functionForm.name" placeholder="Role Name" />
         </el-form-item>
         <el-form-item label="请求路径">
-          <el-input v-model="functionForm.path" placeholder="abc" />
+          <el-input v-model="functionForm.path" placeholder="/path/1" />
         </el-form-item>
         <el-form-item label="父级菜单">
           <el-tree
@@ -84,7 +84,7 @@
 <script>
   import path from 'path'
   import { deepClone } from '@/utils'
-  import { getRoutes, getRoles, addRole, deleteRole, updateRole, getFunctions, getNodes, addOrUpdateFunction } from '@/api/role'
+  import { getRoutes, getRoles, addRole, deleteRole, updateRole, getFunctions, getNodes, addOrUpdateFunction, getFunctionById } from '@/api/role'
 
   const defaultRole = {
     key: '',
@@ -115,11 +115,12 @@
       };
       return {
         functionForm:{
-          name: '',
+          id: '',
           number: '',
           order:'',
-          description: 'title',
-          parentId:''
+          name: '',
+          path:'',
+          parentId:'',
         },
         defaultExpandedNodes:[],
         defaultSelectedNode:[],
@@ -167,24 +168,35 @@
       initFormData(){
 
         if(this.forEdit == 0){//新增数据
+          this.functionForm.id = 0
           this.functionForm.parentId = 0
-          this.functionForm.description = ''
           this.functionForm.name = ''
           this.functionForm.number = ''
           this.functionForm.order = ''
           this.functionForm.path = ''
         } else {//编辑数据
-          this.defaultExpandedNodes = '[0,5]'
-          this.defaultSelectedNode = '[4]'
-        }
 
+          getFunctionById(this.functionForm.id).then(response => {
+            setTimeout(() => {
+                resolve(
+                  this.functionForm = response.data
+              )
+              this.defaultExpandedNodes = '[0,5]'
+              this.defaultSelectedNode = '[4]'
+              this.dialogVisible = true
+              // this.listLoading = false
+            }, 1000)
+          })
+
+
+        }
 
         // 循环请求节点的父级节点，将树渲染完成
         let rootNode = { id: 0, level: 0 }
        // this.getTreeNodes(rootNode)
 
-        this.defaultExpandedNodes = '[0,5]'
-        this.defaultSelectedNode = '[4]'
+        // this.defaultExpandedNodes = '[0,5]'
+        // this.defaultSelectedNode = '[4]'
 
         // new Promise(function(resolve, reject){
         //   //做一些异步操作
@@ -288,6 +300,23 @@
       handleAddOrUpdate(row) {
         console.log('--------------------------------------????')
         console.log(row['id'])
+
+        if ( row['id'] === 0 ){ //新增
+          console.log('新增数据')
+          //this.role = Object.assign({}, defaultRole)
+          if (this.$refs.tree) {
+            this.$refs.tree.setCheckedNodes([])
+          }
+          this.dialogType = 'new'
+          this.dialogVisible = true
+          this.forEdit = 0
+          this.initFormData()
+        } else { //修改
+          console.log('修改数据')
+          this.forEdit = 1
+          this.functionForm.id = row['id']
+          this.initFormData()
+        }
 
       },
 
