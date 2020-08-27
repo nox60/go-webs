@@ -201,9 +201,26 @@ func DeleteFunction(itemId int, tx *sql.Tx) (err error) {
 	return
 }
 
-func UpdateFunctionById(itemData *models.ItemDataBody, tx *sql.Tx) (err error) {
+func UpdateFunctionById(functionData *models.FunctionNode, tx *sql.Tx) (err error) {
 
-	_, err = tx.Exec("UPDATE `tb_items` SET itemContent = ?, itemTitle = ?, itemType = ? WHERE itemId = ? ", itemData.ItemContent, itemData.ItemTitle, itemData.ItemType, itemData.ItemId)
+	//_, err = tx.Exec("UPDATE `tb_functions` SET `number` = ?, `order` = ?, `name` = ?, `path` = ?, `parent_function_id` = ?  WHERE itemId = ? ", itemData.ItemContent, itemData.ItemTitle, itemData.ItemType, itemData.ItemId)
+
+	// 查询语句
+	var queryStm strings.Builder
+	queryStm.WriteString("UPDATE `tb_functions` SET `number` = ?, `order` = ?, `name` = ?, `path` = ?, `parent_function_id` = ?  WHERE function_id = ? ")
+
+	// 查询条件
+	var args = make([]interface{}, 0)
+
+	args = append(args, functionData.Number)
+	args = append(args, functionData.Order)
+	args = append(args, functionData.Name)
+	args = append(args, functionData.Path)
+	args = append(args, functionData.ParentFunctionId)
+	args = append(args, functionData.FunctionId)
+
+	_, err = tx.Exec(queryStm.String(), args...)
+
 	if err != nil {
 		return err
 	}

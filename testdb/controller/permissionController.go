@@ -67,6 +67,7 @@ func AddOrUpdateFunction(c *gin.Context) {
 	} else {
 		// 更新
 		// services.UpdateItemById(&funcionReq)
+
 	}
 
 	resultMsg := new(models.HttpResult)
