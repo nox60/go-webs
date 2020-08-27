@@ -27,6 +27,18 @@
         prop="path"
         label="路径">
       </el-table-column>
+
+      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+        <template slot-scope="{row,$index}">
+          <el-button  type="primary" size="mini" @click="handleUpdate(row)">
+            编辑
+          </el-button>
+          <el-button  size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">
+            删除
+          </el-button>
+        </template>
+      </el-table-column>
+
     </el-table>
 
 
@@ -273,6 +285,13 @@
           }
         }
       },
+
+      handleUpdate(row) {
+
+        console.log(row['id'])
+
+      },
+
       async confirmRole() {
 
       },
