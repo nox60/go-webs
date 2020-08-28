@@ -31,7 +31,10 @@ func AddFunction(function *models.FunctionNode) {
 }
 
 func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.FunctionNode, err error) {
-	return dao.GetFunctionById(fetchDataBody)
+	dataRes, err := dao.GetFunctionById(fetchDataBody)
+	adc := [3]int{1, 22, 2}
+	dataRes.Parents = adc
+	return dataRes, err
 }
 
 func UpdateFunctionById(function *models.FunctionNode) {

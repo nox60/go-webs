@@ -42,7 +42,7 @@ func main() {
 	api.DELETE("/deleteItem/:itemId", controller.DeleteItem)
 	api.GET("/getItem/:itemId", controller.GetItem)
 	api.GET("/getFunctions/:parentId", controller.ListFunctionsData)
-	api.GET("/getNodes/:parentId", controller.ListNodesData)
+	//api.GET("/getNodes/:parentId", controller.ListNodesData)
 	api.POST("/addOrUpdateFunction", controller.AddOrUpdateFunction)
 	api.GET("/getFunctionById/:id", controller.GetFunctionById)
 
