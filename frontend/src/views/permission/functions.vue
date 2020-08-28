@@ -243,7 +243,7 @@
 
             getFunctionById(this.functionForm.id).then(response => {
               setTimeout(() => {
-                            console.log("cuurrent parent................................")
+                            console.log('cuurrent parent................................')
                             this.preParent = response.data.parentId
                             addOrUpdateFunction(this.functionForm).then(() => {
                               this.$notify({
@@ -261,27 +261,25 @@
                               // // }
                               //
                               //
-                              // console.log('-----------------------------------11111111111111111111111111')
-                              console.log(this.$refs.treeElTable['store'])
-                              console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
+                              // // console.log('-----------------------------------11111111111111111111111111')
+                              // console.log(this.$refs.treeElTable['store'])
+                              // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
                               // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded)
                               //
-                              this.$refs.treeElTable['store'].states.treeData[1].children = []
+                              //this.$refs.treeElTable['store'].states.treeData[1].children = []
                               // this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded = false
                               //
                               // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
                               // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded)
                               console.log('-----------------------------------11111111111111111111111111')
 
-                              this.$refs['treeElTable'].doLayout()
+                              //this.$refs['treeElTable'].doLayout()
                               //
                               // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].loaded = false
                               // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].expanded = false
 
 
-
-
-                              this.initData()
+                              //  this.initData()
 
                               this.listLoading = false
                               this.dialogVisible = false
@@ -291,12 +289,16 @@
                               this.functionForm.number = ''
                               this.functionForm.order = ''
                               this.functionForm.path = ''
+
+                              // let editUrl = '/permission/functions'
+                              // this.$router.push({path:editUrl})
+
+                              this.$router.go(0)
+                              console.log('edit done...............................')
                             })
 
               }, 1000)
             })
-
-
 
           }
         })
