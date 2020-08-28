@@ -127,6 +127,7 @@
         },
         defaultExpandedNodes:[],
         defaultSelectedNode:[],
+        preParent:'',
         tableData:[],
         treeData:[],
         treeForm:'',
@@ -239,44 +240,61 @@
         this.$refs['functionForm'].validate((valid) => {
           if (valid) {
             this.listLoading = true
-            addOrUpdateFunction(this.functionForm).then(() => {
-              this.$notify({
-                title: 'Success',
-                message: '操作成功',
-                type: 'success',
-                duration: 2000
-              })
-              console.log('-----------------------------------00000000000000000000000000')
-              // console.log(this.functionForm.id)
-              // console.log(this.functionForm.parentId)
 
-              for(let value of this.$refs.treeElTable['store'].states.treeData){
-                console.log(value)
-              }
+            getFunctionById(this.functionForm.id).then(response => {
+              setTimeout(() => {
+                            console.log("cuurrent parent................................")
+                            this.preParent = response.data.parentId
+                            addOrUpdateFunction(this.functionForm).then(() => {
+                              this.$notify({
+                                title: 'Success',
+                                message: '操作成功',
+                                type: 'success',
+                                duration: 2000
+                              })
+                              console.log('-----------------------------------00000000000000000000000000')
+                              // // console.log(this.functionForm.id)
+                              // console.log(this.$refs.treeElTable['store'].states.treeData)
+                              //
+                              // // for(let value of this.$refs.treeElTable['store'].states.treeData.value){
+                              // //   console.log(value)
+                              // // }
+                              //
+                              //
+                              // console.log('-----------------------------------11111111111111111111111111')
+                              console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
+                              console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded)
+
+                              this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded = false
+                              this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded = false
+
+                              console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
+                              console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded)
+                              console.log('-----------------------------------11111111111111111111111111')
+                              //
+                              // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].loaded = false
+                              // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].expanded = false
 
 
-              console.log('-----------------------------------11111111111111111111111111')
-
-              // this.$refs.treeElTable['store'].states.treeData[this.functionForm.id].loaded = false
-              // this.$refs.treeElTable['store'].states.treeData[this.functionForm.id].expanded = false
-              //
-              this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].loaded = false
-              this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].expanded = false
 
 
+                              this.initData()
 
+                              this.listLoading = false
+                              this.dialogVisible = false
+                              this.functionForm.id = 0
+                              this.functionForm.parentId = 0
+                              this.functionForm.name = ''
+                              this.functionForm.number = ''
+                              this.functionForm.order = ''
+                              this.functionForm.path = ''
+                            })
 
-              this.initData()
-
-              this.listLoading = false
-              this.dialogVisible = false
-              this.functionForm.id = 0
-              this.functionForm.parentId = 0
-              this.functionForm.name = ''
-              this.functionForm.number = ''
-              this.functionForm.order = ''
-              this.functionForm.path = ''
+              }, 1000)
             })
+
+
+
           }
         })
       },
@@ -285,6 +303,12 @@
               this.dialogVisible = false
       },
       handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
+        console.log('-----------------------------------------------111')
+        console.log(data)
+        console.log(checked)
+        console.log(node)
+        console.log('-----------------------------------------------222')
+
         if(checked === true) {
           this.checkedId = data.id;
           this.$refs.treeForm.setCheckedKeys([data.id]);
