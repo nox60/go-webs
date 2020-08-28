@@ -45,7 +45,7 @@ func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.Fun
 
 		//查询父节点
 		tempFetchDataBody := new(models.FunctionNode)
-		tempFetchDataBody.FunctionId = dataRes.ParentFunctionId
+		tempFetchDataBody.FunctionId = tempParentId
 		tempData, _ := dao.GetFunctionById(tempFetchDataBody)
 		tempParentId = tempData.ParentFunctionId
 	}
