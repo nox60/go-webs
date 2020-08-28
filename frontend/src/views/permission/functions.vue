@@ -42,7 +42,9 @@
     </el-table>
 
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
+    <el-dialog :visible.sync="dialogVisible"
+               v-loading="listLoading"
+               :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form  ref="functionForm" :model="functionForm" :rules="rules"  label-width="120px" label-position="left">
         <el-form-item label="编号" prop="number">
           <el-input v-model.number="functionForm.number"  placeholder="编号" />
@@ -175,41 +177,20 @@
           this.functionForm.order = ''
           this.functionForm.path = ''
         } else {//编辑数据
-
           getFunctionById(this.functionForm.id).then(response => {
             setTimeout(() => {
               this.functionForm = response.data
-              this.defaultExpandedNodes = '[0,5]'
-              this.defaultSelectedNode = '[4]'
+              let defaultNode = new Array(1);
+              defaultNode[0] = response.data.id
+
+              this.defaultExpandedNodes = response.data.parents
+              this.defaultSelectedNode = defaultNode
               this.dialogVisible = true
-              // this.listLoading = false
             }, 1000)
           })
-
-
         }
 
-        // 循环请求节点的父级节点，将树渲染完成
-        let rootNode = { id: 0, level: 0 }
-       // this.getTreeNodes(rootNode)
-
-        // this.defaultExpandedNodes = '[0,5]'
-        // this.defaultSelectedNode = '[4]'
-
-        // new Promise(function(resolve, reject){
-        //   //做一些异步操作
-        //   setTimeout(function(){
-        //     console.log('处理根节点');
-        //     //this.$options.methods.getTreeNodes(rootNode, resolve)
-        //     console.log(this.treeNodes)
-        //     console.log(this.treeData)
-        //     console.log('---------------------------------------------------------')
-        //   }, 2000);
-        // });
-
-        // let node1 = { id: 2, level: 1}
-        // this.getTreeNodes( node1)
-
+        this.listLoading = false
       },
       initData(){ //初始化表内数据
         getFunctions(0).then(response => {
@@ -228,10 +209,6 @@
         })
       },
       getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
-        console.log('---------------------0000')
-        console.log(node)
-        console.log('---------------------1111')
-
         if (node.level === 0) {
           return resolve([{ id: 0, number: 0, order: 0, name: "根节点", path: "/", parentId: 0, hasChildren: true, leaf: false }]);
         } else {
@@ -296,7 +273,6 @@
         }
       },
       handleAddOrUpdate(row) {
-        console.log('--------------------------------------????')
         console.log(row['id'])
 
         if ( row['id'] === 0 ){ //新增
@@ -306,7 +282,6 @@
             this.$refs.tree.setCheckedNodes([])
           }
           this.dialogType = 'new'
-          this.dialogVisible = true
           this.forEdit = 0
           this.initFormData()
         } else { //修改
@@ -315,6 +290,8 @@
           this.functionForm.id = row['id']
           this.initFormData()
         }
+        this.listLoading = true
+        this.dialogVisible = false
 
       },
 
