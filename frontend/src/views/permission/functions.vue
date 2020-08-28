@@ -266,7 +266,7 @@
                               console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
                               // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded)
                               //
-                              // this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded = false
+                              this.$refs.treeElTable['store'].states.treeData[this.preParent].children = []
                               // this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded = false
                               //
                               // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
