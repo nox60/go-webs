@@ -192,10 +192,12 @@
           })
         }
         console.log("999999999999999999999999999")
-
         this.listLoading = false
       },
       initData(){ //初始化表内数据
+        this.tableData = []
+        this.defaultExpandedNodes = []
+        this.defaultSelectedNode = []
         getFunctions(0).then(response => {
           this.tableData = response.data
         })
@@ -237,7 +239,10 @@
                 duration: 2000
               })
 
+
+
               this.initData()
+
               this.listLoading = false
               this.dialogVisible = false
               this.functionForm.id = 0
