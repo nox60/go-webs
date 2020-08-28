@@ -196,6 +196,7 @@
       },
       initData(){ //初始化表内数据
         this.tableData = []
+        this.treeData = []
         this.defaultExpandedNodes = []
         this.defaultSelectedNode = []
         getFunctions(0).then(response => {
