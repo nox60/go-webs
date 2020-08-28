@@ -9,6 +9,7 @@
       border
       v-loading="listLoading"
       lazy
+      ref="treeElTable"
       :load="getFunctions"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column
@@ -202,6 +203,14 @@
         })
       },
       getFunctions(tree, treeNode, resolve) { //用于懒加载表内数据
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>1111")
+        console.log('-----------------------------------00000000000000000000000000')
+        console.log(this.$refs.treeElTable['store'].states.treeData)
+        console.log(this.functionForm.id)
+        console.log(this.functionForm.parentId)
+        console.log('-----------------------------------11111111111111111111111111')
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>2222")
+
         this.listLoading = true
         getFunctions(tree.id).then(response => {
           setTimeout(() => {
@@ -237,15 +246,25 @@
                 type: 'success',
                 duration: 2000
               })
-
-              // this.$refs.table['store'].states.treeData[this.functionForm.id].loaded = false
-              // this.$refs.table['store'].states.treeData[this.functionForm.id].expanded = false
-              //
-              // this.$refs.table['store'].states.treeData[this.functionForm.parentId].loaded = false
-              // this.$refs.table['store'].states.treeData[this.functionForm.parentId].expanded = false
               console.log('-----------------------------------00000000000000000000000000')
-              console.log(this.$refs.table['store'])
+              // console.log(this.functionForm.id)
+              // console.log(this.functionForm.parentId)
+
+              for(let value of this.$refs.treeElTable['store'].states.treeData){
+                console.log(value)
+              }
+
+
               console.log('-----------------------------------11111111111111111111111111')
+
+              // this.$refs.treeElTable['store'].states.treeData[this.functionForm.id].loaded = false
+              // this.$refs.treeElTable['store'].states.treeData[this.functionForm.id].expanded = false
+              //
+              this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].loaded = false
+              this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].expanded = false
+
+
+
 
               this.initData()
 
