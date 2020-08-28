@@ -254,16 +254,6 @@
               this.listLoading = false
               this.dialogVisible = false
       },
-      handleAddRole() {
-        this.role = Object.assign({}, defaultRole)
-        if (this.$refs.tree) {
-          this.$refs.tree.setCheckedNodes([])
-        }
-        this.dialogType = 'new'
-        this.dialogVisible = true
-        this.forEdit = 0
-        this.initFormData()
-      },
       handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
         if(checked === true) {
           this.checkedId = data.id;
