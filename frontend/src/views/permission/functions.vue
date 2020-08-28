@@ -271,6 +271,8 @@
                               console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
                               console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded)
                               console.log('-----------------------------------11111111111111111111111111')
+
+                              this.$refs['treeElTable'].doLayout()
                               //
                               // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].loaded = false
                               // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].expanded = false
