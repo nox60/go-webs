@@ -131,9 +131,6 @@
         treeForm:'',
         forEdit:0,
         listLoading: false,
-        // role: Object.assign({}, defaultRole),
-        // routes: [],
-        // rolesList: [],
         dialogVisible: false,
         dialogType: 'new',
         checkStrictly: false,
@@ -199,6 +196,7 @@
         this.treeData = []
         this.defaultExpandedNodes = []
         this.defaultSelectedNode = []
+        this.treeForm = ''
         getFunctions(0).then(response => {
           this.tableData = response.data
         })
@@ -239,8 +237,6 @@
                 type: 'success',
                 duration: 2000
               })
-
-
 
               this.initData()
 
