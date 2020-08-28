@@ -76,7 +76,7 @@
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
+        <el-button type="danger" @click="cancelAddOrEdit">Cancel</el-button>
         <el-button type="primary" @click="addOrUpdateData">Confirm</el-button>
       </div>
     </el-dialog>
@@ -170,12 +170,14 @@
       initFormData(){
 
         if(this.forEdit == 0){//新增数据
+          console.log("88888888888888888888888888888888888888888888")
           this.functionForm.id = 0
           this.functionForm.parentId = 0
           this.functionForm.name = ''
           this.functionForm.number = ''
           this.functionForm.order = ''
           this.functionForm.path = ''
+          this.dialogVisible = true
         } else {//编辑数据
           getFunctionById(this.functionForm.id).then(response => {
             setTimeout(() => {
@@ -189,6 +191,7 @@
             }, 1000)
           })
         }
+        console.log("999999999999999999999999999")
 
         this.listLoading = false
       },
@@ -237,6 +240,12 @@
               this.initData()
               this.listLoading = false
               this.dialogVisible = false
+              this.functionForm.id = 0
+              this.functionForm.parentId = 0
+              this.functionForm.name = ''
+              this.functionForm.number = ''
+              this.functionForm.order = ''
+              this.functionForm.path = ''
 
               // 调用全局挂载的方法,关闭当前标签页
               //this.$store.dispatch("tagsView/delView", 'mydata-createOrEdit');
@@ -250,7 +259,10 @@
           }
         })
       },
-
+      cancelAddOrEdit() {
+              this.listLoading = false
+              this.dialogVisible = false
+      },
       handleAddRole() {
         this.role = Object.assign({}, defaultRole)
         if (this.$refs.tree) {
@@ -274,7 +286,8 @@
       },
       handleAddOrUpdate(row) {
         console.log(row['id'])
-
+        this.listLoading = true
+        this.dialogVisible = false
         if ( row['id'] === 0 ){ //新增
           console.log('新增数据')
           //this.role = Object.assign({}, defaultRole)
@@ -290,9 +303,6 @@
           this.functionForm.id = row['id']
           this.initFormData()
         }
-        this.listLoading = true
-        this.dialogVisible = false
-
       },
 
       async confirmRole() {
