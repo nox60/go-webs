@@ -238,6 +238,15 @@
                 duration: 2000
               })
 
+              // this.$refs.table['store'].states.treeData[this.functionForm.id].loaded = false
+              // this.$refs.table['store'].states.treeData[this.functionForm.id].expanded = false
+              //
+              // this.$refs.table['store'].states.treeData[this.functionForm.parentId].loaded = false
+              // this.$refs.table['store'].states.treeData[this.functionForm.parentId].expanded = false
+              console.log('-----------------------------------00000000000000000000000000')
+              console.log(this.$refs.table['store'])
+              console.log('-----------------------------------11111111111111111111111111')
+
               this.initData()
 
               this.listLoading = false
