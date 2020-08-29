@@ -169,7 +169,6 @@
       initFormData(){
 
         if(this.forEdit == 0){//新增数据
-          console.log("88888888888888888888888888888888888888888888")
           this.functionForm.id = 0
           this.functionForm.parentId = 0
           this.functionForm.name = ''
@@ -190,7 +189,6 @@
             }, 1000)
           })
         }
-        console.log("999999999999999999999999999")
         this.listLoading = false
       },
       initData(){ //初始化表内数据
@@ -204,13 +202,9 @@
         })
       },
       getFunctions(tree, treeNode, resolve) { //用于懒加载表内数据
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>1111")
-        console.log('-----------------------------------00000000000000000000000000')
         console.log(this.$refs.treeElTable['store'].states.treeData)
         console.log(this.functionForm.id)
         console.log(this.functionForm.parentId)
-        console.log('-----------------------------------11111111111111111111111111')
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>2222")
 
         this.listLoading = true
         getFunctions(tree.id).then(response => {
