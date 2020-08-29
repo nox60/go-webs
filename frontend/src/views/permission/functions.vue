@@ -252,9 +252,6 @@
                               // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].loaded = false
                               // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].expanded = false
 
-
-                              //  this.initData()
-
                               this.listLoading = false
                               this.dialogVisible = false
                               this.functionForm.id = 0
