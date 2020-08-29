@@ -253,24 +253,7 @@
                                 duration: 2000
                               })
                               console.log('-----------------------------------00000000000000000000000000')
-                              // // console.log(this.functionForm.id)
-                              // console.log(this.$refs.treeElTable['store'].states.treeData)
-                              //
-                              // // for(let value of this.$refs.treeElTable['store'].states.treeData.value){
-                              // //   console.log(value)
-                              // // }
-                              //
-                              //
-                              // // console.log('-----------------------------------11111111111111111111111111')
-                              // console.log(this.$refs.treeElTable['store'])
-                              // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
-                              // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded)
-                              //
-                              //this.$refs.treeElTable['store'].states.treeData[1].children = []
-                              // this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded = false
-                              //
-                              // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].loaded)
-                              // console.log(this.$refs.treeElTable['store'].states.treeData[this.preParent].expanded)
+
                               console.log('-----------------------------------11111111111111111111111111')
 
                               //this.$refs['treeElTable'].doLayout()
