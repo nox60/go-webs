@@ -282,11 +282,6 @@
               this.dialogVisible = false
       },
       handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
-        console.log('-----------------------------------------------111')
-        console.log(data)
-        console.log(checked)
-        console.log(node)
-        console.log('-----------------------------------------------222')
 
         if(checked === true) {
           this.checkedId = data.id;
