@@ -96,3 +96,14 @@ func GetFunctionById(c *gin.Context) {
 
 	c.JSON(200, resultMsg)
 }
+
+func DeleteFunction(c *gin.Context) {
+	idStr := c.Param("id")
+	id, _ := strconv.Atoi(idStr)
+	services.DeleteFunction(id)
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "删除数据成功"
+	c.JSON(200, resultMsg)
+}
