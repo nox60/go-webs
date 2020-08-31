@@ -34,7 +34,11 @@
           <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
             编辑
           </el-button>
-          <el-button  size="mini" type="danger" @click="handleDeleteConfirm(row,$index)">
+          <el-button
+            v-if="row.leaf === 'true'"
+            size="mini"
+            type="danger"
+            @click="handleDeleteConfirm(row,$index)">
             删除
           </el-button>
         </template>
@@ -97,9 +101,10 @@
   }
 
   export default {
+    inject:['reload'],
     data() {
       let checkNumber = (rule, value, callback) => {
-        console.log(value)
+        //console.log(value)
         if(!value) {
           return new Error('必填信息')
         }else {
@@ -210,9 +215,6 @@
         })
       },
       getFunctions(tree, treeNode, resolve) { //用于懒加载表内数据
-        console.log(this.$refs.treeElTable['store'].states.treeData)
-        console.log(this.functionForm.id)
-        console.log(this.functionForm.parentId)
 
         this.listLoading = true
         getFunctions(tree.id).then(response => {
@@ -245,7 +247,7 @@
 
             getFunctionById(this.functionForm.id).then(response => {
               setTimeout(() => {
-                            console.log('cuurrent parent................................')
+                            //console.log('cuurrent parent................................')
                             this.preParent = response.data.parentId
                             addOrUpdateFunction(this.functionForm).then(() => {
                               this.$notify({
@@ -254,11 +256,6 @@
                                 type: 'success',
                                 duration: 2000
                               })
-
-                              //this.$refs['treeElTable'].doLayout()
-                              //
-                              // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].loaded = false
-                              // this.$refs.treeElTable['store'].states.treeData[this.functionForm.parentId].expanded = false
 
                               this.listLoading = false
                               this.dialogVisible = false
@@ -269,12 +266,7 @@
                               this.functionForm.order = ''
                               this.functionForm.path = ''
 
-                              // let editUrl = '/permission/functions'
-                              // this.$router.push({path:editUrl})
-
-                              //this.$router.go(0)
-                              window.reload()
-                              console.log('edit done...............................')
+                              this.reload()
                             })
 
               }, 1000)
@@ -318,6 +310,26 @@
           this.functionForm.id = row['id']
           this.initFormData()
         }
+      },
+      handleDeleteConfirm(row) {
+        console.log(row)
+        // this.$confirm('确认删除？')
+        //   .then(_ => {
+        //     console.log('点击了确认')
+        //     console.log(row['itemId'])
+        //     deleteItem(row['itemId']).then(() => {
+        //       this.dialogFormVisible = false
+        //       this.$notify({
+        //         title: 'Success',
+        //         message: '删除数据成功！',
+        //         type: 'success',
+        //         duration: 2000
+        //       })
+        //       this.getList()
+        //     })
+        //     done();
+        //   })
+        //   .catch(_ => {});
       },
 
       async confirmRole() {
