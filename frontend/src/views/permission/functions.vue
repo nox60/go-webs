@@ -211,12 +211,14 @@
 
               this.defaultExpandedNodes = response.data.parents
               this.defaultSelectedNode = defaultNode
-
+              this.listLoading = false
             }, 1000)
           })
+        }else {
+          //this.dialogVisible = true
+          this.listLoading = false
         }
-        //this.dialogVisible = true
-        this.listLoading = false
+
       },
       initData(){ //初始化表内数据
         this.tableData = []
