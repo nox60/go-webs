@@ -215,7 +215,7 @@
             }, 1000)
           })
         }
-        this.dialogVisible = true
+        //this.dialogVisible = true
         this.listLoading = false
       },
       initData(){ //初始化表内数据
@@ -307,7 +307,7 @@
       },
       handleAddOrUpdate(row) {
         this.listLoading = true
-        this.dialogVisible = false
+        this.dialogVisible = true
         if ( row['id'] === 0 ){ //新增
           console.log('新增数据')
           //this.role = Object.assign({}, defaultRole)
@@ -317,20 +317,23 @@
           this.dialogType = 'new'
           this.forEdit = 0
           // this.initFormData()
-          this.dialogVisible = true
-          this.listLoading = false
+          //this.dialogVisible = true
 
-          this.$nextTick(()=>{
-            console.log(this.$refs)
-            //this.$refs.functionForm.resetFields();
-          })
+
 
         } else { //修改
           console.log('修改数据')
           this.forEdit = 1
           this.functionForm.id = row['id']
-          this.initFormData()
+
         }
+
+        this.$nextTick(()=>{
+          console.log(this.$refs)
+          //this.$refs.functionForm.resetFields();
+          this.initFormData()
+        })
+
       },
       handleDeleteConfirm(row) {
         console.log(row)
