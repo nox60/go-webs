@@ -192,9 +192,9 @@ func AddFunction(function *models.FunctionNode, tx *sql.Tx) (err error) {
 	return
 }
 
-func DeleteFunction(itemId int, tx *sql.Tx) (err error) {
-	_, err = tx.Exec("DELETE FROM `tb_items` WHERE itemId = ? ",
-		itemId)
+func DeleteFunction(functionId int, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("DELETE FROM `tb_functions` WHERE function_id = ? ",
+		functionId)
 	if err != nil {
 		return err
 	}
