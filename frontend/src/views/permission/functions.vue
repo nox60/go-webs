@@ -317,7 +317,16 @@
           }
           this.dialogType = 'new'
           this.forEdit = 0
-          this.initFormData()
+          // this.initFormData()
+          this.dialogVisible = true
+          this.listLoading = false
+
+
+
+          this.$nextTick(()=>{
+            console.log(this.$refs)
+          })
+
         } else { //修改
           console.log('修改数据')
           this.forEdit = 1
