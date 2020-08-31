@@ -173,6 +173,12 @@
       getFunctions(0).then(response => { //表内数据
         this.tableData = response.data
       })
+
+
+      // this.$nextTick(()=>{
+      //   console.log(this.$refs)
+      // })
+
     },
     activated() {
 
@@ -192,10 +198,10 @@
         // this.functionForm.order = ''
         // this.functionForm.path = ''
         // this.dialogVisible = true
-
+        console.log('--------------------------------------')
         console.log(this.$refs)
 
-        this.$refs['functionForm'].resetFields();
+        // this.$refs['functionForm'].resetFields();
 
         if(this.forEdit == 1) {//编辑数据
           getFunctionById(this.functionForm.id).then(response => {
@@ -206,10 +212,11 @@
 
               this.defaultExpandedNodes = response.data.parents
               this.defaultSelectedNode = defaultNode
-              this.dialogVisible = true
+
             }, 1000)
           })
         }
+        this.dialogVisible = true
         this.listLoading = false
       },
       initData(){ //初始化表内数据
@@ -249,6 +256,7 @@
         }
       },
       addOrUpdateData() {
+        console.log(this.$refs)
         this.$refs['functionForm'].validate((valid) => {
           if (valid) {
             this.listLoading = true
