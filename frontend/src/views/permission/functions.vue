@@ -50,20 +50,24 @@
     <el-dialog :visible.sync="dialogVisible"
                v-loading="listLoading"
                :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form  ref="functionForm" :model="functionForm" :rules="rules"  label-width="120px" label-position="left">
+      <el-form  ref="functionForm"
+                :model="functionForm"
+                :rules="rules"
+                label-width="120px"
+                label-position="left">
         <el-form-item label="编号" prop="number">
           <el-input v-model.number="functionForm.number"  placeholder="编号" />
         </el-form-item>
-        <el-form-item label="菜单内次序">
+        <el-form-item label="菜单内次序" prop="order">
           <el-input v-model.number="functionForm.order" placeholder="菜单内次序，值越大越靠前" />
         </el-form-item>
-        <el-form-item label="菜单名称">
+        <el-form-item label="菜单名称" prop="name">
           <el-input v-model="functionForm.name" placeholder="Role Name" />
         </el-form-item>
-        <el-form-item label="请求路径">
+        <el-form-item label="请求路径" prop="path">
           <el-input v-model="functionForm.path" placeholder="/path/1" />
         </el-form-item>
-        <el-form-item label="父级菜单">
+        <el-form-item label="父级菜单" prop="parentId">
           <el-tree
             :data="treeData"
             :props="treeNodes"
@@ -181,20 +185,24 @@
       },
       initFormData(){
 
-        if(this.forEdit == 0){//新增数据
-          this.functionForm.id = 0
-          this.functionForm.parentId = 0
-          this.functionForm.name = ''
-          this.functionForm.number = ''
-          this.functionForm.order = ''
-          this.functionForm.path = ''
-          this.dialogVisible = true
-        } else {//编辑数据
+        // this.functionForm.id = 0
+        // this.functionForm.parentId = 0
+        // this.functionForm.name = ''
+        // this.functionForm.number = ''
+        // this.functionForm.order = ''
+        // this.functionForm.path = ''
+        // this.dialogVisible = true
+
+        console.log(this.$refs)
+
+        this.$refs['functionForm'].resetFields();
+
+        if(this.forEdit == 1) {//编辑数据
           getFunctionById(this.functionForm.id).then(response => {
             setTimeout(() => {
               this.functionForm = response.data
               let defaultNode = new Array(1);
-              defaultNode[0] = response.data.id
+              defaultNode[0] = response.data.parentId
 
               this.defaultExpandedNodes = response.data.parents
               this.defaultSelectedNode = defaultNode
@@ -280,7 +288,6 @@
               this.dialogVisible = false
       },
       handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
-
         if(checked === true) {
           this.checkedId = data.id;
           this.$refs.treeForm.setCheckedKeys([data.id]);
@@ -292,7 +299,6 @@
         }
       },
       handleAddOrUpdate(row) {
-        console.log(row['id'])
         this.listLoading = true
         this.dialogVisible = false
         if ( row['id'] === 0 ){ //新增
