@@ -165,7 +165,15 @@
         this.tableData = response.data
       })
     },
+    activated() {
+
+    },
     methods: {
+      loadPage(){
+        getFunctions(0).then(response => { //表内数据
+          this.tableData = response.data
+        })
+      },
       initFormData(){
 
         if(this.forEdit == 0){//新增数据
@@ -264,7 +272,8 @@
                               // let editUrl = '/permission/functions'
                               // this.$router.push({path:editUrl})
 
-                              this.$router.go(0)
+                              //this.$router.go(0)
+                              window.reload()
                               console.log('edit done...............................')
                             })
 
