@@ -190,7 +190,6 @@
         })
       },
       initFormData(){
-
         // this.functionForm.id = 0
         // this.functionForm.parentId = 0
         // this.functionForm.name = ''
@@ -201,7 +200,7 @@
         console.log('--------------------------------------')
         console.log(this.$refs)
 
-        // this.$refs['functionForm'].resetFields();
+        this.$refs['functionForm'].resetFields();
 
         if(this.forEdit == 1) {//编辑数据
           getFunctionById(this.functionForm.id).then(response => {
@@ -321,10 +320,9 @@
           this.dialogVisible = true
           this.listLoading = false
 
-
-
           this.$nextTick(()=>{
             console.log(this.$refs)
+            //this.$refs.functionForm.resetFields();
           })
 
         } else { //修改
