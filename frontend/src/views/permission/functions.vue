@@ -49,7 +49,6 @@
 
     </el-table>
 
-
     <el-dialog :visible.sync="dialogVisible"
                v-loading="listLoading"
                :title="dialogType==='edit'?'Edit Role':'New Role'">
@@ -219,6 +218,9 @@
           })
         }else {
           //this.dialogVisible = true
+          let defaultNode = new Array(1);
+          defaultNode[0] = 0
+          this.defaultSelectedNode = defaultNode
           this.listLoading = false
         }
 
