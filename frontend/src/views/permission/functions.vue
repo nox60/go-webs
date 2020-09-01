@@ -15,13 +15,16 @@
       <el-table-column
         prop="number"
         label="编号"
-        sortable
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="order"
+        label="序号（同级菜单内）"
         width="180">
       </el-table-column>
       <el-table-column
         prop="name"
         label="功能点"
-        sortable
         width="180">
       </el-table-column>
       <el-table-column
