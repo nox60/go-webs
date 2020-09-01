@@ -33,7 +33,6 @@ func RetrievePermissionData(fetchDataBody *models.FetchDataRequestBody) (dataRes
 		countQueryStm.WriteString(" AND itemId = ? ")
 		fetchArgs = append(fetchArgs, fetchDataBody.ItemId)
 	}
-
 	queryStm.WriteString("LIMIT ?,? ")
 
 	// 分页查询记录
@@ -104,7 +103,8 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	queryStm.WriteString(" AND a.parent_function_id = ? ")
 	fetchArgs = append(fetchArgs, fetchDataBody.ParentFunctionId)
 
-	queryStm.WriteString(" GROUP BY a.`function_id`")
+	queryStm.WriteString(" GROUP BY a.`function_id` ")
+	queryStm.WriteString(" ORDER BY a.`order` DESC ")
 
 	// 查询记录
 	stmt, _ := MysqlDb.Prepare(queryStm.String())
