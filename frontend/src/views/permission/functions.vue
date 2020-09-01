@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddOrUpdate({ id: 0})">New Role</el-button>
+    <el-button type="primary" @click="handleAddOrUpdate({ id: 0})">新建功能点</el-button>
 
     <el-table
       :data="tableData"
-      style="width: 100%;margin-bottom: 20px;"
+      style="width: 100%;margin-bottom: 20px;margin-top:10px;"
       row-key="id"
       border
       v-loading="listLoading"
