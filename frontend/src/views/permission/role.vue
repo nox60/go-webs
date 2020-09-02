@@ -2,7 +2,9 @@
   <div class="app-container">
     <el-button type="primary" @click="handleAddRole">新建角色</el-button>
 
-    <el-table :data="rolesList" style="width: 100%;margin-top:10px;" border>
+    <el-table
+      :data="rolesList"
+      style="width: 100%;margin-top:10px;" border>
       <el-table-column align="center" label="角色代码" width="220">
         <template slot-scope="scope">
           {{ scope.row.key }}
