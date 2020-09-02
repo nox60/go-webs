@@ -363,9 +363,6 @@
           .catch(_ => {});
       },
 
-      async confirmRole() {
-
-      },
     }
   }
 </script>

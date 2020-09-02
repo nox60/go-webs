@@ -31,6 +31,7 @@
       </el-table-column>
     </el-table>
 
+
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="role" label-width="80px" label-position="left">
         <el-form-item label="Name">
@@ -44,16 +45,21 @@
             placeholder="Role Description"
           />
         </el-form-item>
-        <el-form-item label="Menus">
+        <el-form-item label="权限点" prop="">
           <el-tree
-            ref="tree"
-            :check-strictly="checkStrictly"
-            :data="routesData"
-            :props="defaultProps"
+            :data="treeData"
+            :props="treeNodes"
+            :load="getTreeNodes"
+            lazy
             show-checkbox
-            node-key="path"
-            class="permission-tree"
-          />
+            node-key="id"
+            check-strictly
+            ref="treeForm"
+            :default-expanded-keys="defaultExpandedNodes"
+            :default-checked-keys="defaultSelectedNode"
+            @check-change="handleNodeClick">
+          </el-tree>
+
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -77,6 +83,15 @@ const defaultRole = {
 export default {
   data() {
     return {
+      defaultExpandedNodes:[],
+      defaultSelectedNode:[],
+      treeData:[],
+      treeForm:'',
+      treeNodes: {
+        label: 'name',
+        children: 'zones',
+        isLeaf: 'leaf'
+      },
       role: Object.assign({}, defaultRole),
       routes: [],
       rolesList: [],
@@ -100,9 +115,9 @@ export default {
   methods: {
 
     getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
-      if (node.level === 0) {
-        return resolve([{ id: 0, number: 0, order: 0, name: "根节点", path: "/", parentId: 0, hasChildren: true, leaf: false }]);
-      } else {
+      // if (node.level === 0) {
+      //   return resolve([{ id: 0, number: 0, order: 0, name: "根节点", path: "/", parentId: 0, hasChildren: true, leaf: false }]);
+      // } else {
         getFunctions(node.data.id).then(response => {
           setTimeout(() => {
             // console.log(response.data)
@@ -111,9 +126,49 @@ export default {
             )
           }, 1000)
         })
+      //}
+    },
+    handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
+      if(checked === true) {
+        this.checkedId = data.id;
+        this.$refs.treeForm.setCheckedKeys([data.id]);
+        this.functionForm.parentId = data.id
+      } else {
+        if (this.checkedId == data.id) {
+          this.$refs.treeForm.setCheckedKeys([data.id]);
+        }
       }
     },
+    confirmRole(){
+      console.log('confirm')
+    },
+    handleAddRole(){
+      this.listLoading = true
+      this.dialogVisible = true
+      if ( row['id'] === 0 ){ //新增
+        console.log('新增数据')
+        //this.role = Object.assign({}, defaultRole)
+        if (this.$refs.tree) {
+          this.$refs.tree.setCheckedNodes([])
+        }
+        this.dialogType = 'new'
+        this.forEdit = 0
+        // this.initFormData()
+        //this.dialogVisible = true
 
+      } else { //修改
+        console.log('修改数据')
+        this.forEdit = 1
+        this.functionForm.id = row['id']
+
+      }
+
+      this.$nextTick(()=>{
+        console.log(this.$refs)
+        //this.$refs.functionForm.resetFields();
+        this.initFormData()
+      })
+    }
   }
 }
 </script>
