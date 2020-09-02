@@ -1,29 +1,20 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddRole">新建角色</el-button>
-
+    <el-button type="primary" @click="handleAddRole({ id: 0})">新建角色</el-button>
     <el-table
       :data="rolesList"
       style="width: 100%;margin-top:10px;" border>
-      <el-table-column align="center" label="角色代码" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.key }}
-        </template>
+      <el-table-column align="center" label="角色代码" width="220" prop="">
+
       </el-table-column>
       <el-table-column align="center" label="角色名称" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
+
       </el-table-column>
       <el-table-column align="header-center" label="角色说明">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
-        </template>
+
       </el-table-column>
       <el-table-column align="header-center" label="角色状态">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
-        </template>
+
       </el-table-column>
       <el-table-column align="center" label="Operations">
         <template slot-scope="scope">
@@ -144,7 +135,7 @@ export default {
     confirmRole(){
       console.log('confirm')
     },
-    handleAddRole(){
+    handleAddRole(row){
       this.listLoading = true
       this.dialogVisible = true
       if ( row['id'] === 0 ){ //新增
