@@ -107,9 +107,6 @@ export default {
   methods: {
 
     getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
-      // if (node.level === 0) {
-      //   return resolve([{ id: 0, number: 0, order: 0, name: "根节点", path: "/", parentId: 0, hasChildren: true, leaf: false }]);
-      // } else {
         getFunctions(node.data.id).then(response => {
           setTimeout(() => {
             // console.log(response.data)

@@ -192,16 +192,6 @@
         })
       },
       initFormData(){
-        // this.functionForm.id = 0
-        // this.functionForm.parentId = 0
-        // this.functionForm.name = ''
-        // this.functionForm.number = ''
-        // this.functionForm.order = ''
-        // this.functionForm.path = ''
-        // this.dialogVisible = true
-        console.log('--------------------------------------')
-        console.log(this.$refs)
-
         this.$refs['functionForm'].resetFields();
 
         if(this.forEdit == 1) {//编辑数据
@@ -269,7 +259,6 @@
 
             getFunctionById(this.functionForm.id).then(response => {
               setTimeout(() => {
-                            //console.log('cuurrent parent................................')
                             this.preParent = response.data.parentId
                             addOrUpdateFunction(this.functionForm).then(() => {
                               this.$notify({
