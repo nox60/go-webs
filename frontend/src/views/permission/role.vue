@@ -24,7 +24,6 @@
       </el-table-column>
     </el-table>
 
-
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="role" label-width="80px" label-position="left">
         <el-form-item label="Name">
@@ -153,7 +152,6 @@ export default {
         console.log('修改数据')
         this.forEdit = 1
         this.functionForm.id = row['id']
-
       }
 
       this.$nextTick(()=>{
