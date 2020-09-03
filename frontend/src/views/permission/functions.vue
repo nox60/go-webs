@@ -312,10 +312,6 @@
           }
           this.dialogType = 'new'
           this.forEdit = 0
-          // this.initFormData()
-          //this.dialogVisible = true
-
-
 
         } else { //修改
           console.log('修改数据')
