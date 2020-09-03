@@ -243,7 +243,6 @@
         } else {
           getFunctions(node.data.id).then(response => {
             setTimeout(() => {
-              // console.log(response.data)
               resolve(
                 response.data
               )
