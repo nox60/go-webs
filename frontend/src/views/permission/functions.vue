@@ -306,7 +306,6 @@
         this.dialogVisible = true
         if ( row['id'] === 0 ){ //新增
           console.log('新增数据')
-          //this.role = Object.assign({}, defaultRole)
           if (this.$refs.tree) {
             this.$refs.tree.setCheckedNodes([])
           }
@@ -317,12 +316,9 @@
           console.log('修改数据')
           this.forEdit = 1
           this.functionForm.id = row['id']
-
         }
 
         this.$nextTick(()=>{
-          console.log(this.$refs)
-          //this.$refs.functionForm.resetFields();
           this.initFormData()
         })
 
