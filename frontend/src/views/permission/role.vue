@@ -137,29 +137,13 @@ export default {
     //   }
     // },
     confirmRole(){
-      console.log('confirm')
-      // console.log(this.$refs.roleForm.name)
-      // console.log(this.$refs.roleForm.code)
-
-    //:data="treeData"
-    //:props="treeNodes"
-
-      // this.roleForm.functions =
-
-      var functions = new Array()
-
-      console.log(this.$refs.treeForm.getCheckedNodes())
-      // this.$refs.treeForm.getCheckedNodes().forEach((data) => {
-      //   console.log(data.id);
-      //   functions[]
-      // });
-
+      let functions = new Array()
 
       this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
-        // console.log(data, index, array);
-        console.log(data.id, index)
+        functions[index] = data.id
       });
 
+      this.roleForm.functions = functions
 
     },
     handleAddRole(row){
