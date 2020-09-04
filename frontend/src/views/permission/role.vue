@@ -145,9 +145,20 @@ export default {
     //:props="treeNodes"
 
       // this.roleForm.functions =
+
+      var functions = new Array()
+
       console.log(this.$refs.treeForm.getCheckedNodes())
+      // this.$refs.treeForm.getCheckedNodes().forEach((data) => {
+      //   console.log(data.id);
+      //   functions[]
+      // });
 
 
+      this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
+        // console.log(data, index, array);
+        console.log(data, index)
+      });
 
 
     },
