@@ -157,7 +157,7 @@ export default {
 
       this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
         // console.log(data, index, array);
-        console.log(data, index)
+        console.log(data.id, index)
       });
 
 
