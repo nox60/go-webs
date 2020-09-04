@@ -138,7 +138,14 @@ export default {
     // },
     confirmRole(){
       console.log('confirm')
-      console.log(this.$refs.roleForm)
+      // console.log(this.$refs.roleForm.name)
+      // console.log(this.$refs.roleForm.code)
+
+    //:data="treeData"
+    //:props="treeNodes"
+
+      // this.roleForm.functions =
+      console.log(this.$refs.)
 
 
     },
