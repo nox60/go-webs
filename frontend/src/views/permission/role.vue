@@ -145,7 +145,9 @@ export default {
     //:props="treeNodes"
 
       // this.roleForm.functions =
-      console.log(this.$refs.)
+      console.log(this.$refs.treeForm.getCheckedNodes())
+
+
 
 
     },
