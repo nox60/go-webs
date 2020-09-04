@@ -144,6 +144,8 @@ export default {
       });
 
       this.roleForm.functions = functions
+      //新增
+      //更新
 
     },
     handleAddRole(row){
