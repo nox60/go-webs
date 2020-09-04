@@ -192,19 +192,21 @@ func AddFunction(function *models.FunctionNode, tx *sql.Tx) (err error) {
 	return
 }
 
-func AddRole(function *models.FunctionNode, tx *sql.Tx) (err error) {
-
-	_, err = tx.Exec("INSERT INTO `tb_functions` (`number`,`order`,`name`,`path`,`parent_function_id`) "+
-		"values (?,?,?,?,?) ",
-		function.Number,
-		function.Order,
-		function.Name,
-		function.Path,
-		function.ParentFunctionId)
+func AddRole(role *models.Role, tx *sql.Tx) (roleId int64, err error) {
+	ret, err := tx.Exec("INSERT INTO `tb_roles` (`code`,`name`,`status`) "+
+		"values (?,?,?) ",
+		role.Code,
+		role.Name,
+		role.Status)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return
+
+	if roleId, err = ret.LastInsertId(); nil == err {
+		fmt.Println("LastInsertId:", roleId)
+	}
+
+	return roleId, err
 }
 
 func DeleteFunction(functionId int, tx *sql.Tx) (err error) {

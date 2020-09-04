@@ -13,8 +13,9 @@ type FunctionNode struct {
 }
 
 type Role struct {
-	RoleId int    `json:"roleId"`
-	Code   string `json:"code"`
-	Name   string `json:"name"`
-	Status int    `json:"status"`
+	RoleId    int         `json:"roleId"`
+	Code      string      `json:"code"`
+	Name      string      `json:"name"`
+	Status    int         `json:"status"`
+	Functions interface{} `json:"functionIds"`
 }
