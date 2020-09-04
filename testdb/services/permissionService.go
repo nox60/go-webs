@@ -94,7 +94,7 @@ func DeleteFunction(functionId int) {
 	err = dao.DeleteFunction(functionId, tx)
 }
 
-func AddRole(function *models.Role) {
+func AddRole(role *models.Role) {
 	tx, err := dao.MysqlDb.Begin()
 
 	if err != nil {
@@ -111,5 +111,5 @@ func AddRole(function *models.Role) {
 		}
 	}()
 
-	err = dao.AddFunction(function, tx)
+	_, err = dao.AddRole(role, tx)
 }

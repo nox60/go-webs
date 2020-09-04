@@ -25,13 +25,13 @@
     </el-table>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form :model="role" label-width="80px" label-position="left">
-        <el-form-item label="Name">
-          <el-input v-model="role.name" placeholder="Role Name" />
+      <el-form :model="roleForm" label-width="80px" label-position="left">
+        <el-form-item label="权限点名称">
+          <el-input v-model="roleForm.name" placeholder="Role Name" />
         </el-form-item>
-        <el-form-item label="Desc">
+        <el-form-item label="权限点编码">
           <el-input
-            v-model="role.description"
+            v-model="roleForm.code"
             :autosize="{ minRows: 2, maxRows: 4}"
             type="textarea"
             placeholder="Role Description"
@@ -42,6 +42,7 @@
             :data="treeData"
             :props="treeNodes"
             :load="getTreeNodes"
+            v-model="roleForm.functions"
             lazy
             show-checkbox
             node-key="id"
@@ -49,7 +50,7 @@
             ref="treeForm"
             :default-expanded-keys="defaultExpandedNodes"
             :default-checked-keys="defaultSelectedNode"
-            @check-change="handleNodeClick">
+            >
           </el-tree>
 
         </el-form-item>
@@ -84,6 +85,11 @@ export default {
         children: 'zones',
         isLeaf: 'leaf'
       },
+      roleForm: {
+        name: '',
+        code: '',
+        functions: [],
+      },
       role: Object.assign({}, defaultRole),
       routes: [],
       rolesList: [],
@@ -117,19 +123,22 @@ export default {
         })
       //}
     },
-    handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
-      if(checked === true) {
-        this.checkedId = data.id;
-        this.$refs.treeForm.setCheckedKeys([data.id]);
-        this.functionForm.parentId = data.id
-      } else {
-        if (this.checkedId == data.id) {
-          this.$refs.treeForm.setCheckedKeys([data.id]);
-        }
-      }
-    },
+    // handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
+    //   if(checked === true) {
+    //     this.checkedId = data.id;
+    //     this.$refs.treeForm.setCheckedKeys([data.id]);
+    //     this.functionForm.parentId = data.id
+    //   } else {
+    //     if (this.checkedId == data.id) {
+    //       this.$refs.treeForm.setCheckedKeys([data.id]);
+    //     }
+    //   }
+    // },
     confirmRole(){
       console.log('confirm')
+      console.log(this.$refs.treeForm.getCheckedNodes())
+
+
     },
     handleAddRole(row){
       this.listLoading = true
