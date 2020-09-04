@@ -25,7 +25,9 @@
     </el-table>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form :model="roleForm" label-width="80px" label-position="left">
+      <el-form :model="roleForm"
+               ref="roleForm"
+               label-width="80px" label-position="left">
         <el-form-item label="权限点名称">
           <el-input v-model="roleForm.name" placeholder="Role Name" />
         </el-form-item>
@@ -136,7 +138,7 @@ export default {
     // },
     confirmRole(){
       console.log('confirm')
-      console.log(this.$refs.treeForm.getCheckedNodes())
+      console.log(this.$refs.roleForm)
 
 
     },
