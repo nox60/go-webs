@@ -206,6 +206,12 @@ func AddRole(role *models.Role, tx *sql.Tx) (roleId int64, err error) {
 		fmt.Println("LastInsertId:", roleId)
 	}
 
+	for index, value := range role.Functions {
+		fmt.Println("index:", index, "value:", value)
+
+		//新增
+	}
+
 	return roleId, err
 }
 
