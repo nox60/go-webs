@@ -11,3 +11,10 @@ type FunctionNode struct {
 	Leaf             bool        `json:"leaf"`
 	Parents          interface{} `json:"parents"`
 }
+
+type Role struct {
+	RoleId int    `json:"roleId"`
+	Code   string `json:"code"`
+	Name   string `json:"name"`
+	Status int    `json:"status"`
+}
