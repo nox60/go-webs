@@ -87,8 +87,8 @@
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="cancelAddOrEdit">Cancel</el-button>
-        <el-button type="primary" @click="addOrUpdateData">Confirm</el-button>
+        <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
+        <el-button type="primary" @click="addOrUpdateData">确定</el-button>
       </div>
     </el-dialog>
   </div>
