@@ -19,7 +19,7 @@
       <el-table-column align="center" label="Operations">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="small" @click="handleAddOrEditRole(row)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
+          <el-button type="danger" size="small" @click="handleDeleteConfirm(row)">删除</el-button>
         </template>
       </el-table-column>
 
