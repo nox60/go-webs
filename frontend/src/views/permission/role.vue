@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddRole({ id: 0})">新建角色</el-button>
+    <el-button type="primary" @click="handleAddOrEditRole({ id: 0})">新建角色</el-button>
     <el-table
       :data="rolesList"
       style="width: 100%;margin-top:10px;" border>
@@ -18,7 +18,7 @@
       </el-table-column>
       <el-table-column align="center" label="Operations">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">编辑</el-button>
+          <el-button type="primary" size="small" @click="handleAddOrEditRole(scope)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
@@ -145,10 +145,11 @@ export default {
 
       this.roleForm.functions = functions
       //新增
+
       //更新
 
     },
-    handleAddRole(row){
+    handleAddOrEditRole(row){
       this.listLoading = true
       this.dialogVisible = true
       if ( row['id'] === 0 ){ //新增
