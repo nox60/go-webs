@@ -172,7 +172,7 @@ export default {
 
     addOrUpdateData() {
       console.log(this.$refs)
-      this.$refs['functionForm'].validate((valid) => {
+      this.$refs['roleForm'].validate((valid) => {
         if (valid) {
           this.listLoading = true
 
