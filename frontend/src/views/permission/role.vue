@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { getFunctions } from '@/api/role'
+import {deleteFunction, getFunctions} from '@/api/role'
 
 const defaultRole = {
   key: '',
@@ -194,7 +194,29 @@ export default {
         //this.$refs.functionForm.resetFields();
         this.initFormData()
       })
-    }
+    },
+
+    handleDeleteConfirm(row) {
+      console.log(row)
+      this.$confirm('确认删除？')
+        .then(_ => {
+          console.log('点击了确认')
+          console.log(row['id'])
+          // deleteFunction(row['id']).then(() => {
+          //   this.dialogVisible = false
+          //   this.$notify({
+          //     title: 'Success',
+          //     message: '删除数据成功！',
+          //     type: 'success',
+          //     duration: 2000
+          //   })
+          //   this.reload()
+          // })
+          done();
+        })
+        .catch(_ => {});
+    },
+
   }
 }
 </script>
