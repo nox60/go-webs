@@ -353,6 +353,7 @@ export default {
       //this.$store.dispatch('tagsView/updateVisitedView', route)
       //this.$router.push({path:'/mydatas/mydataList/'})
 
+
     },
     // updateData() {
     //   this.$refs['dataForm'].validate((valid) => {
