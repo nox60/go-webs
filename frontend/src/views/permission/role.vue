@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import {deleteFunction, getFunctions} from '@/api/role'
+import {deleteFunction, getFunctionById, getFunctions} from '@/api/role'
 
 const defaultRole = {
   key: '',
@@ -195,6 +195,32 @@ export default {
         this.initFormData()
       })
     },
+
+    initFormData(){
+      this.$refs['roleForm'].resetFields();
+
+      if(this.forEdit == 1) {//编辑数据
+        // getFunctionById(this.functionForm.id).then(response => {
+        //   setTimeout(() => {
+        //     this.functionForm = response.data
+        //     let defaultNode = new Array(1);
+        //     defaultNode[0] = response.data.parentId
+        //
+        //     this.defaultExpandedNodes = response.data.parents
+        //     this.defaultSelectedNode = defaultNode
+        //     this.listLoading = false
+        //   }, 1000)
+        // })
+      } else {
+        // //this.dialogVisible = true
+        // let defaultNode = new Array(1);
+        // defaultNode[0] = 0
+        // this.defaultSelectedNode = defaultNode
+        // this.listLoading = false
+      }
+
+    },
+
 
     handleDeleteConfirm(row) {
       console.log(row)
