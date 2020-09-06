@@ -250,16 +250,7 @@ export default {
         .then(_ => {
           console.log('点击了确认')
           console.log(row['id'])
-          // deleteFunction(row['id']).then(() => {
-          //   this.dialogVisible = false
-          //   this.$notify({
-          //     title: 'Success',
-          //     message: '删除数据成功！',
-          //     type: 'success',
-          //     duration: 2000
-          //   })
-          //   this.reload()
-          // })
+
           done();
         })
         .catch(_ => {});
