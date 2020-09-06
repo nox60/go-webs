@@ -23,8 +23,6 @@
         </template>
       </el-table-column>
 
-
-
       <el-table-column label="操作" prop="leaf" align="left"  width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
@@ -238,23 +236,9 @@ export default {
       this.$refs['roleForm'].resetFields();
 
       if(this.forEdit == 1) {//编辑数据
-        // getFunctionById(this.functionForm.id).then(response => {
-        //   setTimeout(() => {
-        //     this.functionForm = response.data
-        //     let defaultNode = new Array(1);
-        //     defaultNode[0] = response.data.parentId
-        //
-        //     this.defaultExpandedNodes = response.data.parents
-        //     this.defaultSelectedNode = defaultNode
-        //     this.listLoading = false
-        //   }, 1000)
-        // })
+
       } else {
-        // //this.dialogVisible = true
-        // let defaultNode = new Array(1);
-        // defaultNode[0] = 0
-        // this.defaultSelectedNode = defaultNode
-        // this.listLoading = false
+
       }
 
     },
