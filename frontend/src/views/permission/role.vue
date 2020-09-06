@@ -143,17 +143,7 @@ export default {
         })
       //}
     },
-    // handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
-    //   if(checked === true) {
-    //     this.checkedId = data.id;
-    //     this.$refs.treeForm.setCheckedKeys([data.id]);
-    //     this.functionForm.parentId = data.id
-    //   } else {
-    //     if (this.checkedId == data.id) {
-    //       this.$refs.treeForm.setCheckedKeys([data.id]);
-    //     }
-    //   }
-    // },
+
     confirmRole(){
       let functions = new Array()
 
