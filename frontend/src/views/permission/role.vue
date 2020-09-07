@@ -45,7 +45,9 @@
                ref="roleForm"
                label-width="100px" label-position="left">
         <el-form-item label="角色名称">
-          <el-input v-model="roleForm.name" placeholder="权限点名称" />
+          <el-input
+            v-model="roleForm.name"
+            placeholder="权限点名称" />
         </el-form-item>
         <el-form-item label="角色编码">
           <el-input
