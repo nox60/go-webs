@@ -43,16 +43,14 @@
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="roleForm"
                ref="roleForm"
-               label-width="80px" label-position="left">
-        <el-form-item label="权限点名称">
-          <el-input v-model="roleForm.name" placeholder="Role Name" />
+               label-width="100px" label-position="left">
+        <el-form-item label="角色名称">
+          <el-input v-model="roleForm.name" placeholder="权限点名称" />
         </el-form-item>
-        <el-form-item label="权限点编码">
+        <el-form-item label="角色编码">
           <el-input
             v-model="roleForm.code"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Role Description"
+            placeholder="权限点编码"
           />
         </el-form-item>
         <el-form-item label="权限点" prop="">
