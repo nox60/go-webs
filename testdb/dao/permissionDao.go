@@ -383,3 +383,21 @@ func RetrieveRoleData(fetchDataBody *models.Role) (dataResBody []models.Role, to
 
 	return results, totalCount, err
 }
+
+func DeleteRole(roleId int, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("DELETE FROM `tb_roles` WHERE role_id = ? ",
+		roleId)
+	if err != nil {
+		return err
+	}
+	return
+}
+
+func DeleteRolesAndFunctionsByRoleId(roleId int, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("DELETE FROM `tb_roles_functions` WHERE role_id = ? ",
+		roleId)
+	if err != nil {
+		return err
+	}
+	return
+}

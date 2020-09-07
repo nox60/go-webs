@@ -7,11 +7,9 @@
       v-loading="listLoading"
       style="width: 100%;margin-top:10px;"
       border>
-      <el-table-column align="center" label="角色代码" width="220" prop="">
-
+      <el-table-column align="center" label="角色代码" width="220" prop="code">
       </el-table-column>
-      <el-table-column align="center" label="角色名称" width="220">
-
+      <el-table-column align="center" label="角色名称" width="220" prop="name">
       </el-table-column>
       <el-table-column align="header-center" label="角色说明">
 
