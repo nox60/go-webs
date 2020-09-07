@@ -131,10 +131,9 @@ export default {
     }
   },
   created() {
-
+    this.getList()
   },
   methods: {
-
     getList() {
       this.listLoading = true
       listRoleData(this.listQuery).then(response => {
@@ -147,7 +146,6 @@ export default {
         }, 1.5 * 1000)
       })
     },
-
     getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
         getFunctions(node.data.id).then(response => {
           setTimeout(() => {
