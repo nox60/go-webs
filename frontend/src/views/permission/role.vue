@@ -112,6 +112,14 @@ export default {
         code: '',
         functions: [],
       },
+      listQuery: {
+        page: 1,
+        limit: 20,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: '+id'
+      },
       listLoading: false,
       dialogVisible: false,
       role: Object.assign({}, defaultRole),
