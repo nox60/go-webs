@@ -92,6 +92,7 @@ const defaultRole = {
 }
 
 export default {
+  inject:['reload'],
   data() {
     return {
       defaultExpandedNodes:[],
@@ -140,7 +141,6 @@ export default {
             )
           }, 1000)
         })
-      //}
     },
 
     confirmAddOrUpdateRole(){
@@ -163,7 +163,6 @@ export default {
         this.dialogVisible = false
         this.reload()
       })
-
     },
 
     addOrUpdateData() {
@@ -194,14 +193,11 @@ export default {
 
                 this.reload()
               })
-
             }, 1000)
           })
-
         }
       })
     },
-
 
     handleAddOrEditRole(row){
       this.listLoading = true
@@ -214,9 +210,6 @@ export default {
         }
         this.dialogType = 'new'
         this.forEdit = 0
-        // this.initFormData()
-        //this.dialogVisible = true
-
       } else { //修改
         console.log('修改数据')
         this.forEdit = 1
@@ -225,23 +218,18 @@ export default {
 
       this.$nextTick(()=>{
         console.log(this.$refs)
-        //this.$refs.functionForm.resetFields();
         this.initFormData()
       })
     },
 
     initFormData(){
-
       console.log('reset fields')
-
       this.$refs.roleForm.resetFields();
-
       if(this.forEdit == 1) {//编辑数据
 
       } else {
 
       }
-
     },
 
 
