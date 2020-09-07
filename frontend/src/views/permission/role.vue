@@ -24,21 +24,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" prop="leaf" align="left"  width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
-            编辑
-          </el-button>
-          <el-button
-            size="mini"
-            v-show="row.leaf"
-            type="danger"
-            @click="handleDeleteConfirm(row,$index)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-
     </el-table>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">

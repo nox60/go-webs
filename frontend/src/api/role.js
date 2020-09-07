@@ -82,4 +82,10 @@ export function listRoleData(query) {
   })
 }
 
+export function deleteRole(id) {
+  return request({
+    url: `/deleteRole/${id}`,
+    method: 'delete'
+  })
+}
 
