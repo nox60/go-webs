@@ -151,7 +151,7 @@ export default {
       });
       this.listLoading = true
       this.roleForm.functions = functions
-      addOrUpdateRole(this.functionForm).then(() => {
+      addOrUpdateRole(this.roleForm).then(() => {
         this.$notify({
           title: 'Success',
           message: '操作成功',
