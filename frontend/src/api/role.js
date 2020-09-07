@@ -65,3 +65,12 @@ export function getFunctionById(id) {
     method: 'get',
   })
 }
+
+export function addOrUpdateRole(data) {
+  return request({
+    url: '/addOrUpdateRole',
+    method: 'post',
+    data: data
+  })
+}
+
