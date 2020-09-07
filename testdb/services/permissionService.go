@@ -137,3 +137,25 @@ func UpdateRole(role *models.Role) {
 func RetrieveRoleData(fetchDataBody *models.Role) (dataResBody []models.Role, totalCounts int, err error) {
 	return dao.RetrieveRoleData(fetchDataBody)
 }
+
+func DeleteRole(roleId int) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	err = dao.DeleteRole(roleId, tx)
+
+	err = dao.DeleteRolesAndFunctionsByRoleId(roleId, tx)
+}
