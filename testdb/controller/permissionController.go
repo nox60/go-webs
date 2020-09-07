@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"testdb/dao"
 	"testdb/models"
 	"testdb/services"
 )
@@ -130,5 +131,37 @@ func AddOrUpdateRole(c *gin.Context) {
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
 	resultMsg.Msg = "新增功能点成功"
+	c.JSON(200, resultMsg)
+}
+
+func ListRoleData(c *gin.Context) {
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "获取数据成功"
+
+	var fetchDataRequestBody models.Role
+	var dataLists models.PageListDataResult
+
+	if err := c.ShouldBindJSON(&fetchDataRequestBody); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	fetchDataRequestBody.RoleId = -1
+
+	results, totalCount, err := dao.RetrieveRoleData(&fetchDataRequestBody)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	dataLists.TotalCounts = totalCount
+
+	dataLists.DataLists = results
+
+	resultMsg.Data = dataLists
+
 	c.JSON(200, resultMsg)
 }

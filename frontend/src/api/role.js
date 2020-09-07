@@ -74,3 +74,12 @@ export function addOrUpdateRole(data) {
   })
 }
 
+export function listRoleData(query) {
+  return request({
+    url: '/listRoleData',
+    method: 'post',
+    data: query
+  })
+}
+
+
