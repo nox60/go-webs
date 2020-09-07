@@ -232,7 +232,6 @@ export default {
       }
     },
 
-
     handleDeleteConfirm(row) {
       console.log(row)
       this.$confirm('确认删除？')
