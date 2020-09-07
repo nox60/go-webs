@@ -3,7 +3,10 @@
     <el-button type="primary" @click="handleAddOrEditRole({ id: 0})">新建角色</el-button>
     <el-table
       :data="rolesList"
-      style="width: 100%;margin-top:10px;" border>
+      highlight-current-row
+      v-loading="listLoading"
+      style="width: 100%;margin-top:10px;"
+      border>
       <el-table-column align="center" label="角色代码" width="220" prop="">
 
       </el-table-column>
@@ -82,7 +85,7 @@
 </template>
 
 <script>
-import {addOrUpdateRole, getFunctionById, getFunctions} from '@/api/role'
+import {addOrUpdateRole, getFunctionById, getFunctions, listRoleData} from '@/api/role'
 
 const defaultRole = {
   key: '',
