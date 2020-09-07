@@ -75,14 +75,14 @@
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="confirmRole">确认</el-button>
+        <el-button type="primary" @click="confirmAddOrUpdateRole">确认</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {addOrUpdateFunction, deleteFunction, getFunctionById, getFunctions} from '@/api/role'
+import {addOrUpdateRole, deleteFunction, getFunctionById, getFunctions} from '@/api/role'
 
 const defaultRole = {
   key: '',
@@ -142,7 +142,7 @@ export default {
       //}
     },
 
-    confirmRole(){
+    confirmAddOrUpdateRole(){
       let functions = new Array()
 
       this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
@@ -150,9 +150,18 @@ export default {
       });
 
       this.roleForm.functions = functions
-      //新增
+      addOrUpdateRole(this.functionForm).then(() => {
+        this.$notify({
+          title: 'Success',
+          message: '操作成功',
+          type: 'success',
+          duration: 2000
+        })
 
-      //更新
+        this.listLoading = false
+        this.dialogVisible = false
+        this.reload()
+      })
 
     },
 
