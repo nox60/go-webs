@@ -135,6 +135,19 @@ export default {
   },
   methods: {
 
+    getList() {
+      this.listLoading = true
+      listRoleData(this.listQuery).then(response => {
+        this.rolesList = response.data.dataLists
+        this.total = response.data.totalCounts
+        console.log(this.list)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
+      })
+    },
+
     getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
         getFunctions(node.data.id).then(response => {
           setTimeout(() => {
