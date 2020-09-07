@@ -133,3 +133,7 @@ func UpdateRole(role *models.Role) {
 
 	err = dao.UpdateRoleById(role, tx)
 }
+
+func RetrieveRoleData(fetchDataBody *models.Role) (dataResBody []models.Role, totalCounts int, err error) {
+	return dao.RetrieveRoleData(fetchDataBody)
+}
