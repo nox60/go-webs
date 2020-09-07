@@ -18,4 +18,12 @@ type Role struct {
 	Name      string  `json:"name"`
 	Status    int     `json:"status"`
 	Functions []int64 `json:"functionIds"`
+	Page      int     `json:"page"  `
+	Limit     int     `json:"limit" `
+	ForCount  bool
+}
+
+func (reqBody *Role) GetStartByPageAndLimit() int {
+	result := (reqBody.Page - 1) * reqBody.Limit
+	return result
 }

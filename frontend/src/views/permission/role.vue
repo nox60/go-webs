@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import {addOrUpdateRole, deleteFunction, getFunctionById, getFunctions} from '@/api/role'
+import {addOrUpdateRole, getFunctionById, getFunctions} from '@/api/role'
 
 const defaultRole = {
   key: '',
