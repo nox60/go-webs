@@ -158,7 +158,7 @@ export default {
           type: 'success',
           duration: 2000
         })
-
+        this.initFormData()
         this.listLoading = false
         this.dialogVisible = false
         this.reload()
@@ -231,7 +231,10 @@ export default {
     },
 
     initFormData(){
-      this.$refs['roleForm'].resetFields();
+
+      console.log('reset fields')
+
+      this.$refs.roleForm.resetFields();
 
       if(this.forEdit == 1) {//编辑数据
 
