@@ -108,10 +108,11 @@ export default {
         code: '',
         functions: [],
       },
+      listLoading: false,
+      dialogVisible: false,
       role: Object.assign({}, defaultRole),
       routes: [],
       rolesList: [],
-      dialogVisible: false,
       dialogType: 'new',
       checkStrictly: false,
       defaultProps: {
@@ -148,7 +149,7 @@ export default {
       this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
         functions[index] = data.id
       });
-
+      this.listLoading = true
       this.roleForm.functions = functions
       addOrUpdateRole(this.functionForm).then(() => {
         this.$notify({

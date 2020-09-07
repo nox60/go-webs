@@ -45,7 +45,7 @@ func main() {
 	api.POST("/addOrUpdateFunction", controller.AddOrUpdateFunction)
 	api.GET("/getFunctionById/:id", controller.GetFunctionById)
 	api.DELETE("/deleteFunction/:id", controller.DeleteFunction)
-	api.POST("/addOrUpdateRole", controller.AddOrUpdateFunction)
+	api.POST("/addOrUpdateRole", controller.AddOrUpdateRole)
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
