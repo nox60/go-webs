@@ -107,3 +107,28 @@ func DeleteFunction(c *gin.Context) {
 	resultMsg.Msg = "删除数据成功"
 	c.JSON(200, resultMsg)
 }
+
+func AddOrUpdateRole(c *gin.Context) {
+
+	var roleReq models.Role
+
+	if err := c.ShouldBindJSON(&roleReq); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if roleReq.RoleId == 0 {
+		// 新增
+		services.AddRole(&roleReq)
+	} else {
+		// 更新
+		// services.UpdateItemById(&funcionReq)
+		services.UpdateRole(&roleReq)
+	}
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "新增功能点成功"
+	c.JSON(200, resultMsg)
+}

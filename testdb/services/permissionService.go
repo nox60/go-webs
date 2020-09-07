@@ -113,3 +113,23 @@ func AddRole(role *models.Role) {
 
 	_, err = dao.AddRole(role, tx)
 }
+
+func UpdateRole(role *models.Role) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	err = dao.UpdateRoleById(role, tx)
+}

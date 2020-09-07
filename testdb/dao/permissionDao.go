@@ -215,6 +215,28 @@ func AddRole(role *models.Role, tx *sql.Tx) (roleId int64, err error) {
 	return roleId, err
 }
 
+func UpdateRoleById(roleData *models.Role, tx *sql.Tx) (err error) {
+
+	// 查询语句
+	var queryStm strings.Builder
+	queryStm.WriteString("UPDATE `tb_roles` SET `name` = ?, `code` = ?  WHERE role_id = ? ")
+
+	// 查询条件
+	var args = make([]interface{}, 0)
+
+	args = append(args, roleData.Name)
+	args = append(args, roleData.Code)
+	args = append(args, roleData.RoleId)
+
+	_, err = tx.Exec(queryStm.String(), args...)
+
+	if err != nil {
+		return err
+	}
+
+	return
+}
+
 func DeleteFunction(functionId int, tx *sql.Tx) (err error) {
 	_, err = tx.Exec("DELETE FROM `tb_functions` WHERE function_id = ? ",
 		functionId)
