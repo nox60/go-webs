@@ -159,25 +159,3 @@ func DeleteRole(roleId int) {
 
 	err = dao.DeleteRolesAndFunctionsByRoleId(roleId, tx)
 }
-
-func DeleteRole2(roleId int) {
-	tx, err := dao.MysqlDb.Begin()
-
-	if err != nil {
-		return
-	}
-	defer func() {
-		switch {
-		case err != nil:
-			fmt.Println(err)
-			fmt.Println("rollback error")
-		default:
-			fmt.Println("commit ")
-			err = tx.Commit()
-		}
-	}()
-
-	err = dao.DeleteRole(roleId, tx)
-
-	err = dao.DeleteRolesAndFunctionsByRoleId(roleId, tx)
-}
