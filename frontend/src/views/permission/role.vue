@@ -242,7 +242,7 @@ export default {
       this.$confirm('确认删除？')
         .then(_ => {
           console.log('点击了确认')
-          console.log(row['id'])
+          console.log(row.roleId)
 
           done();
         })
