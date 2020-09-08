@@ -60,7 +60,7 @@
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">取消</el-button>
+        <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
         <el-button type="primary" @click="confirmAddOrUpdateRole">确认</el-button>
       </div>
     </el-dialog>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import {addOrUpdateRole, getFunctionById, getFunctions, listRoleData} from '@/api/role'
+import {addOrUpdateRole, getFunctionById, getFunctions, listRoleData, deleteRole} from '@/api/role'
 
 const defaultRole = {
   key: '',
@@ -237,13 +237,27 @@ export default {
       }
     },
 
+    cancelAddOrEdit() {
+      this.listLoading = false
+      this.dialogVisible = false
+    },
+
     handleDeleteConfirm(row) {
       console.log(row)
       this.$confirm('确认删除？')
         .then(_ => {
           console.log('点击了确认')
           console.log(row.roleId)
-
+          deleteRole(row.roleId).then(() => {
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: '删除数据成功！',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList()
+          })
           done();
         })
         .catch(_ => {});
