@@ -26,7 +26,8 @@
 
     </el-table>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
+    <el-dialog :visible.sync="dialogVisible"
+               :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="roleForm"
                ref="roleForm"
                label-width="100px" label-position="left">
@@ -218,7 +219,7 @@ export default {
       } else { //修改
         console.log('修改数据')
         this.forEdit = 1
-        this.functionForm.id = row['id']
+        this.roleForm.id = row['id']
       }
 
       this.$nextTick(()=>{
