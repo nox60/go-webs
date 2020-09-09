@@ -233,8 +233,10 @@ export default {
       console.log('reset fields')
       this.$refs.roleForm.resetFields();
       if(this.forEdit == 1) {//编辑数据
+        this.listLoading = false
 
       } else {
+        this.listLoading = false
 
       }
     },
