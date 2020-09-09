@@ -27,6 +27,7 @@
     </el-table>
 
     <el-dialog :visible.sync="dialogVisible"
+               v-loading="listLoading"
                :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="roleForm"
                ref="roleForm"
