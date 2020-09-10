@@ -88,10 +88,3 @@ export function deleteRole(id) {
     method: 'delete'
   })
 }
-
-export function deleteRoleE(id) {
-  return request({
-    url: `/deleteRole/${id}`,
-    method: 'delete'
-  })
-}
