@@ -199,24 +199,15 @@ export default {
       }
 
       this.$nextTick(()=>{
-        console.log(this.$refs)
         this.initFormData()
       })
     },
     initFormData(){
-      console.log(this.$refs['roleForm'])
       this.$refs['roleForm'].resetFields();
-      //console.log(this.roleForm.id)
       if(this.forEdit == 1) {//编辑数据
-        //getRoleById
         getRoleById(this.roleForm.id).then(response => {
           setTimeout(() => {
             this.roleForm = response.data
-            // let defaultNode = new Array(1);
-            // defaultNode[0] = response.data.parentId
-
-            // this.defaultExpandedNodes = response.data.parents
-            // this.defaultSelectedNode = defaultNode
             this.listLoading = false
           }, 1000)
         })
