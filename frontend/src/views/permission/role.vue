@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddOrEditRole({ id: 0})">新建角色</el-button>
+    <el-button type="primary" @click="handleAddOrEditRole({ roleId: 0})">新建角色</el-button>
     <el-table
       :data="rolesList"
       highlight-current-row
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import {addOrUpdateRole, getFunctionById, getFunctions, listRoleData, deleteRole, getRoleById} from '@/api/role'
+import {addOrUpdateRole, getFunctions, listRoleData, deleteRole, getRoleById} from '@/api/role'
 
 const defaultRole = {
   key: '',
@@ -87,6 +87,7 @@ export default {
       defaultSelectedNode:[],
       treeData:[],
       treeForm:'',
+      forEdit:0,
       treeNodes: {
         label: 'name',
         children: 'zones',
