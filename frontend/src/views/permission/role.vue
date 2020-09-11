@@ -163,6 +163,22 @@ export default {
         }
       }
     },
+    uniteChildSame (treeList, isSelected) {
+      this.$refs.trees.setChecked(treeList.id, isSelected)
+      if (treeList.children) {
+        for (let i = 0; i < treeList.children.length; i++) {
+          this.uniteChildSame(treeList.children[i], isSelected)
+        }
+      }
+    },
+    // 统一处理父节点为选中
+    selectedParent (currentObj) {
+      let currentNode = this.$refs.tree.getNode(currentObj)
+      if (currentNode.parent.key !== undefined) {
+        this.$refs.trees.setChecked(currentNode.parent, true)
+        this.selectedParent(currentNode.parent)
+      }
+    },
     getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
         getFunctions(node.data.id).then(response => {
           setTimeout(() => {
