@@ -86,13 +86,6 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	/*
-		SELECT a.function_id, a.name, b.function_id, IF(b.function_id IS NULL,0,1) AS leaf FROM tb_functions a
-		LEFT JOIN tb_functions b ON a.function_id = b.parent_function_id
-		WHERE
-		a.parent_function_id = 0;
-	*/
-
 	queryStm.WriteString(" SELECT a.`function_id`,a.`number`,a.`order`,a.`name`,a.`path`,a.`parent_function_id`, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,1,0) AS leaf, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,0,1) AS hasChildren ")
