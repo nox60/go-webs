@@ -202,6 +202,7 @@ export default {
         getRoleById(this.roleForm.id).then(response => {
           setTimeout(() => {
             this.roleForm = response.data
+            this.defaultSelectedNode = response.data.functions
           }, 1000)
         })
       }
