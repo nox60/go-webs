@@ -309,11 +309,6 @@ func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.Fun
 		return dataObj, err
 	}
 
-	fmt.Println("---------------------------------------+++")
-	fmt.Println(queryStm.String())
-	fmt.Println(fetchDataBody.FunctionId)
-	fmt.Println(queryResult)
-
 	queryResult.Scan(&dataObj.FunctionId,
 		&dataObj.Number,
 		&dataObj.Order,
@@ -321,9 +316,6 @@ func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.Fun
 		&dataObj.Path,
 		&dataObj.ParentFunctionId,
 	)
-
-	fmt.Println(dataObj)
-	fmt.Println("---------------------------------------!!!")
 
 	return dataObj, err
 }
@@ -376,7 +368,6 @@ func RetrieveRoleData(fetchDataBody *models.Role) (dataResBody []models.Role, to
 	queryResults, err := stmt.Query(fetchArgs...)
 
 	if err != nil {
-		fmt.Println(err)
 		return results, 0, err
 	}
 
@@ -396,6 +387,13 @@ func DeleteRole(roleId int, tx *sql.Tx) (err error) {
 	if err != nil {
 		return err
 	}
+
+	_, err = tx.Exec("DELETE FROM `tb_roles_functions` WHERE role_id = ? ",
+		roleId)
+	if err != nil {
+		return err
+	}
+
 	return
 }
 
