@@ -158,7 +158,6 @@ export default {
     },
     confirmAddOrUpdateRole(){
       let functions = new Array()
-
       this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
         functions[index] = data.id
       });
@@ -181,10 +180,8 @@ export default {
     handleAddOrEditRole(row){
       this.listLoading = true
       this.dialogVisible = true
-      // console.log(row.roleId)
       if ( row.roleId === 0 ){ //新增
         console.log('新增数据')
-        //this.role = Object.assign({}, defaultRole)
         if (this.$refs.tree) {
           this.$refs.tree.setCheckedNodes([])
         }
@@ -194,10 +191,7 @@ export default {
         console.log('修改数据')
         this.forEdit = 1
         this.roleForm.id = row.roleId
-        // console.log(row['id'])
-        // console.log(this.roleForm.id)
       }
-
       this.$nextTick(()=>{
         this.initFormData()
       })
@@ -208,17 +202,10 @@ export default {
         getRoleById(this.roleForm.id).then(response => {
           setTimeout(() => {
             this.roleForm = response.data
-            this.listLoading = false
           }, 1000)
         })
-
-      } else {
-        console.log('reset fields')
-        // this.$refs.roleForm.resetFields();
-        // this.$refs['roleForm'].resetFields();
-        this.listLoading = false
-
       }
+      this.listLoading = false
     },
     cancelAddOrEdit() {
       this.listLoading = false
