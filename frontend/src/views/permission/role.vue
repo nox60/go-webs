@@ -93,6 +93,7 @@ export default {
         isLeaf: 'leaf'
       },
       roleForm: {
+        roleId: 0,
         name: '',
         code: '',
         functions: [],
