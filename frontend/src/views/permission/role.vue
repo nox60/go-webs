@@ -73,6 +73,7 @@
 
 <script>
 import {addOrUpdateRole, getFunctions, listRoleData, deleteRole, getRoleById} from '@/api/role'
+import Pagination from '@/components/Pagination'
 
 const defaultRole = {
   key: '',
