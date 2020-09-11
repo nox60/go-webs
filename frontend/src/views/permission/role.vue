@@ -32,18 +32,18 @@
       <el-form :model="roleForm"
                ref="roleForm"
                label-width="100px" label-position="left">
-        <el-form-item label="角色名称">
+        <el-form-item label="角色名称" prop="name">
           <el-input
             v-model="roleForm.name"
             placeholder="权限点名称" />
         </el-form-item>
-        <el-form-item label="角色编码">
+        <el-form-item label="角色编码" prop="code">
           <el-input
             v-model="roleForm.code"
             placeholder="权限点编码"
           />
         </el-form-item>
-        <el-form-item label="权限点" prop="">
+        <el-form-item label="权限点" prop="functions">
           <el-tree
             :data="treeData"
             :props="treeNodes"
@@ -236,6 +236,8 @@ export default {
     },
 
     initFormData(){
+      console.log(this.$refs['roleForm'])
+      this.$refs['roleForm'].resetFields();
       //console.log(this.roleForm.id)
       if(this.forEdit == 1) {//编辑数据
         //getRoleById
@@ -253,7 +255,8 @@ export default {
 
       } else {
         console.log('reset fields')
-        this.$refs.roleForm.resetFields();
+        // this.$refs.roleForm.resetFields();
+        // this.$refs['roleForm'].resetFields();
         this.listLoading = false
 
       }
