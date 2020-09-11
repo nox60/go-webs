@@ -58,6 +58,7 @@
             ref="treeForm"
             :default-expanded-keys="defaultExpandedNodes"
             :default-checked-keys="defaultSelectedNode"
+            @check="handleClickNode"
             >
           </el-tree>
 
@@ -145,6 +146,22 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
+    },
+    handleClickNode (currentObj, treeStatus) {
+      // 用于：父子节点严格互不关联时，父节点勾选变化时通知子节点同步变化，实现单向关联。
+      let selected = treeStatus.checkedKeys.indexOf(currentObj.id) // -1未选中
+      // 选中
+      if (selected !== -1) {
+        // 子节点只要被选中父节点就被选中
+        this.selectedParent(currentObj)
+        // 统一处理子节点为相同的勾选状态
+        this.uniteChildSame(currentObj, true)
+      } else {
+        // 未选中 处理子节点全部未选中
+        if (currentObj.childs.length !== 0) {
+          this.uniteChildSame(currentObj, false)
+        }
+      }
     },
     getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
         getFunctions(node.data.id).then(response => {
