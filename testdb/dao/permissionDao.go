@@ -208,8 +208,14 @@ func AddRole(role *models.Role, tx *sql.Tx) (roleId int64, err error) {
 
 	for index, value := range role.Functions {
 		fmt.Println("index:", index, "value:", value)
-
+		_, err := tx.Exec("INSERT INTO `tb_roles_functions` (`role_id`,`function_id`) "+
+			"values (?,?) ",
+			roleId,
+			value)
 		//新增
+		if err != nil {
+			return 0, err
+		}
 	}
 
 	return roleId, err
