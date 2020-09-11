@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import {addOrUpdateRole, getFunctionById, getFunctions, listRoleData, deleteRole} from '@/api/role'
+import {addOrUpdateRole, getFunctionById, getFunctions, listRoleData, deleteRole, getRoleById} from '@/api/role'
 
 const defaultRole = {
   key: '',
@@ -233,7 +233,19 @@ export default {
       console.log('reset fields')
       this.$refs.roleForm.resetFields();
       if(this.forEdit == 1) {//编辑数据
-        this.listLoading = false
+        //getRoleById
+
+        getRoleById(this.roleForm.id).then(response => {
+          setTimeout(() => {
+            this.roleForm = response.data
+            // let defaultNode = new Array(1);
+            // defaultNode[0] = response.data.parentId
+
+            // this.defaultExpandedNodes = response.data.parents
+            // this.defaultSelectedNode = defaultNode
+            this.listLoading = false
+          }, 1000)
+        })
 
       } else {
         this.listLoading = false
@@ -266,7 +278,6 @@ export default {
         })
         .catch(_ => {});
     },
-
   }
 }
 </script>
