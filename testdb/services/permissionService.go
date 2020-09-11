@@ -159,3 +159,8 @@ func DeleteRole(roleId int) {
 
 	err = dao.DeleteRolesAndFunctionsByRoleId(roleId, tx)
 }
+
+func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error) {
+	dataRes, err := dao.GetRoleById(fetchDataBody)
+	return dataRes, err
+}

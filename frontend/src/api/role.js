@@ -88,3 +88,12 @@ export function deleteRole(id) {
     method: 'delete'
   })
 }
+
+export function getRoleById(id) {
+  return request({
+    url: `/getRoleById/${id}`,
+    method: 'get',
+  })
+}
+
+

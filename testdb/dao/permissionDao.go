@@ -401,3 +401,41 @@ func DeleteRolesAndFunctionsByRoleId(roleId int, tx *sql.Tx) (err error) {
 	}
 	return
 }
+
+func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error) {
+
+	// 获取数据的临时对象
+	var dataObj models.Role
+
+	// 查询条件
+	var queryStm strings.Builder
+
+	// 查询条件
+	var fetchArgs = make([]interface{}, 0)
+
+	queryStm.WriteString(" SELECT a.`role_id`,a.`name`,a.`code` ")
+	queryStm.WriteString(" FROM tb_functions AS a  ")
+	queryStm.WriteString(" WHERE 1=1 ")
+	// 查询条件.
+	queryStm.WriteString(" AND a.`role_id` = ? ")
+	fetchArgs = append(fetchArgs, fetchDataBody.RoleId)
+
+	// 查询记录
+	stmt, _ := MysqlDb.Prepare(queryStm.String())
+	defer stmt.Close()
+
+	// 查询数据
+	queryResult := stmt.QueryRow(fetchArgs...)
+
+	if err != nil {
+		fmt.Println(err)
+		return dataObj, err
+	}
+
+	queryResult.Scan(&dataObj.RoleId,
+		&dataObj.Name,
+		&dataObj.Code,
+	)
+
+	return dataObj, err
+}
