@@ -291,37 +291,6 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    handleCreateNew() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    // createData() {
-    //   this.$refs['dataForm'].validate((valid) => {
-    //     if (valid) {
-    //       this.itemForm.id = parseInt(Math.random() * 100) + 1024 // mock a id
-    //       this.itemForm.author = 'vue-element-admin'
-    //       console.log(this.itemForm)
-    //
-    //       addItem(this.itemForm).then(() => {
-    //         //this.list.unshift(this.itemForm)
-    //         this.dialogFormVisible = false
-    //
-    //         this.$notify({
-    //           title: 'Success',
-    //           message: '新增成功',
-    //           type: 'success',
-    //           duration: 2000
-    //         })
-    //         this.getList()
-    //
-    //       })
-    //     }
-    //   })
-    // },
     handleAdd() {
       console.log('handler addd........................................................')
       let editUrl = '/mydatas/createOrEdit/0'
