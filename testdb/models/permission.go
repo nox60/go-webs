@@ -13,7 +13,7 @@ type FunctionNode struct {
 }
 
 type Role struct {
-	RoleId    int     `json:"roleId"`
+	RoleId    int64   `json:"roleId"`
 	Code      string  `json:"code"`
 	Name      string  `json:"name"`
 	Status    int     `json:"status"`

@@ -111,7 +111,10 @@ func AddRole(role *models.Role) {
 		}
 	}()
 
-	_, err = dao.AddRole(role, tx)
+	var roleId int64
+	roleId, err = dao.AddRole(role, tx)
+	role.RoleId = roleId
+	err = dao.AddRoleFunction(role, tx)
 }
 
 func UpdateRole(role *models.Role) {
