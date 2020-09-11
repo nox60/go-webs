@@ -84,6 +84,7 @@ const defaultRole = {
 
 export default {
   inject:['reload'],
+  components: { Pagination },
   data() {
     return {
       defaultExpandedNodes:[],
