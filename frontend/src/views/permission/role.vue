@@ -209,7 +209,8 @@ export default {
     handleAddOrEditRole(row){
       this.listLoading = true
       this.dialogVisible = true
-      if ( row['id'] === 0 ){ //新增
+      // console.log(row.roleId)
+      if ( row.roleId === 0 ){ //新增
         console.log('新增数据')
         //this.role = Object.assign({}, defaultRole)
         if (this.$refs.tree) {
@@ -220,7 +221,9 @@ export default {
       } else { //修改
         console.log('修改数据')
         this.forEdit = 1
-        this.roleForm.id = row['id']
+        this.roleForm.id = row.roleId
+        // console.log(row['id'])
+        // console.log(this.roleForm.id)
       }
 
       this.$nextTick(()=>{
@@ -230,11 +233,9 @@ export default {
     },
 
     initFormData(){
-      console.log('reset fields')
-      this.$refs.roleForm.resetFields();
+      console.log(this.roleForm.id)
       if(this.forEdit == 1) {//编辑数据
         //getRoleById
-
         getRoleById(this.roleForm.id).then(response => {
           setTimeout(() => {
             this.roleForm = response.data
@@ -248,6 +249,8 @@ export default {
         })
 
       } else {
+        console.log('reset fields')
+        this.$refs.roleForm.resetFields();
         this.listLoading = false
 
       }

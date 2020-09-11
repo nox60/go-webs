@@ -414,7 +414,7 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 	var fetchArgs = make([]interface{}, 0)
 
 	queryStm.WriteString(" SELECT a.`role_id`,a.`name`,a.`code` ")
-	queryStm.WriteString(" FROM tb_functions AS a  ")
+	queryStm.WriteString(" FROM tb_roles AS a  ")
 	queryStm.WriteString(" WHERE 1=1 ")
 	// 查询条件.
 	queryStm.WriteString(" AND a.`role_id` = ? ")
