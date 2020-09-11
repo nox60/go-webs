@@ -236,7 +236,7 @@ export default {
     },
 
     initFormData(){
-      console.log(this.roleForm.id)
+      //console.log(this.roleForm.id)
       if(this.forEdit == 1) {//编辑数据
         //getRoleById
         getRoleById(this.roleForm.id).then(response => {
