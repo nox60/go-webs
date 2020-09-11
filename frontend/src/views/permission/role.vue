@@ -101,6 +101,7 @@ export default {
         code: '',
         functions: [],
       },
+      total: 0,
       listQuery: {
         page: 1,
         limit: 20,
