@@ -199,19 +199,23 @@ func AddRole(role *models.Role, tx *sql.Tx) (roleId int64, err error) {
 		fmt.Println("LastInsertId:", roleId)
 	}
 
+	return roleId, err
+}
+
+func AddRoleFunction(role *models.Role, tx *sql.Tx) (err error) {
 	for index, value := range role.Functions {
 		fmt.Println("index:", index, "value:", value)
 		_, err := tx.Exec("INSERT INTO `tb_roles_functions` (`role_id`,`function_id`) "+
 			"values (?,?) ",
-			roleId,
+			role.RoleId,
 			value)
 		//新增
 		if err != nil {
-			return 0, err
+			return err
 		}
 	}
 
-	return roleId, err
+	return
 }
 
 func UpdateRoleById(roleData *models.Role, tx *sql.Tx) (err error) {

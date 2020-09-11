@@ -163,7 +163,7 @@ export default {
       });
       this.listLoading = true
       this.roleForm.functions = functions
-      console.log(this.roleForm.id)
+      // console.log(this.roleForm.id)
       addOrUpdateRole(this.roleForm).then(() => {
         this.$notify({
           title: 'Success',
