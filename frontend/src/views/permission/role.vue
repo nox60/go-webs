@@ -158,6 +158,7 @@ export default {
       });
       this.listLoading = true
       this.roleForm.functions = functions
+      console.log(this.roleForm.id)
       addOrUpdateRole(this.roleForm).then(() => {
         this.$notify({
           title: 'Success',
@@ -171,40 +172,40 @@ export default {
         this.reload()
       })
     },
-
-    addOrUpdateData() {
-      console.log(this.$refs)
-      this.$refs['roleForm'].validate((valid) => {
-        if (valid) {
-          this.listLoading = true
-
-          getFunctionById(this.functionForm.id).then(response => {
-            setTimeout(() => {
-              this.preParent = response.data.parentId
-              addOrUpdateFunction(this.functionForm).then(() => {
-                this.$notify({
-                  title: 'Success',
-                  message: '操作成功',
-                  type: 'success',
-                  duration: 2000
-                })
-
-                this.listLoading = false
-                this.dialogVisible = false
-                this.functionForm.id = 0
-                this.functionForm.parentId = 0
-                this.functionForm.name = ''
-                this.functionForm.number = ''
-                this.functionForm.order = ''
-                this.functionForm.path = ''
-
-                this.reload()
-              })
-            }, 1000)
-          })
-        }
-      })
-    },
+    //
+    // addOrUpdateData() {
+    //   console.log(this.$refs)
+    //   this.$refs['roleForm'].validate((valid) => {
+    //     if (valid) {
+    //       this.listLoading = true
+    //
+    //       getFunctionById(this.functionForm.id).then(response => {
+    //         setTimeout(() => {
+    //           this.preParent = response.data.parentId
+    //           addOrUpdateFunction(this.functionForm).then(() => {
+    //             this.$notify({
+    //               title: 'Success',
+    //               message: '操作成功',
+    //               type: 'success',
+    //               duration: 2000
+    //             })
+    //
+    //             this.listLoading = false
+    //             this.dialogVisible = false
+    //             this.functionForm.id = 0
+    //             this.functionForm.parentId = 0
+    //             this.functionForm.name = ''
+    //             this.functionForm.number = ''
+    //             this.functionForm.order = ''
+    //             this.functionForm.path = ''
+    //
+    //             this.reload()
+    //           })
+    //         }, 1000)
+    //       })
+    //     }
+    //   })
+    // },
 
     handleAddOrEditRole(row){
       this.listLoading = true
