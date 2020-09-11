@@ -139,6 +139,8 @@ func UpdateRole(role *models.Role) {
 	//先删除该角色对应的所有权限点
 	err = dao.DeleteRolesAndFunctionsByRoleId(role.RoleId, tx)
 
+	//重新添加角色对应的功能点
+	err = dao.AddRoleFunction(role, tx)
 }
 
 func RetrieveRoleData(fetchDataBody *models.Role) (dataResBody []models.Role, totalCounts int, err error) {
@@ -162,8 +164,10 @@ func DeleteRole(roleId int64) {
 		}
 	}()
 
+	//删除角色本身
 	err = dao.DeleteRole(roleId, tx)
 
+	//删除角色对应的功能点
 	err = dao.DeleteRolesAndFunctionsByRoleId(roleId, tx)
 }
 
