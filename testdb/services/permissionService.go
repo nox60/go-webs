@@ -145,7 +145,7 @@ func RetrieveRoleData(fetchDataBody *models.Role) (dataResBody []models.Role, to
 	return dao.RetrieveRoleData(fetchDataBody)
 }
 
-func DeleteRole(roleId int) {
+func DeleteRole(roleId int64) {
 	tx, err := dao.MysqlDb.Begin()
 
 	if err != nil {

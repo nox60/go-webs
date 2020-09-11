@@ -146,7 +146,7 @@ func ListRoleData(c *gin.Context) {
 
 func DeleteRole(c *gin.Context) {
 	idStr := c.Param("id")
-	id, _ := strconv.Atoi(idStr)
+	id, _ := strconv.ParseInt(idStr, 10, 64)
 	services.DeleteRole(id)
 
 	resultMsg := new(models.HttpResult)
@@ -163,7 +163,7 @@ func GetRoleById(c *gin.Context) {
 
 	idStr := c.Param("id")
 
-	id, _ := strconv.Atoi(idStr)
+	id, _ := strconv.ParseInt(idStr, 10, 64)
 
 	fetchBody := new(models.Role)
 
