@@ -47,10 +47,6 @@ export default {
           .then(res => {
             if (res.code == "200") {
               console.log(res.data)
-              // this.$message({
-              //   message: res.msg,
-              //   type: "success"
-              // });
             }
             resolve();
           })
