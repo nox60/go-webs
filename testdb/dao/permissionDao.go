@@ -524,29 +524,5 @@ func GetRoleByIdTemp(fetchDataBody *models.Role) (dataResBody models.Role, err e
 
 	// 通过切片存储
 	results2 := make([]int64, 0)
-
-	// 查询条件
-	var fetchArgs2 = make([]interface{}, 0)
-
-	queryStm2.WriteString(" SELECT a.`function_id` ")
-	queryStm2.WriteString(" FROM tb_roles_functions AS a  ")
-	queryStm2.WriteString(" WHERE 1=1 ")
-	// 查询条件.
-	queryStm2.WriteString(" AND a.`role_id` = ? ")
-	fetchArgs2 = append(fetchArgs2, fetchDataBody.RoleId)
-
-	// 查询记录
-	stmt2, _ := MysqlDb.Prepare(queryStm2.String())
-	defer stmt2.Close()
-
-	// 查询数据
-
-	if err != nil {
-		fmt.Println(err)
-		return dataObj, err
-	}
-
-	dataObj.Functions = results2
-
 	return dataObj, err
 }
