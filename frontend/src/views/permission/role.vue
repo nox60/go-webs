@@ -141,7 +141,6 @@ export default {
         this.rolesList = response.data.dataLists
         this.total = response.data.totalCounts
         console.log(this.list)
-        // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
