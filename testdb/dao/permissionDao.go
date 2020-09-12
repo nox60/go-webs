@@ -518,7 +518,6 @@ func GetRoleByIdTemp(fetchDataBody *models.Role) (dataResBody models.Role, err e
 
 	//获取该角色所有的功能点
 	// 获取数据的临时对象
-	var tempFunction int64
 
 	// 查询条件
 	var queryStm2 strings.Builder
@@ -541,17 +540,10 @@ func GetRoleByIdTemp(fetchDataBody *models.Role) (dataResBody models.Role, err e
 	defer stmt2.Close()
 
 	// 查询数据
-	queryResult2, err := stmt2.Query(fetchArgs2...)
 
 	if err != nil {
 		fmt.Println(err)
 		return dataObj, err
-	}
-
-	for queryResult2.Next() {
-		queryResult2.Scan(&tempFunction)
-
-		results2 = append(results2, tempFunction)
 	}
 
 	dataObj.Functions = results2
