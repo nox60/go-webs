@@ -531,9 +531,6 @@ func GetRoleByNameCase(fetchDataBody *models.Role) (dataResBody models.Role, err
 
 	queryStm2.WriteString(" SELECT a.`function_id` ")
 	queryStm2.WriteString(" FROM tb_roles_functions AS a  ")
-	queryStm2.WriteString(" WHERE 1=1 ")
-	// 查询条件.
-	queryStm2.WriteString(" AND a.`role_id` = ? ")
 	fetchArgs2 = append(fetchArgs2, fetchDataBody.RoleId)
 
 	// 查询记录
