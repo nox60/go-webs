@@ -493,10 +493,7 @@ func GetRoleByNameCase(fetchDataBody *models.Role) (dataResBody models.Role, err
 	var fetchArgs = make([]interface{}, 0)
 
 	queryStm.WriteString(" SELECT a.`role_id`,a.`name`,a.`code` ")
-	queryStm.WriteString(" FROM tb_roles AS a  ")
 	queryStm.WriteString(" WHERE 1=1 ")
-	// 查询条件.
-	queryStm.WriteString(" AND a.`role_id` = ? ")
 	fetchArgs = append(fetchArgs, fetchDataBody.RoleId)
 
 	// 查询记录
