@@ -15,11 +15,6 @@ import (
 
 func main() {
 	dao.Init()
-	//StructQueryField()
-	//services.RetriveUserInfo(1)
-	//services.RetriveUserInfo(2)
-	//services.RetriveUserInfo(3)
-	//services.InsertTestWithOutTx()
 
 	r := gin.Default()
 
