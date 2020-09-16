@@ -156,12 +156,6 @@ const statusOptions = [
   { statusValue: 2, statusName: '已发布' }
 ]
 
-// // arr to obj, such as { CN : "China", US : "USA" }
-// const itemTypeKeyValue = typeValuesArray.reduce((acc, cur) => {
-//   acc[cur.key] = cur.typeName
-//   return acc
-// }, {})
-
 export default {
   name: 'ComplexTable',
   components: { Pagination },
