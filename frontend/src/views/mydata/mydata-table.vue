@@ -175,9 +175,6 @@ export default {
       }
       return statusMap[status]
     },
-    // typeFilter(type) {
-    //   return itemTypeKeyValue[type]
-    // }
   },
   data() {
     return {
