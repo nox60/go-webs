@@ -307,35 +307,9 @@ export default {
 
       this.$router.push({path:editUrl})
 
-      //const title = 'Update Sample Data'
-      //const route = Object.assign({}, this.tempRoute, { title: `${title}` })
-
-      //先关闭已经打开的
-      // this.$store.dispatch('tagsView/delView', route)
-      //this.$store.dispatch('tagsView/updateVisitedView', route)
-      //this.$router.push({path:'/mydatas/mydataList/'})
-
 
     },
-    // updateData() {
-    //   this.$refs['dataForm'].validate((valid) => {
-    //     if (valid) {
-    //       const tempData = Object.assign({}, this.temp)
-    //       tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-    //       updateArticle(tempData).then(() => {
-    //         const index = this.list.findIndex(v => v.id === this.temp.id)
-    //         this.list.splice(index, 1, this.temp)
-    //         this.dialogFormVisible = false
-    //         this.$notify({
-    //           title: 'Success',
-    //           message: 'Update Successfully',
-    //           type: 'success',
-    //           duration: 2000
-    //         })
-    //       })
-    //     }
-    //   })
-    // },
+
     handleDeleteConfirm(row) {
       this.$confirm('确认删除？')
         .then(_ => {
