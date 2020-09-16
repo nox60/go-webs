@@ -53,16 +53,7 @@
       <el-table-column label="类型" width="110px" align="center" :formatter="formatType">
 
       </el-table-column>
-<!--      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">-->
-<!--        <template slot-scope="{row}">-->
-<!--          <span style="color:red;">{{ row.reviewer }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="Imp" width="80px">-->
-<!--        <template slot-scope="{row}">-->
-<!--          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />-->
-<!--        </template>-->
-<!--      </el-table-column>-->
+
       <el-table-column label="星级" align="center" width="95">
         <template slot-scope="scope" >
           <!-- <el-rate v-model="scope.row.evaValue" :allow-half="true"  disabled show-score text-color="#ff9900" score-template="{value}"></el-rate> -->
