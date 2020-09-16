@@ -283,22 +283,13 @@ export default {
       })
     },
     handleAdd() {
-      console.log('handler addd........................................................')
       let editUrl = '/mydatas/createOrEdit/0'
       this.$router.push({path:editUrl})
     },
 
     handleUpdate(row) {
-      console.log("--------------------------------->>>")
-      console.log(row['itemId'])
-
-      //this.$router.push({path:'/mydatas/mydataList/'})
-
       let editUrl = '/mydatas/createOrEdit/'+row['itemId']
-
       this.$router.push({path:editUrl})
-
-
     },
 
     handleDeleteConfirm(row) {
