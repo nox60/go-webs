@@ -188,7 +188,9 @@ func GetRoleByParentId(c *gin.Context) {
 
 	var parentNode models.FunctionNode
 
+	parentNode.ParentFunctionId = id
 	parentNode.FunctionId = id
+	parentNode.HasChildren = true
 
 	var functionNode []*models.FunctionNode
 
