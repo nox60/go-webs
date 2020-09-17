@@ -49,9 +49,7 @@
           <el-tree
             :data="treeData"
             :props="treeNodes"
-            :load="getTreeNodes"
             v-model="roleForm.functions"
-            lazy
             show-checkbox
             node-key="id"
             check-strictly
@@ -162,6 +160,8 @@ export default {
         this.uniteChildSame(currentObj, true)
       } else {
         // 未选中 处理子节点全部未选中
+        console.log(currentObj)
+
         if (currentObj.childs.length !== 0) {
           this.uniteChildSame(currentObj, false)
         }
@@ -170,6 +170,10 @@ export default {
     uniteChildSame (treeList, isSelected) {
       this.$refs.treeForm.setChecked(treeList.id, isSelected)
       if (treeList.children) {
+        console.log('------------------------------------------??')
+        console.log(treeList.children)
+        console.log('------------------------------------------!!')
+
         for (let i = 0; i < treeList.children.length; i++) {
           this.uniteChildSame(treeList.children[i], isSelected)
         }
@@ -178,10 +182,10 @@ export default {
     // 统一处理父节点为选中
     selectedParent (currentObj) {
       let currentNode = this.$refs.treeForm.getNode(currentObj)
-      console.log('------------------------------->>')
-      console.log(this.$refs)
-      console.log(currentNode)
-      console.log('-------------------------------<<')
+      // console.log('------------------------------->>')
+      // console.log(this.$refs)
+      // console.log(currentNode)
+      // console.log('-------------------------------<<')
       if (currentNode.parent.key !== undefined) {
         this.$refs.treeForm.setChecked(currentNode.parent, true)
         this.selectedParent(currentNode.parent)
