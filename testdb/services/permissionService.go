@@ -176,9 +176,18 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 	return dataRes, err
 }
 
-func GetAllRunctions(parentId int, functionNode []*models.FunctionNode) (err error) {
-	if parentId == 0 {
+func GetAllFunctions(parentId int, functionNode []*models.FunctionNode) (err error) {
+	var parentNode models.FunctionNode
+	parentNode.ParentFunctionId = parentId
+	childs, err := dao.GetFunctionsByParentId(&parentNode)
+	if err != nil {
+		fmt.Println(err)
+	}
 
+	if childs != nil {
+
+	} else {
+		return
 	}
 	return err
 }
