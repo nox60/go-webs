@@ -175,3 +175,20 @@ func GetRoleById(c *gin.Context) {
 
 	c.JSON(200, resultMsg)
 }
+
+func GetRoleByParentId(c *gin.Context) {
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "获取数据成功"
+
+	idStr := c.Param("id")
+
+	id, _ := strconv.Atoi(idStr)
+
+	var functionNode []*models.FunctionNode
+
+	services.GetAllFunctions(id, functionNode)
+
+	c.JSON(200, resultMsg)
+}
