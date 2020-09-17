@@ -28,6 +28,7 @@ func main() {
 
 	//以下接口不需要鉴权
 	api.POST("/checkLogin", controller.JsonLogin)
+	api.GET("/pid/:id", controller.GetRoleByParentId)
 
 	api.Use(Authorize())
 	// 以下接口都需要鉴权，验证token的正确性
@@ -43,7 +44,6 @@ func main() {
 	api.POST("/addOrUpdateRole", controller.AddOrUpdateRole)
 	api.POST("/listRoleData", controller.ListRoleData)
 	api.DELETE("/deleteRole/:id", controller.DeleteRole)
-	api.GET("/getRoleById/:id", controller.GetRoleById)
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
