@@ -225,6 +225,9 @@ export default {
     handleAddOrEditRole(row){
       this.listLoading = true
       this.dialogVisible = true
+      // 获取所有功能点
+
+
       if ( row.roleId === 0 ){ //新增
         console.log('新增数据')
         if (this.$refs.tree) {
