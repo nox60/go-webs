@@ -177,8 +177,13 @@ export default {
     },
     // 统一处理父节点为选中
     selectedParent (currentObj) {
-      console.log(currentObj)
-      let currentNode = this.$refs.tree.getNode(currentObj)
+
+
+      let currentNode = this.$refs.treeForm.getNode(currentObj)
+      console.log('------------------------------->>')
+      console.log(this.$refs)
+      console.log(currentNode)
+      console.log('-------------------------------<<')
       if (currentNode.parent.key !== undefined) {
         this.$refs.trees.setChecked(currentNode.parent, true)
         this.selectedParent(currentNode.parent)
