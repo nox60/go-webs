@@ -177,7 +177,6 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 }
 
 func GetAllFunctions(node *models.FunctionNode) (child *[]models.FunctionNode, err error) {
-
 	if node.HasChildren {
 
 		var parent models.FunctionNode
@@ -188,10 +187,11 @@ func GetAllFunctions(node *models.FunctionNode) (child *[]models.FunctionNode, e
 			fmt.Println(err)
 		}
 
-		node.Child = child
+		// node.Child = child
 		for i, v := range child {
 			fmt.Println(i, v)
-			GetAllFunctions(&v)
+			child2, _ := GetAllFunctions(&v)
+			child[i].Child = child2
 		}
 		return &child, err
 	} else {
