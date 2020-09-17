@@ -168,7 +168,7 @@ export default {
       }
     },
     uniteChildSame (treeList, isSelected) {
-      this.$refs.trees.setChecked(treeList.id, isSelected)
+      this.$refs.treeForm.setChecked(treeList.id, isSelected)
       if (treeList.children) {
         for (let i = 0; i < treeList.children.length; i++) {
           this.uniteChildSame(treeList.children[i], isSelected)
@@ -177,15 +177,13 @@ export default {
     },
     // 统一处理父节点为选中
     selectedParent (currentObj) {
-
-
       let currentNode = this.$refs.treeForm.getNode(currentObj)
       console.log('------------------------------->>')
       console.log(this.$refs)
       console.log(currentNode)
       console.log('-------------------------------<<')
       if (currentNode.parent.key !== undefined) {
-        this.$refs.trees.setChecked(currentNode.parent, true)
+        this.$refs.treeForm.setChecked(currentNode.parent, true)
         this.selectedParent(currentNode.parent)
       }
     },
