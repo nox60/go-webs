@@ -183,9 +183,7 @@ func GetRoleByParentId(c *gin.Context) {
 	resultMsg.Msg = "获取数据成功"
 
 	idStr := c.Param("id")
-
 	id, _ := strconv.Atoi(idStr)
-
 	var parentNode models.FunctionNode
 
 	parentNode.ParentFunctionId = id
@@ -193,6 +191,7 @@ func GetRoleByParentId(c *gin.Context) {
 	parentNode.HasChildren = true
 
 	services.GetAllFunctions(&parentNode)
+	resultMsg.Data = parentNode.Child
 
 	c.JSON(200, resultMsg)
 }

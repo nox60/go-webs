@@ -10,7 +10,7 @@ type FunctionNode struct {
 	HasChildren      bool            `json:"hasChildren"`
 	Leaf             bool            `json:"leaf"`
 	Parents          interface{}     `json:"parents"`
-	Child            *[]FunctionNode `json:"child"`
+	Child            *[]FunctionNode `json:"children"`
 }
 
 type Role struct {

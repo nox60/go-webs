@@ -97,3 +97,9 @@ export function getRoleById(id) {
 }
 
 
+export function getAllFuncs() {
+  return request({
+    url: `/pid/0`,
+    method: 'get',
+  })
+}

@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {addOrUpdateRole, getFunctions, listRoleData, deleteRole, getRoleById} from '@/api/role'
+import {addOrUpdateRole, getFunctions, listRoleData, deleteRole, getRoleById, getAllFuncs} from '@/api/role'
 import Pagination from '@/components/Pagination'
 
 const defaultRole = {
@@ -226,8 +226,11 @@ export default {
       this.listLoading = true
       this.dialogVisible = true
       // 获取所有功能点
-
-
+      getAllFuncs().then(response => {
+        setTimeout(() => {
+          this.treeData = response.data
+        }, 1000)
+      })
       if ( row.roleId === 0 ){ //新增
         console.log('新增数据')
         if (this.$refs.tree) {
