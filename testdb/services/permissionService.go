@@ -187,6 +187,7 @@ func GetAllFunctions(parentId int, functionNode []*models.FunctionNode) (err err
 	if childs != nil {
 		for i, v := range childs {
 			fmt.Println(i, v)
+			GetAllFunctions(v.FunctionId, functionNode)
 			//
 			// &childs[i].ParentFunctionId
 		}
