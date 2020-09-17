@@ -10,6 +10,7 @@ type FunctionNode struct {
 	HasChildren      bool        `json:"hasChildren"`
 	Leaf             bool        `json:"leaf"`
 	Parents          interface{} `json:"parents"`
+	Child            interface{} `json:"child"`
 }
 
 type Role struct {

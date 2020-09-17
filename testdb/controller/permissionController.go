@@ -186,9 +186,15 @@ func GetRoleByParentId(c *gin.Context) {
 
 	id, _ := strconv.Atoi(idStr)
 
+	var parentNode models.FunctionNode
+
+	parentNode.FunctionId = id
+
 	var functionNode []*models.FunctionNode
 
-	services.GetAllFunctions(id, functionNode)
+	services.GetAllFunctions(parentNode, functionNode)
+
+	fmt.Println(functionNode)
 
 	c.JSON(200, resultMsg)
 }
