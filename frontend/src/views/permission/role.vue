@@ -51,6 +51,7 @@
             :props="defaultProps"
             v-model="roleForm.functions"
             show-checkbox
+            default-expand-all
             node-key="id"
             ref="treeForm"
             :default-checked-keys="defaultSelectedNode"
@@ -148,6 +149,7 @@ export default {
       // console.log('===============================>>>')
       // 选中
       if (selected !== -1) {
+        console.log("------1")
         // 子节点只要被选中父节点就被选中
         this.selectedParent(currentObj)
         // 统一处理子节点为相同的勾选状态
