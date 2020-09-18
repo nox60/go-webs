@@ -206,7 +206,6 @@
       },
       initFormData(){
         this.$refs['functionForm'].resetFields();
-
         if(this.forEdit == 1) {//编辑数据
           getFunctionById(this.functionForm.id).then(response => {
             setTimeout(() => {
@@ -226,20 +225,8 @@
           this.defaultSelectedNode = defaultNode
           this.listLoading = false
         }
-
-      },
-      initData(){ //初始化表内数据
-        this.tableData = []
-        this.treeData = []
-        this.defaultExpandedNodes = []
-        this.defaultSelectedNode = []
-        this.treeForm = ''
-        getFunctions(0).then(response => {
-          this.tableData = response.data
-        })
       },
       getFunctions(tree, treeNode, resolve) { //用于懒加载表内数据
-
         this.listLoading = true
         getFunctions(tree.id).then(response => {
           setTimeout(() => {
