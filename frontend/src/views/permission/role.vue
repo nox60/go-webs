@@ -154,14 +154,15 @@ export default {
       if (selected !== -1) {
         console.log("------1")
         // 子节点只要被选中父节点就被选中
-        this.selectedParent(currentObj)
+        // this.selectedParent(currentObj)
         // 统一处理子节点为相同的勾选状态
-        this.uniteChildSame(currentObj, true)
+        // this.uniteChildSame(currentObj, true)
       } else {
         // 未选中 处理子节点全部未选中
+        console.log('反选。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。')
         console.log(currentObj)
-
-        if (currentObj.childs.length !== 0) {
+        console.log('un..................................')
+        if (currentObj.children != null && currentObj.children.length !== 0) {
           this.uniteChildSame(currentObj, false)
         }
       }
@@ -187,10 +188,11 @@ export default {
       // console.log(this.$refs)
       // console.log(currentNode)
       // console.log('-------------------------------<<')
-      if (currentNode.parent.key !== undefined) {
-        this.$refs.treeForm.setChecked(currentNode.parent, true)
-        this.selectedParent(currentNode.parent)
-      }
+
+      // if (currentNode.parent.key !== undefined) {
+      //   this.$refs.treeForm.setChecked(currentNode.parent, true)
+      //   this.selectedParent(currentNode.parent)
+      // }
     },
     getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
         getFunctions(node.data.id).then(response => {
