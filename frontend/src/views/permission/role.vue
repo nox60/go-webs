@@ -48,13 +48,11 @@
         <el-form-item label="权限点" prop="functions">
           <el-tree
             :data="treeData"
-            :props="treeNodes"
+            :props="defaultProps"
             v-model="roleForm.functions"
             show-checkbox
             node-key="id"
-            check-strictly
             ref="treeForm"
-            :default-expanded-keys="defaultExpandedNodes"
             :default-checked-keys="defaultSelectedNode"
             @check="handleClickNode"
             >
@@ -91,9 +89,9 @@ export default {
       treeData:[],
       treeForm:'',
       forEdit:0,
-      treeNodes: {
+      defaultProps: {
         label: 'name',
-        children: 'zones',
+        children: 'children',
         isLeaf: 'leaf'
       },
       roleForm: {
@@ -118,10 +116,6 @@ export default {
       rolesList: [],
       dialogType: 'new',
       checkStrictly: false,
-      defaultProps: {
-        children: 'children',
-        label: 'title'
-      }
     }
   },
   computed: {
