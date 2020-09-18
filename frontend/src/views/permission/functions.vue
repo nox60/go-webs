@@ -140,11 +140,11 @@
       };
       return {
           typeOptions: [{
-            value: '选项1',
-            label: '黄金糕'
+            value: '0',
+            label: '菜单项目'
           }, {
-            value: '选项2',
-            label: '双皮奶'
+            value: '1',
+            label: '页内控件'
           }],
         functionForm:{
           id: 0,
@@ -153,7 +153,7 @@
           name: '',
           path:'',
           parentId:0,
-          type: 0,
+          type: '菜单项目',
         },
         defaultExpandedNodes:[],
         defaultSelectedNode:[],
@@ -194,12 +194,6 @@
       getFunctions(0).then(response => { //表内数据
         this.tableData = response.data
       })
-
-
-      // this.$nextTick(()=>{
-      //   console.log(this.$refs)
-      // })
-
     },
     activated() {
 
