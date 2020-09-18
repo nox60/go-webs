@@ -3,6 +3,7 @@ package dao
 import (
 	"database/sql"
 	"fmt"
+	"strconv"
 	"strings"
 	"testdb/models"
 )
@@ -67,6 +68,7 @@ func RetrievePermissionData(fetchDataBody *models.FetchDataRequestBody) (dataRes
 			&dataObj.ItemTitle,
 			&dataObj.ItemStatus,
 			&dataObj.ItemDesc)
+
 		results = append(results, dataObj)
 	}
 
@@ -121,6 +123,19 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.Leaf,
 			&dataObj.HasChildren,
 		)
+
+		var items = make([]models.Item, 0)
+
+		var tempItem models.Item
+		tempItem.ItemName = "itemA" + strconv.Itoa(dataObj.FunctionId)
+
+		var tempItem2 models.Item
+		tempItem2.ItemName = "itemB" + strconv.Itoa(dataObj.FunctionId)
+
+		items = append(items, tempItem)
+		items = append(items, tempItem2)
+
+		dataObj.Items = &items
 		results = append(results, dataObj)
 	}
 

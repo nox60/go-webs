@@ -32,6 +32,33 @@
         label="路径">
       </el-table-column>
 
+      <el-table-column
+        prop="path"
+        label="页内功能点">
+
+        <el-button type="primary" size="mini" v-for="value in row">
+          {{ value }}
+        </el-button>
+
+
+        <el-button type="primary" icon="el-icon-edit" circle @click="edited(index)"></el-button>
+
+
+
+        <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
+          编辑2
+        </el-button>
+
+        <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
+          编辑1
+        </el-button>
+
+        <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
+          编辑3
+        </el-button>
+
+      </el-table-column>
+
       <el-table-column label="操作" prop="leaf" align="left"  width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
@@ -69,16 +96,17 @@
         <el-form-item label="请求路径" prop="path">
           <el-input v-model="functionForm.path" placeholder="/path/1" />
         </el-form-item>
-        <el-form-item label="类型" prop="type">
-          <el-select v-model="functionForm.type" placeholder="请选择">
-            <el-option
-              v-for="item in typeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
+
+<!--        <el-form-item label="类型" prop="type">-->
+<!--          <el-select v-model="functionForm.type" placeholder="请选择">-->
+<!--            <el-option-->
+<!--              v-for="item in typeOptions"-->
+<!--              :key="item.value"-->
+<!--              :label="item.label"-->
+<!--              :value="item.value">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
 
         <el-form-item label="父级菜单" prop="parentId">
           <el-tree
@@ -140,10 +168,10 @@
       };
       return {
           typeOptions: [{
-            value: '0',
+            value: 0,
             label: '菜单项目'
           }, {
-            value: '1',
+            value: 1,
             label: '页内控件'
           }],
         functionForm:{
@@ -153,7 +181,7 @@
           name: '',
           path:'',
           parentId:0,
-          type: '菜单项目',
+          // type: '菜单项目',
         },
         defaultExpandedNodes:[],
         defaultSelectedNode:[],
@@ -255,34 +283,26 @@
         this.$refs['functionForm'].validate((valid) => {
           if (valid) {
             this.listLoading = true
-            // // 这里为什么要getFunctionById?....
-            // getFunctionById(this.functionForm.id).then(response => {
-            //   setTimeout(() => {
-                            //this.preParent = response.data.parentId
+            console.log(this.functionForm)
+            addOrUpdateFunction(this.functionForm).then(() => {
+              this.$notify({
+                title: 'Success',
+                message: '操作成功',
+                type: 'success',
+                duration: 2000
+              })
 
-                            addOrUpdateFunction(this.functionForm).then(() => {
-                              this.$notify({
-                                title: 'Success',
-                                message: '操作成功',
-                                type: 'success',
-                                duration: 2000
-                              })
+              this.listLoading = false
+              this.dialogVisible = false
+              this.functionForm.id = 0
+              this.functionForm.parentId = 0
+              this.functionForm.name = ''
+              this.functionForm.number = ''
+              this.functionForm.order = ''
+              this.functionForm.path = ''
 
-                              this.listLoading = false
-                              this.dialogVisible = false
-                              this.functionForm.id = 0
-                              this.functionForm.parentId = 0
-                              this.functionForm.name = ''
-                              this.functionForm.number = ''
-                              this.functionForm.order = ''
-                              this.functionForm.path = ''
-
-                              this.reload()
-                            })
-
-            //   }, 1000)
-            // })
-
+              this.reload()
+            })
           }
         })
       },
