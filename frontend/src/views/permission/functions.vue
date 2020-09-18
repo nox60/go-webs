@@ -32,31 +32,12 @@
         label="路径">
       </el-table-column>
 
-      <el-table-column
-        prop="path"
-        label="页内功能点">
-
-        <el-button type="primary" size="mini" v-for="value in row">
-          {{ value }}
-        </el-button>
-
-
-        <el-button type="primary" icon="el-icon-edit" circle @click="edited(index)"></el-button>
-
-
-
-        <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
-          编辑2
-        </el-button>
-
-        <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
-          编辑1
-        </el-button>
-
-        <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
-          编辑3
-        </el-button>
-
+      <el-table-column prop="items" label="当前人数">
+        <template slot-scope="scope">
+          <el-button v-for="item in scope.row.items" type="primary" size="mini" >
+            {{item.itemName}}
+          </el-button>
+        </template>
       </el-table-column>
 
       <el-table-column label="操作" prop="leaf" align="left"  width="230" class-name="small-padding fixed-width">
