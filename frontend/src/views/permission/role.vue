@@ -146,23 +146,13 @@ export default {
     handleClickNode (currentObj, treeStatus) {
       // 用于：父子节点严格互不关联时，父节点勾选变化时通知子节点同步变化，实现单向关联。
       let selected = treeStatus.checkedKeys.indexOf(currentObj.id) // -1未选
-      // console.log('------------------------------->>>')
-      // console.log(currentObj)
-      // console.log(treeStatus)
-      // console.log(selected)
-      // console.log('===============================>>>')
-      // 选中
       if (selected !== -1) {
-        console.log("------1")
         // 子节点只要被选中父节点就被选中
         this.selectedParent(currentObj)
         // 统一处理子节点为相同的勾选状态
         // this.uniteChildSame(currentObj, true)
       } else {
         // 未选中 处理子节点全部未选中
-        console.log('反选。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。')
-        console.log(currentObj)
-        console.log('un..................................')
         if (currentObj.children != null && currentObj.children.length !== 0) {
           this.uniteChildSame(currentObj, false)
         }
