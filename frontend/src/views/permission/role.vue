@@ -33,7 +33,9 @@
                :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="roleForm"
                ref="roleForm"
-               label-width="100px" label-position="left">
+               v-loading="listLoading"
+               label-width="100px"
+               label-position="left">
         <el-form-item label="角色名称" prop="name">
           <el-input
             v-model="roleForm.name"
@@ -248,10 +250,12 @@ export default {
         getRoleById(this.roleForm.id).then(response => {
           setTimeout(() => {
             this.dialogVisible = true
-            this.$refs['roleForm'].resetFields();
-            this.roleForm = response.data
-            this.defaultSelectedNode = response.data.functions
-            this.listLoading = false
+            this.$nextTick(() => {
+              this.$refs['roleForm'].resetFields();
+              this.roleForm = response.data
+              this.defaultSelectedNode = response.data.functions
+              this.listLoading = false
+            })
           }, 1000)
         })
       }
