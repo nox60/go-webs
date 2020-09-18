@@ -167,6 +167,7 @@ export default {
       }
     },
     uniteChildSame (treeList, isSelected) {
+      console.log('统一处理子节点')
       this.$refs.treeForm.setChecked(treeList.id, isSelected)
       if (treeList.children) {
         console.log('------------------------------------------??')
@@ -180,6 +181,7 @@ export default {
     },
     // 统一处理父节点为选中
     selectedParent (currentObj) {
+      console.log('父节点被选中')
       let currentNode = this.$refs.treeForm.getNode(currentObj)
       // console.log('------------------------------->>')
       // console.log(this.$refs)
