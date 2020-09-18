@@ -57,6 +57,7 @@
             default-expand-all
             node-key="id"
             ref="treeForm"
+            check-strictly
             :default-checked-keys="defaultSelectedNode"
             @check="handleClickNode"
             >
@@ -154,7 +155,7 @@ export default {
       if (selected !== -1) {
         console.log("------1")
         // 子节点只要被选中父节点就被选中
-        // this.selectedParent(currentObj)
+        this.selectedParent(currentObj)
         // 统一处理子节点为相同的勾选状态
         // this.uniteChildSame(currentObj, true)
       } else {
