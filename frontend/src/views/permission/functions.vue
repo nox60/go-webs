@@ -69,6 +69,17 @@
         <el-form-item label="请求路径" prop="path">
           <el-input v-model="functionForm.path" placeholder="/path/1" />
         </el-form-item>
+        <el-form-item label="类型" prop="type">
+          <el-select v-model="functionForm.type" placeholder="请选择">
+            <el-option
+              v-for="item in typeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="父级菜单" prop="parentId">
           <el-tree
             :data="treeData"
@@ -128,13 +139,21 @@
         }
       };
       return {
+          typeOptions: [{
+            value: '选项1',
+            label: '黄金糕'
+          }, {
+            value: '选项2',
+            label: '双皮奶'
+          }],
         functionForm:{
-          id: '',
+          id: 0,
           number: '',
           order:'',
           name: '',
           path:'',
-          parentId:'',
+          parentId:0,
+          type: 0,
         },
         defaultExpandedNodes:[],
         defaultSelectedNode:[],
