@@ -218,7 +218,7 @@ export default {
     },
     handleAddOrEditRole(row){
       this.listLoading = true
-      this.dialogVisible = true
+      // this.dialogVisible = false
       // 获取所有功能点
       getAllFuncs().then(response => {
         setTimeout(() => {
@@ -242,16 +242,17 @@ export default {
       })
     },
     initFormData(){
-      this.$refs['roleForm'].resetFields();
       if(this.forEdit == 1) {//编辑数据
         getRoleById(this.roleForm.id).then(response => {
           setTimeout(() => {
+            this.dialogVisible = true
+            this.$refs['roleForm'].resetFields();
             this.roleForm = response.data
             this.defaultSelectedNode = response.data.functions
+            this.listLoading = false
           }, 1000)
         })
       }
-      this.listLoading = false
     },
     cancelAddOrEdit() {
       this.listLoading = false
