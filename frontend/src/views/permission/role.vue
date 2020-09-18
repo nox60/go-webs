@@ -169,18 +169,17 @@ export default {
       }
     },
     uniteChildSame (treeList, isSelected) {
-      console.log('统一处理子节点')
       this.$refs.treeForm.setChecked(treeList.id, isSelected)
       if (treeList.children) {
-        console.log('------------------------------------------??')
-        console.log(treeList.children)
-        console.log('------------------------------------------!!')
-
         for (let i = 0; i < treeList.children.length; i++) {
           this.uniteChildSame(treeList.children[i], isSelected)
         }
       }
     },
+
+    // https://blog.csdn.net/qq_41612675/article/details/86612840
+    // 横排样式
+
     // 统一处理父节点为选中
     selectedParent (currentObj) {
       console.log('父节点被选中')
@@ -190,10 +189,10 @@ export default {
       // console.log(currentNode)
       // console.log('-------------------------------<<')
 
-      // if (currentNode.parent.key !== undefined) {
-      //   this.$refs.treeForm.setChecked(currentNode.parent, true)
-      //   this.selectedParent(currentNode.parent)
-      // }
+      if (currentNode.parent.key !== undefined) {
+        this.$refs.treeForm.setChecked(currentNode.parent, true)
+        this.selectedParent(currentNode.parent)
+      }
     },
     getTreeNodes(node, resolve) { //新增OR修改菜单中获取树的下级节点数据
         getFunctions(node.data.id).then(response => {
