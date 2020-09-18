@@ -6,6 +6,7 @@ type FunctionNode struct {
 	Order            int             `json:"order"`
 	Name             string          `json:"name"`
 	Path             string          `json:"path"`
+	Type             int             `json:"type"`
 	ParentFunctionId int             `json:"parentId"`
 	HasChildren      bool            `json:"hasChildren"`
 	Leaf             bool            `json:"leaf"`

@@ -6,6 +6,7 @@ CREATE TABLE tb_functions (
 	`order` int NOT NULL,
 	`name` VARCHAR(200) NULL,
 	`path` VARCHAR(200) NULL,
+	`type` TINYINT NOT NULL DEFAULT 0,
 	`parent_function_id` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`function_id`)
 )DEFAULT CHARSET=utf8;

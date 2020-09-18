@@ -255,10 +255,11 @@
         this.$refs['functionForm'].validate((valid) => {
           if (valid) {
             this.listLoading = true
-            // 这里为什么要getFunctionById?....
-            getFunctionById(this.functionForm.id).then(response => {
-              setTimeout(() => {
-                            this.preParent = response.data.parentId
+            // // 这里为什么要getFunctionById?....
+            // getFunctionById(this.functionForm.id).then(response => {
+            //   setTimeout(() => {
+                            //this.preParent = response.data.parentId
+
                             addOrUpdateFunction(this.functionForm).then(() => {
                               this.$notify({
                                 title: 'Success',
@@ -279,8 +280,8 @@
                               this.reload()
                             })
 
-              }, 1000)
-            })
+            //   }, 1000)
+            // })
 
           }
         })
