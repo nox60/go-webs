@@ -29,12 +29,12 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :visible.sync="dialogVisible"
-               v-loading="listLoading"
-               v-if='dialogVisible'
+               @close="$reset('roleForm')"
                :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="roleForm"
                ref="roleForm"
-               v-loading="listLoading"
+               :modal-append-to-body='true'
+               v-if='dialogVisible'
                label-width="100px"
                label-position="left">
         <el-form-item label="角色名称" prop="name">
@@ -115,6 +115,7 @@ export default {
       },
       listLoading: false,
       dialogVisible: false,
+      loadingFinish: false,
       role: Object.assign({}, defaultRole),
       routes: [],
       rolesList: [],
@@ -223,6 +224,7 @@ export default {
     },
     handleAddOrEditRole(row){
       this.listLoading = true
+      this.loadingFinish = false
       // this.dialogVisible = false
       // 获取所有功能点
       getAllFuncs().then(response => {
@@ -256,6 +258,7 @@ export default {
               this.roleForm = response.data
               this.defaultSelectedNode = response.data.functions
               this.listLoading = false
+              this.loadingFinish = true
             })
           }, 1000)
         })
