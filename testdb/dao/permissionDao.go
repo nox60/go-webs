@@ -124,12 +124,12 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.HasChildren,
 		)
 
-		var items = make([]models.Item, 0)
+		var items = make([]models.FunctionItem, 0)
 
-		var tempItem models.Item
+		var tempItem models.FunctionItem
 		tempItem.ItemName = "itemA" + strconv.Itoa(dataObj.FunctionId)
 
-		var tempItem2 models.Item
+		var tempItem2 models.FunctionItem
 		tempItem2.ItemName = "itemB" + strconv.Itoa(dataObj.FunctionId)
 
 		items = append(items, tempItem)

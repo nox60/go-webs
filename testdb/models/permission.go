@@ -11,12 +11,13 @@ type FunctionNode struct {
 	Leaf             bool            `json:"leaf"`
 	Parents          interface{}     `json:"parents"`
 	Child            *[]FunctionNode `json:"children"`
-	Items            *[]Item         `json:"items"`
+	Items            *[]FunctionItem `json:"items"`
 }
 
-type Item struct {
-	ItemId   int    `json:"itemId"`
-	ItemName string `json:"itemName"`
+type FunctionItem struct {
+	ItemId     int    `json:"itemId"`
+	ItemName   string `json:"itemName"`
+	FunctionId int    `json:"functionId"`
 }
 
 type Role struct {

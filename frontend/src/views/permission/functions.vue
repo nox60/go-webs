@@ -32,7 +32,7 @@
         label="路径">
       </el-table-column>
 
-      <el-table-column prop="items" label="业内功能点">
+      <el-table-column prop="items" label="页内功能点">
         <template slot-scope="scope">
           <el-button v-for="item in scope.row.items" type="primary" size="mini" >
             {{item.itemName}}
@@ -133,8 +133,8 @@
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
-        <el-button type="primary" @click="addOrUpdateData">确定</el-button>
+        <el-button type="danger" @click="cancelAddOrEditItem">取消</el-button>
+        <el-button type="primary" @click="submitAddOrUpdateItemData">确定</el-button>
       </div>
     </el-dialog>
 
@@ -322,6 +322,10 @@
               this.listLoading = false
               this.dialogVisible = false
       },
+      cancelAddOrEditItem() {
+        this.listLoading = false
+        this.addItemDialogVisible = false
+      },
       handleNodeClick(data, checked, node) {//新增OR修改权限点时点击树节点
         if(checked === true) {
           this.checkedId = data.id;
@@ -332,6 +336,20 @@
             this.$refs.treeForm.setCheckedKeys([data.id]);
           }
         }
+      },
+      handleAddOrUpdateItem(row){
+        this.listLoading = true
+        this.addItemDialogVisible = true
+        if ( row['id'] === 0 ){ //新增
+          console.log('新增数据')
+          this.forEdit = 0
+        } else { //修改
+          console.log('修改数据')
+          this.forEdit = 1
+          this.itemForm.id = row['id']
+        }
+        this.listLoading = false
+
       },
       handleAddOrUpdate(row) {
         this.listLoading = true
@@ -349,11 +367,9 @@
           this.forEdit = 1
           this.functionForm.id = row['id']
         }
-
         this.$nextTick(()=>{
           this.initFormData()
         })
-
       },
       handleDeleteConfirm(row) {
         console.log(row)
