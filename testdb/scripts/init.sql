@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS tb_functions_items;
 CREATE TABLE tb_functions_items (
 	`function_item_id` INT NOT NULL AUTO_INCREMENT,
 	`function_id` INT NOT NULL,
-	`name` VARCHAR(200) NULL,
+	`item_name` VARCHAR(200) NULL,
   PRIMARY KEY (`function_item_id`)
 )DEFAULT CHARSET=utf8;
 
