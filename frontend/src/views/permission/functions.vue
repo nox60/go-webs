@@ -32,11 +32,15 @@
         label="路径">
       </el-table-column>
 
-      <el-table-column prop="items" label="当前人数">
+      <el-table-column prop="items" label="业内功能点">
         <template slot-scope="scope">
           <el-button v-for="item in scope.row.items" type="primary" size="mini" >
             {{item.itemName}}
           </el-button>
+
+          <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateItem({ id: 0})">
+          </el-button>
+
         </template>
       </el-table-column>
 
@@ -111,6 +115,29 @@
         <el-button type="primary" @click="addOrUpdateData">确定</el-button>
       </div>
     </el-dialog>
+
+
+    <el-dialog :visible.sync="addItemDialogVisible"
+               v-loading="listLoading"
+               :title="dialogType==='edit'?'Edit Role':'New Role'">
+      <el-form  ref="itemForm"
+                :model="itemForm"
+                :rules="rules"
+                label-width="120px"
+                label-position="left">
+        <el-form-item label="功能点名称" prop="number">
+          <el-input v-model.number="itemForm.name"  placeholder="功能点名称" />
+        </el-form-item>
+        <el-form-item label="功能点值" prop="order">
+          <el-input v-model.number="functionForm.order" placeholder="功能点值" />
+        </el-form-item>
+      </el-form>
+      <div style="text-align:right;">
+        <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
+        <el-button type="primary" @click="addOrUpdateData">确定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -164,6 +191,9 @@
           parentId:0,
           // type: '菜单项目',
         },
+        itemForm:{
+
+        },
         defaultExpandedNodes:[],
         defaultSelectedNode:[],
         preParent:'',
@@ -173,6 +203,7 @@
         forEdit:0,
         listLoading: false,
         dialogVisible: false,
+        addItemDialogVisible: false,
         dialogType: 'new',
         checkStrictly: false,
         defaultProps: {
