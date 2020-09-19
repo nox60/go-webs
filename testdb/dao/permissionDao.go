@@ -200,6 +200,17 @@ func AddFunction(function *models.FunctionNode, tx *sql.Tx) (err error) {
 	return
 }
 
+func AddFunctionItem(item *models.FunctionItem, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("INSERT INTO `tb_functions_items` (`itemName`,`functionId`) "+
+		"values (?,?) ",
+		item.ItemName,
+		item.FunctionId)
+	if err != nil {
+		return err
+	}
+	return
+}
+
 func AddRole(role *models.Role, tx *sql.Tx) (roleId int64, err error) {
 	ret, err := tx.Exec("INSERT INTO `tb_roles` (`code`,`name`,`status`) "+
 		"values (?,?,?) ",

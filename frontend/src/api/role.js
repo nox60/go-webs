@@ -74,6 +74,7 @@ export function addOrUpdateRole(data) {
   })
 }
 
+
 export function listRoleData(query) {
   return request({
     url: '/listRoleData',
@@ -103,3 +104,4 @@ export function getAllFuncs() {
     method: 'get',
   })
 }
+

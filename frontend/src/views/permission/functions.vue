@@ -192,7 +192,9 @@
           // type: '菜单项目',
         },
         itemForm:{
-
+          itemId:0,
+          itemName:'',
+          functionId:0,
         },
         defaultExpandedNodes:[],
         defaultSelectedNode:[],
