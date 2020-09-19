@@ -128,13 +128,11 @@
         <el-form-item label="功能点名称" prop="number">
           <el-input v-model.number="itemForm.name"  placeholder="功能点名称" />
         </el-form-item>
-        <el-form-item label="功能点值" prop="order">
-          <el-input v-model.number="functionForm.order" placeholder="功能点值" />
-        </el-form-item>
+
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="cancelAddOrEditItem">取消</el-button>
-        <el-button type="primary" @click="submitAddOrUpdateItemData">确定</el-button>
+        <el-button type="primary" @click="confirmAddOrUpdateFunctionItem">确定</el-button>
       </div>
     </el-dialog>
 
@@ -144,7 +142,14 @@
 <script>
   import path from 'path'
   import { deepClone } from '@/utils'
-  import { deleteFunction, getFunctions, addOrUpdateFunction, getFunctionById, addOrUpdateFunctionItem} from '@/api/role'
+  import {
+    deleteFunction,
+    getFunctions,
+    addOrUpdateFunction,
+    getFunctionById,
+    addOrUpdateFunctionItem,
+    addOrUpdateRole
+  } from '@/api/role'
 
   const defaultRole = {
     key: '',
@@ -321,23 +326,38 @@
         })
       },
       confirmAddOrUpdateFunctionItem() {
-        console.log(this.$refs)
-        this.$refs['functionForm'].validate((valid) => {
+        this.$refs['itemForm'].validate((valid) => {
           if (valid) {
             this.listLoading = true
-            console.log(this.functionForm)
-            addOrUpdateFunctionItem(this.functionForm).then(() => {
+            console.log(this.itemForm)
+            addOrUpdateFunctionItem(this.itemForm).then(() => {
               this.$notify({
                 title: 'Success',
                 message: '操作成功',
                 type: 'success',
                 duration: 2000
               })
-
-
               this.reload()
             })
           }
+        })
+      },
+
+      confirmAddOrUpdateRole(){
+        this.listLoading = true
+        this.roleForm.functions = functions
+        // console.log(this.roleForm.id)
+        addOrUpdateRole(this.roleForm).then(() => {
+          this.$notify({
+            title: 'Success',
+            message: '操作成功',
+            type: 'success',
+            duration: 2000
+          })
+          this.initFormData()
+          this.listLoading = false
+          this.dialogVisible = false
+          this.reload()
         })
       },
 
