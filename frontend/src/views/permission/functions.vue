@@ -38,7 +38,7 @@
             {{item.itemName}}
           </el-button>
 
-          <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateItem({ id: 0})">
+          <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateItem({ itemId: 0, functionId: scope.row.id })">
           </el-button>
 
         </template>
@@ -382,7 +382,12 @@
           }
         }
       },
-      handleAddOrUpdateItem(row){
+      handleAddOrUpdateItem(jsonObject){
+        console.log('----------2222222')
+        console.log(jsonObject.itemId)
+        console.log(jsonObject.functionId)
+        this.itemForm.functionId = jsonObject.functionId
+        console.log('----------eeeeeeee')
         this.listLoading = true
         this.addItemDialogVisible = true
         if ( row['id'] === 0 ){ //新增
