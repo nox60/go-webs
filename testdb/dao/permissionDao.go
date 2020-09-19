@@ -201,8 +201,8 @@ func AddFunction(function *models.FunctionNode, tx *sql.Tx) (err error) {
 }
 
 func AddFunctionItem(item *models.FunctionItem, tx *sql.Tx) (err error) {
-	_, err = tx.Exec("INSERT INTO `tb_functions_items` (`itemName`,`functionId`) "+
-		"values (?,?) ",
+	_, err = tx.Exec(" INSERT INTO `tb_functions_items` (`itemName`,`functionId`) "+
+		" values (?,?) ",
 		item.ItemName,
 		item.FunctionId)
 	if err != nil {

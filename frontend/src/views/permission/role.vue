@@ -74,7 +74,13 @@
 </template>
 
 <script>
-import {addOrUpdateRole, getFunctions, listRoleData, deleteRole, getRoleById, getAllFuncs} from '@/api/role'
+import {addOrUpdateRole,
+  getFunctions,
+  listRoleData,
+  deleteRole,
+  getRoleById,
+  getAllFuncs
+} from '@/api/role'
 import Pagination from '@/components/Pagination'
 
 const defaultRole = {

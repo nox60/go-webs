@@ -59,6 +59,14 @@ export function addOrUpdateFunction(data) {
   })
 }
 
+export function addOrUpdateFunctionItem(data) {
+  return request({
+    url: '/addOrUpdateFunctionItem',
+    method: 'post',
+    data: data
+  })
+}
+
 export function getFunctionById(id) {
   return request({
     url: `/getFunctionById/${id}`,

@@ -144,7 +144,7 @@
 <script>
   import path from 'path'
   import { deepClone } from '@/utils'
-  import { deleteFunction, getFunctions, addOrUpdateFunction, getFunctionById } from '@/api/role'
+  import { deleteFunction, getFunctions, addOrUpdateFunction, getFunctionById, addOrUpdateFunctionItem} from '@/api/role'
 
   const defaultRole = {
     key: '',
@@ -320,6 +320,27 @@
           }
         })
       },
+      confirmAddOrUpdateFunctionItem() {
+        console.log(this.$refs)
+        this.$refs['functionForm'].validate((valid) => {
+          if (valid) {
+            this.listLoading = true
+            console.log(this.functionForm)
+            addOrUpdateFunctionItem(this.functionForm).then(() => {
+              this.$notify({
+                title: 'Success',
+                message: '操作成功',
+                type: 'success',
+                duration: 2000
+              })
+
+
+              this.reload()
+            })
+          }
+        })
+      },
+
       cancelAddOrEdit() {
               this.listLoading = false
               this.dialogVisible = false
