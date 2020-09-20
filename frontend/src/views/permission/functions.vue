@@ -383,9 +383,9 @@
         }
       },
       handleAddOrUpdateItem(jsonObject){
-        console.log('----------2222222')
-        console.log(jsonObject.itemId)
-        console.log(jsonObject.functionId)
+        // console.log('----------2222222')
+        // console.log(jsonObject.itemId)
+        // console.log(jsonObject.functionId)
         this.itemForm.functionId = jsonObject.functionId
         console.log('----------eeeeeeee')
         this.listLoading = true
