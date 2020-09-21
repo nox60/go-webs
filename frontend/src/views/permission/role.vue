@@ -52,6 +52,7 @@
           <el-tree
             :data="treeData"
             :props="defaultProps"
+            :render-content="renderContent"
             v-model="roleForm.functions"
             show-checkbox
             default-expand-all
@@ -293,14 +294,19 @@ export default {
     },
 
     renderContent(h, { node, data, store }) {//树节点的内容区的渲染 Function
+      console.log('------------------------>>>>>>>>>>>>>')
       let classname = "";
       // 由于项目中有三级菜单也有四级级菜单，就要在此做出判断
+      console.log(node)
+      console.log(node.level)
       if (node.level === 4) {
         classname = "foo";
       }
       if (node.level === 3 && node.childNodes.length === 0) {
+        console.log('fffffffffffffffffffffffffffffffffffff')
         classname = "foo";
       }
+      classname = "foo"
       return h(
         "p",
         {
