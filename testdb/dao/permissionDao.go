@@ -91,7 +91,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	queryStm.WriteString(" SELECT a.`function_id`,a.`number`,a.`order`,a.`name`,a.`path`,a.`parent_function_id`, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,1,0) AS leaf, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,0,1) AS hasChildren, ")
-	queryStm.WriteString(" GROUP_CONCAT(CONCAT_WS('|!|, B.function_item_id, B.item_name))  AS itemStr ")
+	queryStm.WriteString(" GROUP_CONCAT(CONCAT_WS('|!|', c.function_item_id, c.item_name))  AS itemStr ")
 	queryStm.WriteString(" FROM tb_functions AS a  ")
 	queryStm.WriteString(" LEFT JOIN tb_functions AS b ON a.function_id = b.parent_function_id ")
 	queryStm.WriteString(" LEFT JOIN tb_functions_items AS c ON a.function_id = c.function_id ")
@@ -104,8 +104,13 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	queryStm.WriteString(" ORDER BY a.`order` DESC ")
 
 	// 查询记录
-	stmt, _ := MysqlDb.Prepare(queryStm.String())
+	stmt, err := MysqlDb.Prepare(queryStm.String())
 	defer stmt.Close()
+
+	if err != nil {
+		fmt.Println(err)
+		return results, err
+	}
 
 	// 查询数据
 	queryResults, err := stmt.Query(fetchArgs...)
@@ -127,21 +132,29 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.ItemStr,
 		)
 
-		items := strings.Split(dataObj.ItemStr, ",")
+		if strings.Index(dataObj.ItemStr, ",") > 0 {
+			var items = make([]string, 0)
 
-		for _, itemTemp := range items {
-			var functionItemTemp models.FunctionItem
-
-			itemTempArray := strings.Split(itemTemp, "|!|")
-
-			itemIdInt, _ := strconv.Atoi(itemTempArray[0])
-
-			functionItemTemp.ItemId = itemIdInt
-			functionItemTemp.ItemName = itemTempArray[1]
+			items = strings.Split(dataObj.ItemStr, ",")
 
 			var itemsTemp = make([]models.FunctionItem, 0)
-			itemsTemp = append(itemsTemp, functionItemTemp)
-			dataObj.Items = &itemsTemp
+
+			if len(items) > 0 {
+				for _, itemTemp := range items {
+					var functionItemTemp models.FunctionItem
+
+					itemTempArray := strings.Split(itemTemp, "|!|")
+
+					itemIdInt, _ := strconv.Atoi(itemTempArray[0])
+
+					functionItemTemp.ItemId = itemIdInt
+					functionItemTemp.ItemName = itemTempArray[1]
+
+					itemsTemp = append(itemsTemp, functionItemTemp)
+				}
+
+				dataObj.Items = &itemsTemp
+			}
 		}
 
 		results = append(results, dataObj)
