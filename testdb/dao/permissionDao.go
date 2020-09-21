@@ -121,6 +121,11 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	}
 
 	for queryResults.Next() {
+
+		dataObj.ItemStr = ""
+
+		dataObj.Items = dataObj.Items[:0]
+
 		queryResults.Scan(&dataObj.FunctionId,
 			&dataObj.Number,
 			&dataObj.Order,
@@ -132,12 +137,12 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.ItemStr,
 		)
 
-		if strings.Index(dataObj.ItemStr, ",") > 0 {
+		var itemsTemp = make([]models.FunctionItem, 0)
+
+		if strings.Index(dataObj.ItemStr, "|!|") > 0 {
 			var items = make([]string, 0)
 
 			items = strings.Split(dataObj.ItemStr, ",")
-
-			var itemsTemp = make([]models.FunctionItem, 0)
 
 			if len(items) > 0 {
 				for _, itemTemp := range items {
@@ -152,10 +157,10 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 
 					itemsTemp = append(itemsTemp, functionItemTemp)
 				}
-
-				dataObj.Items = &itemsTemp
 			}
 		}
+
+		dataObj.Items = itemsTemp
 
 		results = append(results, dataObj)
 	}

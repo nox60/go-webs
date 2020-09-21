@@ -11,7 +11,7 @@ type FunctionNode struct {
 	Leaf             bool            `json:"leaf"`
 	Parents          interface{}     `json:"parents"`
 	Child            *[]FunctionNode `json:"children"`
-	Items            *[]FunctionItem `json:"items"`
+	Items            []FunctionItem  `json:"items"`
 	ItemStr          string
 }
 
