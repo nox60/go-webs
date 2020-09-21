@@ -90,9 +90,11 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 
 	queryStm.WriteString(" SELECT a.`function_id`,a.`number`,a.`order`,a.`name`,a.`path`,a.`parent_function_id`, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,1,0) AS leaf, ")
-	queryStm.WriteString(" IF(b.function_id IS NULL,0,1) AS hasChildren ")
+	queryStm.WriteString(" IF(b.function_id IS NULL,0,1) AS hasChildren, ")
+	queryStm.WriteString(" GROUP_CONCAT(c.function_item_id) AS itemStr ")
 	queryStm.WriteString(" FROM tb_functions AS a  ")
 	queryStm.WriteString(" LEFT JOIN tb_functions AS b ON a.function_id = b.parent_function_id ")
+	queryStm.WriteString(" LEFT JOIN tb_functions_items AS c ON a.function_id = c.function_id ")
 	queryStm.WriteString(" WHERE 1=1 ")
 	// 查询条件.
 	queryStm.WriteString(" AND a.parent_function_id = ? ")
@@ -122,20 +124,31 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.ParentFunctionId,
 			&dataObj.Leaf,
 			&dataObj.HasChildren,
+			&dataObj.ItemStr,
 		)
 
-		var items = make([]models.FunctionItem, 0)
+		//var items = make([]models.FunctionItem, 0)
+		//
+		//var tempItem models.FunctionItem
+		//tempItem.ItemName = "itemA" + strconv.Itoa(dataObj.FunctionId)
+		//
+		//var tempItem2 models.FunctionItem
+		//tempItem2.ItemName = "itemB" + strconv.Itoa(dataObj.FunctionId)
+		//
+		//items = append(items, tempItem)
+		//items = append(items, tempItem2)
+		//strings.Split()
 
-		var tempItem models.FunctionItem
-		tempItem.ItemName = "itemA" + strconv.Itoa(dataObj.FunctionId)
+		//dataObj.Items = &items
 
-		var tempItem2 models.FunctionItem
-		tempItem2.ItemName = "itemB" + strconv.Itoa(dataObj.FunctionId)
+		itemIds := strings.Split(dataObj.ItemStr, ",")
 
-		items = append(items, tempItem)
-		items = append(items, tempItem2)
+		for _, itemId := range itemIds {
+			var functionItemTemp models.FunctionItem
+			itemIdInt, _ := strconv.Atoi(itemId)
+			functionItemTemp.ItemId = itemIdInt
+		}
 
-		dataObj.Items = &items
 		results = append(results, dataObj)
 	}
 

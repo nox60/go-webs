@@ -390,13 +390,13 @@
         console.log('----------eeeeeeee')
         this.listLoading = true
         this.addItemDialogVisible = true
-        if ( row['id'] === 0 ){ //新增
+        if ( jsonObject.itemId === 0 ){ //新增
           console.log('新增数据')
           this.forEdit = 0
         } else { //修改
           console.log('修改数据')
           this.forEdit = 1
-          this.itemForm.id = row['id']
+          this.itemForm.id = jsonObject.itemId
         }
         this.listLoading = false
 
