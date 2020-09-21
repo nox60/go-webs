@@ -137,6 +137,9 @@ export default {
   created() {
     this.getList()
   },
+  mounted() {
+    this.changeCss();
+  },
   methods: {
     getList() {
       this.listLoading = true
@@ -288,6 +291,37 @@ export default {
         })
         .catch(_ => {});
     },
+
+    renderContent(h, { node, data, store }) {//树节点的内容区的渲染 Function
+      let classname = "";
+      // 由于项目中有三级菜单也有四级级菜单，就要在此做出判断
+      if (node.level === 4) {
+        classname = "foo";
+      }
+      if (node.level === 3 && node.childNodes.length === 0) {
+        classname = "foo";
+      }
+      return h(
+        "p",
+        {
+          class: classname
+        },
+        node.label
+      );
+    },
+    changeCss() {
+      var levelName = document.getElementsByClassName("foo"); // levelname是上面的最底层节点的名字
+      for (var i = 0; i < levelName.length; i++) {
+        // cssFloat 兼容 ie6-8  styleFloat 兼容ie9及标准浏览器
+        levelName[i].parentNode.style.cssFloat = "left"; // 最底层的节点，包括多选框和名字都让他左浮动
+        levelName[i].parentNode.style.styleFloat = "left";
+        levelName[i].parentNode.onmouseover = function() {
+          this.style.backgroundColor = "#fff";
+        };
+      }
+    },
+
+
   }
 }
 </script>
