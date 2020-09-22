@@ -196,11 +196,11 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 	return dataRes, err
 }
 
-func GetAllFunctions(node *models.FunctionNode) (err error) {
+func GetAllFunctions(node *models.FunctionNode, showItems bool) (err error) {
 	if node.HasChildren {
 		var parent models.FunctionNode
 		parent.ParentFunctionId = node.FunctionId
-		child, err := dao.GetFunctionsByParentId(&parent)
+		child, err := dao.GetFunctionsByParentId(&parent, showItems)
 
 		if err != nil {
 			fmt.Println(err)
@@ -209,7 +209,7 @@ func GetAllFunctions(node *models.FunctionNode) (err error) {
 		node.Child = &child
 		for i, v := range child {
 			fmt.Println(i, v)
-			GetAllFunctions(&child[i])
+			GetAllFunctions(&child[i], showItems)
 		}
 
 	}

@@ -199,7 +199,7 @@ func GetRoleById(c *gin.Context) {
 	c.JSON(200, resultMsg)
 }
 
-func GetRoleByParentId(c *gin.Context) {
+func GetAllChildByParentId(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
@@ -209,11 +209,18 @@ func GetRoleByParentId(c *gin.Context) {
 	id, _ := strconv.Atoi(idStr)
 	var parentNode models.FunctionNode
 
+	showItems := c.Param("showItems")
+
 	parentNode.ParentFunctionId = id
 	parentNode.FunctionId = id
 	parentNode.HasChildren = true
 
 	services.GetAllFunctions(&parentNode)
+
+	if showItems == "1" {
+
+	}
+
 	resultMsg.Data = parentNode.Child
 
 	c.JSON(200, resultMsg)
