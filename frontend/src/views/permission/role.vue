@@ -52,7 +52,6 @@
           <el-tree
             :data="treeData"
             :props="defaultProps"
-            :render-content="renderContent"
             v-model="roleForm.functions"
             show-checkbox
             default-expand-all
@@ -232,6 +231,7 @@ export default {
       getAllFuncs().then(response => {
         setTimeout(() => {
           this.treeData = response.data
+          this.changeCss()
         }, 1000)
       })
       if ( row.roleId === 0 ){ //新增
@@ -298,26 +298,26 @@ export default {
       let classname = "";
       // 由于项目中有三级菜单也有四级级菜单，就要在此做出判断
       console.log(node)
-      console.log(node.level)
-      if (node.level === 4) {
-        classname = "foo";
-      }
-      if (node.level === 3 && node.childNodes.length === 0) {
+      console.log(node.isLeaf)
+      if (node.isLeaf === true) {
         console.log('fffffffffffffffffffffffffffffffffffff')
         classname = "foo";
       }
-      classname = "foo"
       return h(
         "p",
         {
-          class: classname
+          class: 'foo'
         },
         node.label
       );
     },
     changeCss() {
+      console.log('into change css method---------------------------------------------')
       var levelName = document.getElementsByClassName("foo"); // levelname是上面的最底层节点的名字
+      console.log(levelName)
+      console.log(levelName.length)
       for (var i = 0; i < levelName.length; i++) {
+        console.log('------------------------------------------fund')
         // cssFloat 兼容 ie6-8  styleFloat 兼容ie9及标准浏览器
         levelName[i].parentNode.style.cssFloat = "left"; // 最底层的节点，包括多选框和名字都让他左浮动
         levelName[i].parentNode.style.styleFloat = "left";
@@ -326,7 +326,6 @@ export default {
         };
       }
     },
-
 
   }
 }

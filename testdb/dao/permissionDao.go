@@ -149,9 +149,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 					var functionItemTemp models.FunctionItem
 
 					itemTempArray := strings.Split(itemTemp, "|!|")
-
 					itemIdInt, _ := strconv.Atoi(itemTempArray[0])
-
 					functionItemTemp.ItemId = itemIdInt
 					functionItemTemp.ItemName = itemTempArray[1]
 
