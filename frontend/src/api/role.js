@@ -59,14 +59,6 @@ export function addOrUpdateFunction(data) {
   })
 }
 
-export function addOrUpdateFunctionItem(data) {
-  return request({
-    url: '/addOrUpdateFunctionItem',
-    method: 'post',
-    data: data
-  })
-}
-
 export function getFunctionById(id) {
   return request({
     url: `/getFunctionById/${id}`,
@@ -81,7 +73,6 @@ export function addOrUpdateRole(data) {
     data: data
   })
 }
-
 
 export function listRoleData(query) {
   return request({
@@ -108,8 +99,7 @@ export function getRoleById(id) {
 
 export function getAllFuncs() {
   return request({
-    url: `/getAllChildByParentId/0/1`,
+    url: `/pid/0`,
     method: 'get',
   })
 }
-

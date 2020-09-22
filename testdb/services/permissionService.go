@@ -7,7 +7,7 @@ import (
 )
 
 func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []models.FunctionNode, err error) {
-	return dao.GetFunctionsByParentId(fetchDataBody, false)
+	return dao.GetFunctionsByParentId(fetchDataBody)
 }
 
 func AddFunction(function *models.FunctionNode) {
@@ -28,26 +28,6 @@ func AddFunction(function *models.FunctionNode) {
 	}()
 
 	err = dao.AddFunction(function, tx)
-}
-
-func AddFunctionItem(functionItem *models.FunctionItem) {
-	tx, err := dao.MysqlDb.Begin()
-
-	if err != nil {
-		return
-	}
-	defer func() {
-		switch {
-		case err != nil:
-			fmt.Println(err)
-			fmt.Println("rollback error")
-		default:
-			fmt.Println("commit ")
-			err = tx.Commit()
-		}
-	}()
-
-	err = dao.AddFunctionItem(functionItem, tx)
 }
 
 func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.FunctionNode, err error) {
@@ -196,20 +176,20 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 	return dataRes, err
 }
 
-func GetAllFunctions(node *models.FunctionNode, showItems bool) (err error) {
+func GetAllFunctions(node *models.FunctionNode) (err error) {
 	if node.HasChildren {
 		var parent models.FunctionNode
 		parent.ParentFunctionId = node.FunctionId
-		child, err := dao.GetFunctionsByParentId(&parent, showItems)
+		child, err := dao.GetFunctionsByParentId(&parent)
 
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		node.Child = child
+		node.Child = &child
 		for i, v := range child {
 			fmt.Println(i, v)
-			GetAllFunctions(&child[i], showItems)
+			GetAllFunctions(&child[i])
 		}
 
 	}

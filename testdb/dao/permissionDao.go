@@ -75,7 +75,7 @@ func RetrievePermissionData(fetchDataBody *models.FetchDataRequestBody) (dataRes
 	return results, totalCount, err
 }
 
-func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) (dataResBody []models.FunctionNode, err error) {
+func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []models.FunctionNode, err error) {
 	// 通过切片存储
 	results := make([]models.FunctionNode, 0)
 
@@ -121,7 +121,9 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) 
 	}
 
 	for queryResults.Next() {
+
 		dataObj.ItemStr = ""
+
 		dataObj.Items = dataObj.Items[:0]
 
 		queryResults.Scan(&dataObj.FunctionId,
@@ -135,49 +137,30 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) 
 			&dataObj.ItemStr,
 		)
 
-		if strings.Index(dataObj.ItemStr, "|!|") > 0 {
+		var itemsTemp = make([]models.FunctionItem, 0)
+
+		if strings.Index(dataObj.ItemStr, ",") > 0 {
 			var items = make([]string, 0)
+
 			items = strings.Split(dataObj.ItemStr, ",")
 
 			if len(items) > 0 {
-				// 如果需要将页面功能点以节点的方式渲染在树中，则以。。
-				if showItems {
-					dataObj.HasChildren = true
-					dataObj.Leaf = false
+				for _, itemTemp := range items {
+					var functionItemTemp models.FunctionItem
 
-					// 将功能点以为 FunctionNode的结构体方式返回
-					var nodesTemp []models.FunctionNode
-					for _, itemTemp := range items {
-						var functionNodeTemp models.FunctionNode
+					itemTempArray := strings.Split(itemTemp, "|!|")
 
-						itemTempArray := strings.Split(itemTemp, "|!|")
-						itemIdInt, _ := strconv.Atoi(itemTempArray[0])
-						functionNodeTemp.FunctionId = itemIdInt
-						functionNodeTemp.Name = itemTempArray[1]
+					itemIdInt, _ := strconv.Atoi(itemTempArray[0])
 
-						nodesTemp = append(nodesTemp, functionNodeTemp)
-					}
+					functionItemTemp.ItemId = itemIdInt
+					functionItemTemp.ItemName = itemTempArray[1]
 
-					dataObj.Child = nodesTemp
-				} else { // 反之
-					var itemsTemp = make([]models.FunctionItem, 0)
-					for _, itemTemp := range items {
-						var functionItemTemp models.FunctionItem
-
-						itemTempArray := strings.Split(itemTemp, "|!|")
-
-						itemIdInt, _ := strconv.Atoi(itemTempArray[0])
-						functionItemTemp.ItemId = itemIdInt
-						functionItemTemp.ItemName = itemTempArray[1]
-
-						itemsTemp = append(itemsTemp, functionItemTemp)
-					}
-
-					dataObj.Items = itemsTemp
+					itemsTemp = append(itemsTemp, functionItemTemp)
 				}
-
 			}
 		}
+
+		dataObj.Items = itemsTemp
 
 		results = append(results, dataObj)
 	}
