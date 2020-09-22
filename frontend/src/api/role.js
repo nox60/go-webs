@@ -108,7 +108,7 @@ export function getRoleById(id) {
 
 export function getAllFuncs() {
   return request({
-    url: `/pid/0`,
+    url: `/getAllChildByParentId/0/1`,
     method: 'get',
   })
 }

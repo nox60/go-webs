@@ -210,12 +210,16 @@ func GetAllChildByParentId(c *gin.Context) {
 	var parentNode models.FunctionNode
 
 	showItems := c.Param("showItems")
+	showItemBool := false
+	if showItems == "1" {
+		showItemBool = true
+	}
 
 	parentNode.ParentFunctionId = id
 	parentNode.FunctionId = id
 	parentNode.HasChildren = true
 
-	services.GetAllFunctions(&parentNode)
+	services.GetAllFunctions(&parentNode, showItemBool)
 
 	if showItems == "1" {
 

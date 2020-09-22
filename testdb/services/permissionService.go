@@ -7,7 +7,7 @@ import (
 )
 
 func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []models.FunctionNode, err error) {
-	return dao.GetFunctionsByParentId(fetchDataBody)
+	return dao.GetFunctionsByParentId(fetchDataBody, false)
 }
 
 func AddFunction(function *models.FunctionNode) {
