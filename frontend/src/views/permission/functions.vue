@@ -34,9 +34,11 @@
 
       <el-table-column prop="items" label="页内功能点">
         <template slot-scope="scope">
-          <el-button v-for="item in scope.row.items" type="primary" size="mini" >
-            {{item.itemName}}
-          </el-button>
+          <el-button-group v-for="item in scope.row.items"  >
+            <el-button type="small" icon="el-icon-delete" @click="handleDeleteItem(item.itemId)"></el-button>
+            <el-button type="small" @click="handleUpdateItem(item.itemId)">{{item.itemName}}</el-button>
+
+          </el-button-group>
 
           <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateItem({ itemId: 0, functionId: scope.row.id })">
           </el-button>
@@ -440,6 +442,12 @@
             done();
           })
           .catch(_ => {});
+      },
+      handleDeleteItem(itemId) {//新增OR修改权限点时点击树节点
+        console.log(itemId)
+      },
+      handleUpdateItem(itemId) {
+        console.log(itemId)
       },
 
     }
