@@ -140,7 +140,6 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) 
 			items = strings.Split(dataObj.ItemStr, ",")
 
 			if len(items) > 0 {
-
 				// 如果需要将页面功能点以节点的方式渲染在树中，则以。。
 				if showItems {
 					dataObj.HasChildren = true
@@ -159,7 +158,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) 
 						nodesTemp = append(nodesTemp, functionNodeTemp)
 					}
 
-					dataObj.Child = &nodesTemp
+					dataObj.Child = nodesTemp
 				} else { // 反之
 					var itemsTemp = make([]models.FunctionItem, 0)
 					for _, itemTemp := range items {

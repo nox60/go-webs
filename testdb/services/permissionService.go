@@ -206,7 +206,7 @@ func GetAllFunctions(node *models.FunctionNode, showItems bool) (err error) {
 			fmt.Println(err)
 		}
 
-		node.Child = &child
+		node.Child = child
 		for i, v := range child {
 			fmt.Println(i, v)
 			GetAllFunctions(&child[i], showItems)
