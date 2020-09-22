@@ -137,8 +137,6 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) 
 			&dataObj.ItemStr,
 		)
 
-		var itemsTemp = make([]models.FunctionItem, 0)
-
 		if strings.Index(dataObj.ItemStr, "|!|") > 0 {
 			var items = make([]string, 0)
 
@@ -152,8 +150,24 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) 
 				// 如果需要将页面功能点以节点的方式渲染在树中，则以。。
 
 				if showItems {
+					// 将功能点以为 FunctionNode的结构体方式返回
+					var nodesTemp []models.FunctionNode
+					for _, itemTemp := range items {
+						var functionNodeTemp models.FunctionNode
 
+						itemTempArray := strings.Split(itemTemp, "|!|")
+
+						itemIdInt, _ := strconv.Atoi(itemTempArray[0])
+						functionNodeTemp.FunctionId = itemIdInt
+						functionNodeTemp.Name = itemTempArray[1]
+
+						nodesTemp = append(nodesTemp, functionNodeTemp)
+					}
+
+					dataObj.Child = &nodesTemp
 				} else { // 反之
+					var itemsTemp = make([]models.FunctionItem, 0)
+
 					for _, itemTemp := range items {
 						var functionItemTemp models.FunctionItem
 
@@ -165,12 +179,12 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) 
 
 						itemsTemp = append(itemsTemp, functionItemTemp)
 					}
+
+					dataObj.Items = itemsTemp
 				}
 
 			}
 		}
-
-		dataObj.Items = itemsTemp
 
 		results = append(results, dataObj)
 	}
