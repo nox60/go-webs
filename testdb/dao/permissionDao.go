@@ -144,12 +144,12 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode, showItems bool) 
 
 			if len(items) > 0 {
 
-				dataObj.HasChildren = true
-				dataObj.Leaf = false
-
 				// 如果需要将页面功能点以节点的方式渲染在树中，则以。。
 
 				if showItems {
+					dataObj.HasChildren = true
+					dataObj.Leaf = false
+
 					// 将功能点以为 FunctionNode的结构体方式返回
 					var nodesTemp []models.FunctionNode
 					for _, itemTemp := range items {
