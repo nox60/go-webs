@@ -55,6 +55,29 @@ func AddOrUpdateFunction(c *gin.Context) {
 	c.JSON(200, resultMsg)
 }
 
+func AddOrUpdateFunctionItem(c *gin.Context) {
+
+	var functionItemReq models.FunctionItem
+
+	if err := c.ShouldBindJSON(&functionItemReq); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if functionItemReq.ItemId == 0 {
+		// 新增
+		services.AddFunctionItem(&functionItemReq)
+	} else {
+		// 更新
+	}
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "新增功能点成功"
+	c.JSON(200, resultMsg)
+}
+
 func GetFunctionById(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)

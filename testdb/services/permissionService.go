@@ -30,6 +30,26 @@ func AddFunction(function *models.FunctionNode) {
 	err = dao.AddFunction(function, tx)
 }
 
+func AddFunctionItem(functionItem *models.FunctionItem) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	err = dao.AddFunctionItem(functionItem, tx)
+}
+
 func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.FunctionNode, err error) {
 	dataRes, err := dao.GetFunctionById(fetchDataBody)
 	tempParentId := dataRes.ParentFunctionId

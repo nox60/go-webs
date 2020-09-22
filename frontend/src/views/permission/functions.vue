@@ -333,6 +333,7 @@
         this.$refs['itemForm'].validate((valid) => {
           if (valid) {
             this.listLoading = true
+            console.log('---------------------------------!!!!!!!!!!!!!!!!!')
             console.log(this.itemForm)
             addOrUpdateFunctionItem(this.itemForm).then(() => {
               this.$notify({
