@@ -129,7 +129,6 @@
         <el-form-item label="功能点名称" prop="itemName">
           <el-input v-model="itemForm.itemName"  placeholder="功能点名称" />
         </el-form-item>
-
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="cancelAddOrEditItem">取消</el-button>
@@ -386,11 +385,7 @@
         }
       },
       handleAddOrUpdateFunctionItem(jsonObject){
-        console.log('----------2222222')
-        console.log(jsonObject.itemId)
-        console.log(jsonObject.functionId)
         this.itemForm.functionId = jsonObject.functionId
-        console.log('----------eeeeeeee')
         this.listLoading = true
         this.addItemDialogVisible = true
         if ( jsonObject.itemId === 0 ){ //新增
@@ -400,7 +395,6 @@
           console.log('修改数据')
           this.forEdit = 1
           this.itemForm.id = jsonObject.itemId
-
           getFunctionItemById(this.itemForm.id).then(response => {
             setTimeout(() => {
               this.itemForm.itemName = response.data.itemName
