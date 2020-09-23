@@ -240,3 +240,23 @@ func GetFunctionItemById(fetchDataBody *models.FunctionItem) (dataResBody models
 	dataRes, err := dao.GetFunctionItemById(fetchDataBody)
 	return dataRes, err
 }
+
+func UpdateFunctionItemById(item *models.FunctionItem) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	err = dao.UpdateFunctionItemById(item, tx)
+}

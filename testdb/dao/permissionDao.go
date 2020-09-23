@@ -218,13 +218,33 @@ func AddFunction(function *models.FunctionNode, tx *sql.Tx) (err error) {
 }
 
 func AddFunctionItem(item *models.FunctionItem, tx *sql.Tx) (err error) {
-	_, err = tx.Exec(" INSERT INTO `tb_functions_items` (`item_name`,`function_id`) "+
-		" values (?,?) ",
+	_, err = tx.Exec(" INSERT INTO `tb_functions_items` (`item_name`,`function_id`, `item_number`) "+
+		" values (?,?,?) ",
 		item.ItemName,
-		item.FunctionId)
+		item.FunctionId,
+		item.ItemNumber)
 	if err != nil {
 		return err
 	}
+	return
+}
+
+func UpdateFunctionItemById(itemData *models.FunctionItem, tx *sql.Tx) (err error) {
+	var queryStm strings.Builder
+	queryStm.WriteString("UPDATE `tb_functions_items` SET `item_name` = ?, `item_number` = ?  WHERE function_item_id = ? ")
+
+	var args = make([]interface{}, 0)
+
+	args = append(args, itemData.ItemName)
+	args = append(args, itemData.ItemNumber)
+	args = append(args, itemData.ItemId)
+
+	_, err = tx.Exec(queryStm.String(), args...)
+
+	if err != nil {
+		return err
+	}
+
 	return
 }
 
