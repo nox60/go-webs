@@ -532,3 +532,42 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 
 	return dataObj, err
 }
+
+func GetFunctionItemById(fetchDataBody *models.FunctionItem) (dataResBody models.FunctionItem, err error) {
+
+	// 获取数据的临时对象
+	var dataObj models.FunctionItem
+
+	// 查询条件
+	var queryStm strings.Builder
+
+	// 查询条件
+	var fetchArgs = make([]interface{}, 0)
+
+	queryStm.WriteString(" SELECT a.`function_id`,a.`item_number`,a.`item_name` ")
+	queryStm.WriteString(" FROM tb_functions_items AS a  ")
+	queryStm.WriteString(" WHERE 1=1 ")
+	// 查询条件.
+	queryStm.WriteString(" AND a.`function_item_id` = ? ")
+	fetchArgs = append(fetchArgs, fetchDataBody.ItemId)
+
+	// 查询记录
+	stmt, _ := MysqlDb.Prepare(queryStm.String())
+	defer stmt.Close()
+
+	// 查询数据
+	queryResult := stmt.QueryRow(fetchArgs...)
+
+	if err != nil {
+		fmt.Println(err)
+		return dataObj, err
+	}
+
+	queryResult.Scan(&dataObj.FunctionId,
+		&dataObj.FunctionId,
+		&dataObj.ItemNumber,
+		&dataObj.ItemName,
+	)
+
+	return dataObj, err
+}

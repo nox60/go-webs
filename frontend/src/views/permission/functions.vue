@@ -36,10 +36,10 @@
         <template slot-scope="scope">
           <el-button-group v-for="item in scope.row.items"  >
             <el-button  size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)"></el-button>
-            <el-button  size="mini" @click="handleUpdateItem(item.itemId)">{{item.itemName}}</el-button>
+            <el-button  size="mini" @click="handleAddOrUpdateFunctionItem({ itemId: item.itemId, functionId: scope.row.id })">{{item.itemName}}</el-button>
           </el-button-group>
 
-          <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateItem({ itemId: 0, functionId: scope.row.id })">
+          <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateFunctionItem({ itemId: 0, functionId: scope.row.id })">
           </el-button>
 
         </template>
@@ -385,10 +385,10 @@
           }
         }
       },
-      handleAddOrUpdateItem(jsonObject){
-        // console.log('----------2222222')
-        // console.log(jsonObject.itemId)
-        // console.log(jsonObject.functionId)
+      handleAddOrUpdateFunctionItem(jsonObject){
+        console.log('----------2222222')
+        console.log(jsonObject.itemId)
+        console.log(jsonObject.functionId)
         this.itemForm.functionId = jsonObject.functionId
         console.log('----------eeeeeeee')
         this.listLoading = true
@@ -400,9 +400,21 @@
           console.log('修改数据')
           this.forEdit = 1
           this.itemForm.id = jsonObject.itemId
+
+          getFunctionById(this.functionForm.id).then(response => {
+            setTimeout(() => {
+              this.functionForm = response.data
+              let defaultNode = new Array(1);
+              defaultNode[0] = response.data.parentId
+
+              this.defaultExpandedNodes = response.data.parents
+              this.defaultSelectedNode = defaultNode
+              this.listLoading = false
+            }, 1000)
+          })
+
         }
         this.listLoading = false
-
       },
       handleAddOrUpdate(row) {
         this.listLoading = true
@@ -461,7 +473,7 @@
           })
           .catch(_ => {});
       },
-      handleUpdateItem(itemId) {
+      handleUpdateFunctionItem(itemId) {
         console.log(itemId)
       },
 

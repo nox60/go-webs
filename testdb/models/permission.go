@@ -18,6 +18,7 @@ type FunctionNode struct {
 type FunctionItem struct {
 	ItemId     int    `json:"itemId"`
 	ItemName   string `json:"itemName"`
+	ItemNumber int    `json:"itemNumber"`
 	FunctionId int    `json:"functionId"`
 }
 
