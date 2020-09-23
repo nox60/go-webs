@@ -91,7 +91,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	queryStm.WriteString(" SELECT a.`function_id`,a.`number`,a.`order`,a.`name`,a.`path`,a.`parent_function_id`, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,1,0) AS leaf, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,0,1) AS hasChildren, ")
-	queryStm.WriteString(" GROUP_CONCAT(CONCAT_WS('|!|', c.function_item_id, c.item_name))  AS itemStr ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT(CONCAT_WS('|!|', c.function_item_id, c.item_name)))  AS itemStr ")
 	queryStm.WriteString(" FROM tb_functions AS a  ")
 	queryStm.WriteString(" LEFT JOIN tb_functions AS b ON a.function_id = b.parent_function_id ")
 	queryStm.WriteString(" LEFT JOIN tb_functions_items AS c ON a.function_id = c.function_id ")
