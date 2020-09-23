@@ -364,7 +364,6 @@
           this.reload()
         })
       },
-
       cancelAddOrEdit() {
               this.listLoading = false
               this.dialogVisible = false
@@ -404,7 +403,6 @@
               this.listLoading = false
             }, 1000)
           })
-
         }
         this.listLoading = false
       },
