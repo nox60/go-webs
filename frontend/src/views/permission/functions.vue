@@ -35,9 +35,8 @@
       <el-table-column prop="items" label="页内功能点">
         <template slot-scope="scope">
           <el-button-group v-for="item in scope.row.items"  >
-            <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)"></el-button>
-            <el-button type="small" size="mini" @click="handleUpdateItem(item.itemId)">{{item.itemName}}</el-button>
-
+            <el-button  size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)"></el-button>
+            <el-button  size="mini" @click="handleUpdateItem(item.itemId)">{{item.itemName}}</el-button>
           </el-button-group>
 
           <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateItem({ itemId: 0, functionId: scope.row.id })">

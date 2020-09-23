@@ -137,7 +137,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.ItemStr,
 		)
 		var itemsTemp = make([]models.FunctionItem, 0)
-		if strings.Index(dataObj.ItemStr, ",") > 0 {
+		if strings.Index(dataObj.ItemStr, "|!|") > 0 {
 			var items = make([]string, 0)
 			items = strings.Split(dataObj.ItemStr, ",")
 			if len(items) > 0 {
