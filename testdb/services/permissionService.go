@@ -235,3 +235,8 @@ func DeleteFunctionItem(functionItemId int) {
 
 	err = dao.DeleteFunctionItem(functionItemId, tx)
 }
+
+func GetFunctionItemById(fetchDataBody *models.FunctionItem) (dataResBody models.FunctionItem, err error) {
+	dataRes, err := dao.GetFunctionItemById(fetchDataBody)
+	return dataRes, err
+}

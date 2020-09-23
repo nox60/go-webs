@@ -150,7 +150,8 @@
     addOrUpdateFunction,
     getFunctionById,
     addOrUpdateFunctionItem,
-    addOrUpdateRole
+    addOrUpdateRole,
+    getFunctionItemById
   } from '@/api/role'
 
   const defaultRole = {
@@ -201,6 +202,7 @@
         itemForm:{
           itemId:0,
           itemName:'',
+          itemNumber:0,
           functionId:0,
         },
         defaultExpandedNodes:[],
@@ -401,14 +403,12 @@
           this.forEdit = 1
           this.itemForm.id = jsonObject.itemId
 
-          getFunctionById(this.functionForm.id).then(response => {
+          getFunctionItemById(this.itemForm.id).then(response => {
             setTimeout(() => {
-              this.functionForm = response.data
-              let defaultNode = new Array(1);
-              defaultNode[0] = response.data.parentId
-
-              this.defaultExpandedNodes = response.data.parents
-              this.defaultSelectedNode = defaultNode
+              this.itemForm.itemName = response.data.itemName
+              this.itemForm.itemId = response.data.itemId
+              this.itemForm.itemNumber = response.data.itemNumber
+              this.itemForm.functionId = response.data.functionId
               this.listLoading = false
             }, 1000)
           })

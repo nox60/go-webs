@@ -229,3 +229,24 @@ func DeleteFunctionItem(c *gin.Context) {
 	resultMsg.Msg = "删除数据成功"
 	c.JSON(200, resultMsg)
 }
+
+func GetFunctionItemById(c *gin.Context) {
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "获取数据成功"
+
+	idStr := c.Param("itemId")
+
+	itemId, _ := strconv.Atoi(idStr)
+
+	fetchBody := new(models.FunctionItem)
+
+	fetchBody.ItemId = itemId
+
+	resultBody, _ := services.GetFunctionItemById(fetchBody)
+
+	resultMsg.Data = resultBody
+
+	c.JSON(200, resultMsg)
+}

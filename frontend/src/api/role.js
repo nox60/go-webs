@@ -118,3 +118,9 @@ export function deleteFunctionItem(id) {
   })
 }
 
+export function getFunctionItemById(id) {
+  return request({
+    url: `/getFunctionItemById/${id}`,
+    method: 'get',
+  })
+}

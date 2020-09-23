@@ -47,6 +47,7 @@ func main() {
 	api.GET("/getRoleById/:id", controller.GetRoleById)
 	api.POST("/addOrUpdateFunctionItem", controller.AddOrUpdateFunctionItem)
 	api.DELETE("/deleteFunctionItem/:functionItemId", controller.DeleteFunctionItem)
+	api.GET("/getFunctionItemById/:id", controller.GetFunctionItemById)
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
