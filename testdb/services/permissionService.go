@@ -211,8 +211,27 @@ func GetAllFunctions(node *models.FunctionNode) (err error) {
 			fmt.Println(i, v)
 			GetAllFunctions(&child[i])
 		}
-
 	}
 	return
 
+}
+
+func DeleteFunctionItem(functionItemId int) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	err = dao.DeleteFunctionItem(functionItemId, tx)
 }

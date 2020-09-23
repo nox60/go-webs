@@ -218,3 +218,14 @@ func GetRoleByParentId(c *gin.Context) {
 
 	c.JSON(200, resultMsg)
 }
+
+func DeleteFunctionItem(c *gin.Context) {
+	functionItemIdStr := c.Param("functionItemId")
+	functionItemId, _ := strconv.Atoi(functionItemIdStr)
+	services.DeleteFunctionItem(functionItemId)
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "删除数据成功"
+	c.JSON(200, resultMsg)
+}

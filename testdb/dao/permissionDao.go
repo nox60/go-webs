@@ -136,32 +136,23 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.HasChildren,
 			&dataObj.ItemStr,
 		)
-
 		var itemsTemp = make([]models.FunctionItem, 0)
-
 		if strings.Index(dataObj.ItemStr, ",") > 0 {
 			var items = make([]string, 0)
-
 			items = strings.Split(dataObj.ItemStr, ",")
-
 			if len(items) > 0 {
 				for _, itemTemp := range items {
 					var functionItemTemp models.FunctionItem
-
 					itemTempArray := strings.Split(itemTemp, "|!|")
-
 					itemIdInt, _ := strconv.Atoi(itemTempArray[0])
-
 					functionItemTemp.ItemId = itemIdInt
 					functionItemTemp.ItemName = itemTempArray[1]
-
 					itemsTemp = append(itemsTemp, functionItemTemp)
 				}
 			}
 		}
 
 		dataObj.Items = itemsTemp
-
 		results = append(results, dataObj)
 	}
 
@@ -295,6 +286,15 @@ func UpdateRoleById(roleData *models.Role, tx *sql.Tx) (err error) {
 func DeleteFunction(functionId int, tx *sql.Tx) (err error) {
 	_, err = tx.Exec("DELETE FROM `tb_functions` WHERE function_id = ? ",
 		functionId)
+	if err != nil {
+		return err
+	}
+	return
+}
+
+func DeleteFunctionItem(functionItemId int, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("DELETE FROM `tb_functions_items` WHERE function_item_id = ? ",
+		functionItemId)
 	if err != nil {
 		return err
 	}

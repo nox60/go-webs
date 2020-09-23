@@ -110,3 +110,11 @@ export function getAllFuncs() {
     method: 'get',
   })
 }
+
+export function deleteFunctionItem(id) {
+  return request({
+    url: `/deleteFunctionItem/${id}`,
+    method: 'delete'
+  })
+}
+

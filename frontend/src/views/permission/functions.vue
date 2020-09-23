@@ -35,8 +35,8 @@
       <el-table-column prop="items" label="页内功能点">
         <template slot-scope="scope">
           <el-button-group v-for="item in scope.row.items"  >
-            <el-button type="small" icon="el-icon-delete" @click="handleDeleteItem(item.itemId)"></el-button>
-            <el-button type="small" @click="handleUpdateItem(item.itemId)">{{item.itemName}}</el-button>
+            <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)"></el-button>
+            <el-button type="small" size="mini" @click="handleUpdateItem(item.itemId)">{{item.itemName}}</el-button>
 
           </el-button-group>
 
@@ -146,6 +146,7 @@
   import { deepClone } from '@/utils'
   import {
     deleteFunction,
+    deleteFunctionItem,
     getFunctions,
     addOrUpdateFunction,
     getFunctionById,
@@ -444,8 +445,22 @@
           })
           .catch(_ => {});
       },
-      handleDeleteItem(itemId) {//新增OR修改权限点时点击树节点
-        console.log(itemId)
+      handleDeleteFunctionItem(itemId) {//新增OR修改权限点时点击树节点
+        this.$confirm('确认删除？')
+          .then(_ => {
+            deleteFunctionItem(itemId).then(() => {
+              this.dialogVisible = false
+              this.$notify({
+                title: 'Success',
+                message: '删除数据成功！',
+                type: 'success',
+                duration: 2000
+              })
+              this.reload()
+            })
+            done();
+          })
+          .catch(_ => {});
       },
       handleUpdateItem(itemId) {
         console.log(itemId)
