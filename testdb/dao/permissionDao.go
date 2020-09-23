@@ -544,7 +544,7 @@ func GetFunctionItemById(fetchDataBody *models.FunctionItem) (dataResBody models
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT a.`function_id`,a.`item_number`,a.`item_name` ")
+	queryStm.WriteString(" SELECT a.`function_item_id`,a.`function_id`,a.`item_number`,a.`item_name` ")
 	queryStm.WriteString(" FROM tb_functions_items AS a  ")
 	queryStm.WriteString(" WHERE 1=1 ")
 	// 查询条件.
@@ -563,7 +563,7 @@ func GetFunctionItemById(fetchDataBody *models.FunctionItem) (dataResBody models
 		return dataObj, err
 	}
 
-	queryResult.Scan(&dataObj.FunctionId,
+	queryResult.Scan(&dataObj.ItemId,
 		&dataObj.FunctionId,
 		&dataObj.ItemNumber,
 		&dataObj.ItemName,
