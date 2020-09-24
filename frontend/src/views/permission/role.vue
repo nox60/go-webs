@@ -71,30 +71,17 @@
             border
             default-expand-all
             :tree-props="{children: 'children', hasChildren: ''}"> /* 这里有坑*/
-            <el-table-column
-              prop="number"
-              label="编号"
-              width="180">
-            </el-table-column>
+
 
             <el-table-column
               prop="name"
               label="功能点"
               width="180">
             </el-table-column>
-            <el-table-column
-              prop="path"
-              label="路径">
-            </el-table-column>
 
             <el-table-column prop="items" label="页内功能点">
               <template slot-scope="scope">
-                <el-button-group v-for="item in scope.row.items"  >
-                  <el-button  size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)"></el-button>
-                  <el-button  size="mini" @click="handleAddOrUpdateFunctionItem({ itemId: item.itemId, functionId: scope.row.id })">{{item.itemName}}</el-button>
-                </el-button-group>
-                <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateFunctionItem({ itemId: 0, functionId: scope.row.id })">
-                </el-button>
+                <el-checkbox  v-for="item in scope.row.items" @click="handleDeleteFunctionItem(item.itemId)" border size="mini">{{item.itemName}}</el-checkbox>
               </template>
             </el-table-column>
 
