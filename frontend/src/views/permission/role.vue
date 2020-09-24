@@ -183,10 +183,6 @@ export default {
     selectedParent (currentObj) {
       console.log('父节点被选中')
       let currentNode = this.$refs.treeForm.getNode(currentObj)
-      // console.log('------------------------------->>')
-      // console.log(this.$refs)
-      // console.log(currentNode)
-      // console.log('-------------------------------<<')
 
       if (currentNode.parent.key !== undefined) {
         this.$refs.treeForm.setChecked(currentNode.parent, true)
