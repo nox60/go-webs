@@ -83,17 +83,6 @@
           <el-input v-model="functionForm.path" placeholder="/path/1" />
         </el-form-item>
 
-<!--        <el-form-item label="类型" prop="type">-->
-<!--          <el-select v-model="functionForm.type" placeholder="请选择">-->
-<!--            <el-option-->
-<!--              v-for="item in typeOptions"-->
-<!--              :key="item.value"-->
-<!--              :label="item.label"-->
-<!--              :value="item.value">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-
         <el-form-item label="父级菜单" prop="parentId">
           <el-tree
             :data="treeData"
@@ -278,6 +267,25 @@
           this.listLoading = false
         }
       },
+      initFunctionItemFormData(){
+        this.$refs['itemForm'].resetFields();
+        if(this.forEdit == 1) {//编辑数据
+          this.$nextTick(() => {
+            // this.itemForm.id = jsonObject.itemId
+            getFunctionItemById(this.itemForm.itemId).then(response => {
+              setTimeout(() => {
+                this.itemForm.itemName = response.data.itemName
+                this.itemForm.itemId = response.data.itemId
+                this.itemForm.itemNumber = response.data.itemNumber
+                this.itemForm.functionId = response.data.functionId
+                this.listLoading = false
+              }, 1000)
+            })
+          })
+        } else {
+          this.listLoading = false
+        }
+      },
       getFunctions(tree, treeNode, resolve) { //用于懒加载表内数据
         this.listLoading = true
         getFunctions(tree.id).then(response => {
@@ -346,7 +354,6 @@
           }
         })
       },
-
       confirmAddOrUpdateRole(){
         this.listLoading = true
         this.roleForm.functions = functions
@@ -393,18 +400,11 @@
         } else { //修改
           console.log('修改数据')
           this.forEdit = 1
-          this.itemForm.id = jsonObject.itemId
-          getFunctionItemById(this.itemForm.id).then(response => {
-            setTimeout(() => {
-              this.itemForm.itemName = response.data.itemName
-              this.itemForm.itemId = response.data.itemId
-              this.itemForm.itemNumber = response.data.itemNumber
-              this.itemForm.functionId = response.data.functionId
-              this.listLoading = false
-            }, 1000)
-          })
+          this.itemForm.itemId = jsonObject.itemId
         }
-        this.listLoading = false
+        this.$nextTick(()=> {
+          this.initFunctionItemFormData()
+        })
       },
       handleAddOrUpdate(row) {
         this.listLoading = true
@@ -416,7 +416,6 @@
           }
           this.dialogType = 'new'
           this.forEdit = 0
-
         } else { //修改
           console.log('修改数据')
           this.forEdit = 1
