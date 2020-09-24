@@ -49,19 +49,57 @@
           />
         </el-form-item>
         <el-form-item label="权限点" prop="functions">
-          <el-tree
-            :data="treeData"
-            :props="defaultProps"
-            v-model="roleForm.functions"
-            show-checkbox
+<!--          <el-tree-->
+<!--            :data="treeData"-->
+<!--            :props="defaultProps"-->
+<!--            v-model="roleForm.functions"-->
+<!--            show-checkbox-->
+<!--            default-expand-all-->
+<!--            node-key="id"-->
+<!--            ref="treeForm"-->
+<!--            check-strictly-->
+<!--            :default-checked-keys="defaultSelectedNode"-->
+<!--            @check="handleClickNode"-->
+<!--            >-->
+<!--          </el-tree>-->
+
+
+          <el-table
+            :data="tableData"
+            style="width: 100%;margin-bottom: 20px;margin-top:10px;"
+            row-key="id"
+            border
             default-expand-all
-            node-key="id"
-            ref="treeForm"
-            check-strictly
-            :default-checked-keys="defaultSelectedNode"
-            @check="handleClickNode"
-            >
-          </el-tree>
+            :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+            <el-table-column
+              prop="number"
+              label="编号"
+              width="180">
+            </el-table-column>
+
+            <el-table-column
+              prop="name"
+              label="功能点"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="path"
+              label="路径">
+            </el-table-column>
+
+            <el-table-column prop="items" label="页内功能点">
+              <template slot-scope="scope">
+                <el-button-group v-for="item in scope.row.items"  >
+                  <el-button  size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)"></el-button>
+                  <el-button  size="mini" @click="handleAddOrUpdateFunctionItem({ itemId: item.itemId, functionId: scope.row.id })">{{item.itemName}}</el-button>
+                </el-button-group>
+                <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateFunctionItem({ itemId: 0, functionId: scope.row.id })">
+                </el-button>
+              </template>
+            </el-table-column>
+
+          </el-table>
+
 
         </el-form-item>
       </el-form>
@@ -98,6 +136,8 @@ export default {
       defaultExpandedNodes:[],
       defaultSelectedNode:[],
       treeData:[],
+      tableData:[
+      ],
       treeForm:'',
       forEdit:0,
       defaultProps: {
@@ -175,7 +215,17 @@ export default {
         }
       }
     },
-
+    getFunctions(tree, treeNode, resolve) { //用于懒加载表内数据
+      this.listLoading = true
+      getFunctions(tree.id).then(response => {
+        setTimeout(() => {
+          resolve(
+            response.data
+          )
+          this.listLoading = false
+        }, 1000)
+      })
+    },
     // https://blog.csdn.net/qq_41612675/article/details/86612840
     // 横排样式
 
@@ -227,7 +277,6 @@ export default {
       getAllFuncs().then(response => {
         setTimeout(() => {
           this.treeData = response.data
-          this.changeCss()
         }, 1000)
       })
       if ( row.roleId === 0 ){ //新增
@@ -241,6 +290,19 @@ export default {
         console.log('修改数据')
         this.forEdit = 1
         this.roleForm.id = row.roleId
+        console.log('----------------------------------------------------------->>>')
+        console.log(row)
+        this.listLoading = true
+        getAllFuncs().then(response => {
+          setTimeout(() => {
+            // this.tableData = response.data
+            this.tableData =
+              [{"id":1,"number":11,"order":33,"name":"esta","path":"/eksk/fa","parentId":0,"hasChildren":true,"leaf":false,"parents":null,"children":[{"id":2,"number":2,"order":3,"name":"aa","path":"s","parentId":1,"hasChildren":true,"leaf":false,"parents":null,"children":[{"id":3,"number":2,"order":22,"name":"asdf","path":"/test/case","parentId":2,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[],"ItemStr":""},{"id":6,"number":2,"order":3,"name":"bb","path":"bbbb","parentId":2,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[{"itemId":8,"itemName":"f11112222","itemNumber":0,"functionId":0}],"ItemStr":"8|!|f11112222"},{"id":7,"number":4,"order":3,"name":"2","path":"asdf","parentId":2,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[],"ItemStr":""}],"items":[{"itemId":7,"itemName":"232222","itemNumber":0,"functionId":0}],"ItemStr":"7|!|232222"},{"id":5,"number":1,"order":2,"name":"a","path":"ss","parentId":1,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[],"ItemStr":""}],"items":[{"itemId":6,"itemName":"qwf11111","itemNumber":0,"functionId":0}],"ItemStr":"6|!|qwf11111"},{"id":4,"number":2,"order":3,"name":"sadf","path":"/fkeka","parentId":0,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[{"itemId":1,"itemName":"ffffffsssss","itemNumber":0,"functionId":0}],"ItemStr":"1|!|ffffffsssss"}]
+              ,
+
+            this.listLoading = false
+          }, 1000)
+        })
       }
       this.$nextTick(()=>{
         this.initFormData()
