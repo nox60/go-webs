@@ -338,8 +338,24 @@ export default {
         .catch(_ => {});
     },
     handleSelectFunction(checked,obj){
-      console.log(checked)
+      // console.log(checked)
+      console.log(this.roleForm.functions)
       console.log(obj)
+      var type=Object.prototype.toString.call(this.roleForm.functions);
+
+      console.log(type)
+      if(checked) {
+        console.log('选中')
+        if ( obj.id == 1 ) {
+         this.roleForm.functions.push(2)
+        }
+      } else {
+        console.log('撤销')
+        if ( obj.id == 7 ){
+          let index = this.roleForm.functions.indexOf(3);
+          this.roleForm.functions.splice(index, 1);
+        }
+      }
     },
 
   }
