@@ -72,11 +72,14 @@
             default-expand-all
             :tree-props="{children: 'children', hasChildren: ''}"> /* 这里有坑*/
 
-
             <el-table-column
-              prop="name"
-              label="功能点"
-              width="180">
+              width="180"
+              label="菜单选择">
+              <template slot-scope="scope">
+              <el-checkbox @click="handleDeleteFunctionItem(name)"  size="mini">
+                {{ scope.row.name }}
+              </el-checkbox>
+              </template>
             </el-table-column>
 
             <el-table-column prop="items" label="页内功能点">
@@ -282,13 +285,7 @@ export default {
         this.listLoading = true
         getAllFuncs().then(response => {
           setTimeout(() => {
-            // this.tableData = response.data
-            this.tableData =
-
-              [{"id":1,"number":11,"order":33,"name":"esta","path":"/eksk/fa","parentId":0,"hasChildren":true,"leaf":false,"parents":null,"children":[{"id":2,"number":2,"order":3,"name":"aa","path":"s","parentId":1,"hasChildren":true,"leaf":false,"parents":null,"children":[{"id":3,"number":2,"order":22,"name":"asdf","path":"/test/case","parentId":2,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[],"ItemStr":""},{"id":6,"number":2,"order":3,"name":"bb","path":"bbbb","parentId":2,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[{"itemId":8,"itemName":"f11112222","itemNumber":0,"functionId":0}],"ItemStr":"8|!|f11112222"},{"id":7,"number":4,"order":3,"name":"2","path":"asdf","parentId":2,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[],"ItemStr":""}],"items":[{"itemId":7,"itemName":"232222","itemNumber":0,"functionId":0}],"ItemStr":"7|!|232222"},{"id":5,"number":1,"order":2,"name":"a","path":"ss","parentId":1,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[],"ItemStr":""}],"items":[{"itemId":6,"itemName":"qwf11111","itemNumber":0,"functionId":0}],"ItemStr":"6|!|qwf11111"},{"id":4,"number":2,"order":3,"name":"sadf","path":"/fkeka","parentId":0,"hasChildren":false,"leaf":true,"parents":null,"children":null,"items":[{"itemId":1,"itemName":"ffffffsssss","itemNumber":0,"functionId":0}],"ItemStr":"1|!|ffffffsssss"}]          }, 1000)
-
-
-
+            this.tableData = response.data}, 1000)
         })
       }
       this.$nextTick(()=>{
