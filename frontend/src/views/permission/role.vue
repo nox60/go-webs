@@ -280,8 +280,6 @@ export default {
         console.log('修改数据')
         this.forEdit = 1
         this.roleForm.id = row.roleId
-        console.log('----------------------------------------------------------->>>')
-        console.log(row)
         this.listLoading = true
         getAllFuncs().then(response => {
           setTimeout(() => {
@@ -335,40 +333,6 @@ export default {
         .catch(_ => {});
     },
 
-
-    renderContent(h, { node, data, store }) {//树节点的内容区的渲染 Function
-      console.log('------------------------>>>>>>>>>>>>>')
-      let classname = "";
-      // 由于项目中有三级菜单也有四级级菜单，就要在此做出判断
-      console.log(node)
-      console.log(node.isLeaf)
-      if (node.isLeaf === true) {
-        console.log('fffffffffffffffffffffffffffffffffffff')
-        classname = "foo";
-      }
-      return h(
-        "p",
-        {
-          class: 'foo'
-        },
-        node.label
-      );
-    },
-    changeCss() {
-      console.log('into change css method---------------------------------------------')
-      var levelName = document.getElementsByClassName("foo"); // levelname是上面的最底层节点的名字
-      console.log(levelName)
-      console.log(levelName.length)
-      for (var i = 0; i < levelName.length; i++) {
-        console.log('------------------------------------------fund')
-        // cssFloat 兼容 ie6-8  styleFloat 兼容ie9及标准浏览器
-        levelName[i].parentNode.style.cssFloat = "left"; // 最底层的节点，包括多选框和名字都让他左浮动
-        levelName[i].parentNode.style.styleFloat = "left";
-        levelName[i].parentNode.onmouseover = function() {
-          this.style.backgroundColor = "#fff";
-        };
-      }
-    },
 
   }
 }
