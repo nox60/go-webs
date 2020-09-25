@@ -76,7 +76,11 @@
               width="180"
               label="菜单选择">
               <template slot-scope="scope">
-              <el-checkbox @click="handleSelectFunction(scope.row.functionId)"  size="mini">
+              <el-checkbox v-model="roleForm.functions"
+                           @change="handleSelectFunction"
+                           :label="scope.row.id"
+                           :key="scope.row.id"
+                           size="mini">
                 {{ scope.row.name }}
               </el-checkbox>
               </template>
@@ -139,7 +143,7 @@ export default {
         roleId: 0,
         name: '',
         code: '',
-        functions: '',
+        functions: [],
         items: '',
       },
       total: 0,
@@ -167,10 +171,9 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.getList();
   },
   mounted() {
-    this.changeCss();
   },
   methods: {
     getList() {
@@ -334,9 +337,9 @@ export default {
         })
         .catch(_ => {});
     },
-    handleSelectFunction(functionId){
-      console.log("------------------------------------------")
-      console.log(functionId)
+    handleSelectFunction(){
+      console.log(this.roleForm.functions)
+
     },
 
   }
