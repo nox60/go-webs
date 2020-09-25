@@ -76,7 +76,7 @@
               width="180"
               label="菜单选择">
               <template slot-scope="scope">
-              <el-checkbox @click="handleDeleteFunctionItem(name)"  size="mini">
+              <el-checkbox @click="handleSelectFunction(scope.row.functionId)"  size="mini">
                 {{ scope.row.name }}
               </el-checkbox>
               </template>
@@ -139,7 +139,8 @@ export default {
         roleId: 0,
         name: '',
         code: '',
-        functions: [],
+        functions: '',
+        items: '',
       },
       total: 0,
       listQuery: {
@@ -150,6 +151,7 @@ export default {
         type: undefined,
         sort: '+id'
       },
+
       listLoading: false,
       dialogVisible: false,
       role: Object.assign({}, defaultRole),
@@ -332,7 +334,10 @@ export default {
         })
         .catch(_ => {});
     },
-
+    handleSelectFunction(functionId){
+      console.log("------------------------------------------")
+      console.log(functionId)
+    },
 
   }
 }
