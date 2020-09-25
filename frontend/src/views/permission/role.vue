@@ -77,7 +77,7 @@
               label="菜单选择">
               <template slot-scope="scope">
               <el-checkbox v-model="roleForm.functions"
-                           @change="handleSelectFunction"
+                           @change="checked=>handleSelectFunction(checked, scope.row)"
                            :label="scope.row.id"
                            :key="scope.row.id"
                            size="mini">
@@ -337,9 +337,9 @@ export default {
         })
         .catch(_ => {});
     },
-    handleSelectFunction(){
-      console.log(this.roleForm.functions)
-
+    handleSelectFunction(checked,obj){
+      console.log(checked)
+      console.log(obj)
     },
 
   }
