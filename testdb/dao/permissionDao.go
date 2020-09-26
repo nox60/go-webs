@@ -323,8 +323,6 @@ func DeleteFunctionItem(functionItemId int, tx *sql.Tx) (err error) {
 
 func UpdateFunctionById(functionData *models.FunctionNode, tx *sql.Tx) (err error) {
 
-	//_, err = tx.Exec("UPDATE `tb_functions` SET `number` = ?, `order` = ?, `name` = ?, `path` = ?, `parent_function_id` = ?  WHERE itemId = ? ", itemData.ItemContent, itemData.ItemTitle, itemData.ItemType, itemData.ItemId)
-
 	// 查询语句
 	var queryStm strings.Builder
 	queryStm.WriteString("UPDATE `tb_functions` SET `number` = ?, `order` = ?, `name` = ?, `path` = ?, `parent_function_id` = ?  WHERE function_id = ? ")

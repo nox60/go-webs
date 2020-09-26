@@ -339,8 +339,8 @@ export default {
     },
     handleSelectFunction(checked,obj){
       // console.log(checked)
-      console.log(this.roleForm.functions)
-      console.log(obj)
+      // console.log(this.roleForm.functions)
+      // console.log(obj)
       var type=Object.prototype.toString.call(this.roleForm.functions);
 
       console.log(type)

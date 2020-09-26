@@ -465,7 +465,6 @@
       handleUpdateFunctionItem(itemId) {
         console.log(itemId)
       },
-
     }
   }
 </script>
