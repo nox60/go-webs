@@ -90,13 +90,9 @@ func GetFunctionById(c *gin.Context) {
 	id, _ := strconv.Atoi(idStr)
 
 	fetchBody := new(models.FunctionNode)
-
 	fetchBody.FunctionId = id
-
 	resultBody, _ := services.GetFunctionById(fetchBody)
-
 	resultMsg.Data = resultBody
-
 	c.JSON(200, resultMsg)
 }
 
