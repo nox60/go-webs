@@ -199,6 +199,7 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
 	var selfAndChildIds []int
 	if node.HasChildren {
+
 		var parent models.FunctionNode
 		parent.ParentFunctionId = node.FunctionId
 		child, err := dao.GetFunctionsByParentId(&parent)
@@ -209,6 +210,8 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
 
 		node.Child = &child
 		for i, _ := range child {
+			// 将孩子节点和父亲节点进行关联
+			child[i].ParentNode = node
 			_, childs := GetAllFunctions(&child[i])
 
 			if len(childs) > 0 {
@@ -217,11 +220,23 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
 				}
 			}
 		}
-
 		node.ChildIds = selfAndChildIds
 
 	}
 	selfAndChildIds = append(selfAndChildIds, node.FunctionId)
+
+	//处理父节点
+	tempNode := node
+	// var tempParentIds []int
+
+	for {
+		if tempNode.ParentFunctionId != 0 {
+			node.ParentIds = append(node.ParentIds, tempNode.FunctionId)
+			tempNode = tempNode.ParentNode
+		} else {
+			break
+		}
+	}
 
 	return err, selfAndChildIds
 }
