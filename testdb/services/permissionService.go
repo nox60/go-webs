@@ -196,7 +196,8 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 	return dataRes, err
 }
 
-func GetAllFunctions(node *models.FunctionNode) (err error) {
+func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
+	var selfAndChildIds []int
 	if node.HasChildren {
 		var parent models.FunctionNode
 		parent.ParentFunctionId = node.FunctionId
@@ -207,13 +208,22 @@ func GetAllFunctions(node *models.FunctionNode) (err error) {
 		}
 
 		node.Child = &child
-		for i, v := range child {
-			fmt.Println(i, v)
-			GetAllFunctions(&child[i])
-		}
-	}
-	return
+		for i, _ := range child {
+			_, childs := GetAllFunctions(&child[i])
 
+			if len(childs) > 0 {
+				for _, t := range childs {
+					selfAndChildIds = append(selfAndChildIds, t)
+				}
+			}
+		}
+
+		node.ChildIds = selfAndChildIds
+
+	}
+	selfAndChildIds = append(selfAndChildIds, node.FunctionId)
+
+	return err, selfAndChildIds
 }
 
 func DeleteFunctionItem(functionItemId int) {

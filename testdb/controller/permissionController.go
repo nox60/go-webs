@@ -211,6 +211,9 @@ func GetRoleByParentId(c *gin.Context) {
 	parentNode.HasChildren = true
 
 	services.GetAllFunctions(&parentNode)
+
+	// 处理父节点和孩子节点ID
+
 	resultMsg.Data = parentNode.Child
 
 	c.JSON(200, resultMsg)

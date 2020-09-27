@@ -12,6 +12,8 @@ type FunctionNode struct {
 	Parents          interface{}     `json:"parents"`
 	Child            *[]FunctionNode `json:"children"`
 	Items            []FunctionItem  `json:"items"`
+	ParentIds        []int           `json:"parentIds"`
+	ChildIds         []int           `json:"childIds"`
 	ItemStr          string
 }
 
