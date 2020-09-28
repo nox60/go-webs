@@ -49,21 +49,6 @@
           />
         </el-form-item>
         <el-form-item label="权限点" prop="functions">
-<!--          <el-tree-->
-<!--            :data="treeData"-->
-<!--            :props="defaultProps"-->
-<!--            v-model="roleForm.functions"-->
-<!--            show-checkbox-->
-<!--            default-expand-all-->
-<!--            node-key="id"-->
-<!--            ref="treeForm"-->
-<!--            check-strictly-->
-<!--            :default-checked-keys="defaultSelectedNode"-->
-<!--            @check="handleClickNode"-->
-<!--            >-->
-<!--          </el-tree>-->
-
-
           <el-table
             :data="tableData"
             style="width: 100%;margin-bottom: 20px;margin-top:10px;"
@@ -88,7 +73,10 @@
 
             <el-table-column prop="items" label="页内功能点">
               <template slot-scope="scope">
-                <el-checkbox  v-for="item in scope.row.items" @click="handleDeleteFunctionItem(item.itemId)" border size="mini">{{item.itemName}}</el-checkbox>
+                <el-checkbox  v-for="item in scope.row.items"
+                              @change="checked=>handleSelectItem(checked, item)"
+                              border size="mini">{{item.itemName}}
+                </el-checkbox>
               </template>
             </el-table-column>
 
@@ -338,12 +326,7 @@ export default {
         .catch(_ => {});
     },
     handleSelectFunction(checked,obj){
-      // console.log(checked)
-      // console.log(this.roleForm.functions)
-      // console.log(obj)
       var type=Object.prototype.toString.call(this.roleForm.functions);
-      console.log('选中')
-      console.log(type)
       if(checked) {
         if( obj.parentIds ) {
           obj.parentIds.forEach((item,index,array)=>{
@@ -353,11 +336,8 @@ export default {
             }
           })
         }
-
         //参数：value数组中的当前项, index当前项的索引, array原始数组；
       } else {
-        console.log('撤销')
-
         if( obj.childIds ) {
           obj.childIds.forEach((item,index,array)=>{
             //首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
@@ -370,7 +350,11 @@ export default {
         }
       }
     },
+    handleSelectItem(checked,item){
+      console.log(checked)
+      console.log(item)
 
+    },
   }
 }
 </script>
