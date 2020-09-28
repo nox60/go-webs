@@ -23,6 +23,7 @@ type FunctionItem struct {
 	ItemName   string `json:"itemName"`
 	ItemNumber int    `json:"itemNumber"`
 	FunctionId int    `json:"functionId"`
+	ParentIds  []int  `json:"parentIds"`
 }
 
 type Role struct {

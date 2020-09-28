@@ -198,13 +198,15 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 
 func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
 	var selfAndChildIds []int
-	// var parentIds []int
 
+	// 给当前节点的所有父节点（祖先节点）赋值，保证在树形结构中选择该节点时能够选中其所有的祖先节点
 	node.ParentIds = append(node.ParentIds, node.ParentFunctionId)
 	if node.HasChildren {
-
 		var parent models.FunctionNode
+
+		//这里主要是解决GetFunctionsByParentId方法的条件问题，该方法的查询条件取的是ParentFunctionId字段
 		parent.ParentFunctionId = node.FunctionId
+		parent.ParentIds = node.ParentIds
 		child, err := dao.GetFunctionsByParentId(&parent)
 
 		if err != nil {
@@ -213,8 +215,6 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
 
 		node.Child = &child
 		for i, _ := range child {
-			// 将孩子节点和父亲节点进行关联
-			//	child[i].ParentNode = node
 			child[i].ParentIds = node.ParentIds
 			_, childs := GetAllFunctions(&child[i])
 
@@ -228,19 +228,6 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
 
 	}
 	selfAndChildIds = append(selfAndChildIds, node.FunctionId)
-
-	//处理父节点
-	//tempNode := node
-	//// var tempParentIds []int
-	//
-	//for {
-	//	if tempNode.ParentFunctionId != 0 {
-	//		node.ParentIds = append(node.ParentIds, tempNode.FunctionId)
-	//		tempNode = tempNode.ParentNode
-	//	} else {
-	//		break
-	//	}
-	//}
 
 	return err, selfAndChildIds
 }

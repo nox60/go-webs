@@ -358,7 +358,7 @@ export default {
       } else {
         console.log('撤销')
 
-        if( obj.childIds )
+        if( obj.childIds ) {
           obj.childIds.forEach((item,index,array)=>{
             //首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
             if ( this.roleForm.functions.indexOf(item) > -1 ){
@@ -367,6 +367,7 @@ export default {
               this.roleForm.functions.splice(index, 1);
             }
           })
+        }
       }
     },
 
