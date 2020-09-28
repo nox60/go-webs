@@ -342,18 +342,21 @@ export default {
       // console.log(this.roleForm.functions)
       // console.log(obj)
       var type=Object.prototype.toString.call(this.roleForm.functions);
-
+      console.log('选中')
       console.log(type)
       if(checked) {
-        console.log('选中')
+        if( obj.parentIds ) {
+          obj.parentIds.forEach((item,index,array)=>{
+            //要判断已经被选中，如果没有被选中才选中
+            if ( this.roleForm.functions.indexOf(item) === -1 && item != 0 && item != -1 ){
+              this.roleForm.functions.push(item)
+            }
+          })
+        }
 
-          //参数：value数组中的当前项, index当前项的索引, array原始数组；
+        //参数：value数组中的当前项, index当前项的索引, array原始数组；
       } else {
         console.log('撤销')
-        if ( obj.id == 7 ){
-          let index = this.roleForm.functions.indexOf(3);
-          this.roleForm.functions.splice(index, 1);
-        }
 
         if( obj.childIds )
           obj.childIds.forEach((item,index,array)=>{

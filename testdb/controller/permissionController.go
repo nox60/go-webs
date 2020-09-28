@@ -206,7 +206,7 @@ func GetRoleByParentId(c *gin.Context) {
 	id, _ := strconv.Atoi(idStr)
 	var parentNode models.FunctionNode
 
-	parentNode.ParentFunctionId = id
+	parentNode.ParentFunctionId = -1
 	parentNode.FunctionId = id
 	parentNode.HasChildren = true
 
