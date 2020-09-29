@@ -354,7 +354,21 @@ export default {
       console.log(checked)
       console.log(item)
 
+      if(checked) {
+        if( item.parentIds ) {
+          item.parentIds.forEach((item,index,array)=>{
+            //要判断已经被选中，如果没有被选中才选中
+            if ( this.roleForm.functions.indexOf(item) === -1 && item != 0 && item != -1 ){
+              this.roleForm.functions.push(item)
+            }
+          })
+        }
+        //参数：value数组中的当前项, index当前项的索引, array原始数组；
+      }
     },
+
+
+
   }
 }
 </script>
