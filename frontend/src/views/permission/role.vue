@@ -351,9 +351,6 @@ export default {
       }
     },
     handleSelectItem(checked,item){
-      console.log(checked)
-      console.log(item)
-
       if(checked) {
         if( item.parentIds ) {
           item.parentIds.forEach((item,index,array)=>{
@@ -363,7 +360,6 @@ export default {
             }
           })
         }
-        //参数：value数组中的当前项, index当前项的索引, array原始数组；
       }
     },
 

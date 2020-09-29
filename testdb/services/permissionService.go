@@ -196,8 +196,13 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 	return dataRes, err
 }
 
-func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
+/**
+ * childIds是当前节点的所有孩子节点ID
+ * childItems是当前节点的所有下属的菜单项ID
+ */
+func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, itemIds []int) {
 	var selfAndChildIds []int
+	var childItems []int
 
 	// 给当前节点的所有父节点（祖先节点）赋值，保证在树形结构中选择该节点时能够选中其所有的祖先节点
 	node.ParentIds = append(node.ParentIds, node.ParentFunctionId)
@@ -213,10 +218,11 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
 			fmt.Println(err)
 		}
 
+		// 处理当前节点的孩子节点
 		node.Child = &child
 		for i, _ := range child {
 			child[i].ParentIds = node.ParentIds
-			_, childs := GetAllFunctions(&child[i])
+			_, childs, items := GetAllFunctions(&child[i])
 
 			if len(childs) > 0 {
 				for _, t := range childs {
@@ -226,10 +232,13 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int) {
 		}
 		node.ChildIds = selfAndChildIds
 
+		//处理当前节点的菜单项节点
+
 	}
 	selfAndChildIds = append(selfAndChildIds, node.FunctionId)
 
-	return err, selfAndChildIds
+	// 返回了当前节点及其所有孩子节点的ID，以便在权限配置菜单中取消上级节点的时候，能够联动撤销下级菜单
+	return err, selfAndChildIds, childItems
 }
 
 func DeleteFunctionItem(functionItemId int) {
