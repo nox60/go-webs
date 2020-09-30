@@ -220,6 +220,7 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, item
 
 		// 处理当前节点的孩子节点
 		node.Child = &child
+
 		for i, _ := range child {
 			child[i].ParentIds = node.ParentIds
 			_, childs, items := GetAllFunctions(&child[i])
@@ -229,7 +230,17 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, item
 					selfAndChildIds = append(selfAndChildIds, t)
 				}
 			}
+
+			if len(items) > 0 {
+				for _, t := range items {
+					childItems = append(childItems, t)
+				}
+			}
+
 		}
+
+		node.ChildItems = childItems
+
 		node.ChildIds = selfAndChildIds
 
 		//处理当前节点的菜单项节点
