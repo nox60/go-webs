@@ -74,12 +74,14 @@
             <el-table-column
               label="页内功能点">
               <template slot-scope="scope">
-                  <el-checkbox v-model="roleForm.items"   v-for="item in scope.row.items"
-                                :label="item.itemId"
-                                :key="item.itemId"
-                                @change="checked=>handleSelectItem(checked, item)"
-                                border
-                                size="mini">{{item.itemName}}
+                  <el-checkbox v-model="roleForm.items"
+                               v-for="itemObj in scope.row.items"
+                               @change="checked=>handleSelectItem(checked, itemObj)"
+                               :label="itemObj.itemId"
+                               :key="itemObj.itemId"
+                               border
+                               size="mini">
+                    {{itemObj.itemName}}
                   </el-checkbox>
 
               </template>
@@ -370,12 +372,17 @@ export default {
 
       }
     },
-    handleSelectItem(checked,item){
+    handleSelectItem(checked,obj){
+      var type=Object.prototype.toString.call(this.roleForm.items);
+
       console.log('------------------------------------->>>>')
+      console.log(type)
       console.log(this.roleForm.items)
+      console.log(checked)
+      console.log(obj)
       if(checked) {
-        if( item.parentIds ) {
-          item.parentIds.forEach((item,index,array)=>{
+        if( obj.parentIds ) {
+          obj.parentIds.forEach((item,index,array)=>{
             //要判断已经被选中，如果没有被选中才选中
             if ( this.roleForm.functions.indexOf(item) === -1 && item != 0 && item != -1 ){
               this.roleForm.functions.push(item)
