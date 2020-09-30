@@ -74,14 +74,14 @@
             <el-table-column
               label="页内功能点">
               <template slot-scope="scope">
-                <el-checkbox  v-for="item in scope.row.items"
-                              v-model="roleForm.items"
-                              :label="item.itemId"
-                              :key="item.itemId"
-                              @change="checked=>handleSelectItem(checked, item)"
-                              border
-                              size="mini">{{item.itemName}}
-                </el-checkbox>
+                  <el-checkbox v-model="roleForm.items"   v-for="item in scope.row.items"
+                                :label="item.itemId"
+                                :key="item.itemId"
+                                @change="checked=>handleSelectItem(checked, item)"
+                                border
+                                size="mini">{{item.itemName}}
+                  </el-checkbox>
+
               </template>
             </el-table-column>
 
@@ -344,6 +344,8 @@ export default {
         }
         //参数：value数组中的当前项, index当前项的索引, array原始数组；
       } else {
+        console.log(obj)
+
         if( obj.childIds ) {
           obj.childIds.forEach((item,index,array)=>{
             //首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
@@ -369,6 +371,8 @@ export default {
       }
     },
     handleSelectItem(checked,item){
+      console.log('------------------------------------->>>>')
+      console.log(this.roleForm.items)
       if(checked) {
         if( item.parentIds ) {
           item.parentIds.forEach((item,index,array)=>{
