@@ -71,7 +71,8 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="items" label="页内功能点">
+            <el-table-column
+              label="页内功能点">
               <template slot-scope="scope">
                 <el-checkbox  v-for="item in scope.row.items"
                               v-model="roleForm.items"
@@ -86,6 +87,7 @@
 
           </el-table>
 
+          <!-- https://blog.csdn.net/qq_33769914/article/details/81302116 -->
 
         </el-form-item>
       </el-form>
@@ -363,6 +365,7 @@ export default {
             }
           })
         }
+
       }
     },
     handleSelectItem(checked,item){
