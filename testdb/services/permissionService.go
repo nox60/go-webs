@@ -210,7 +210,7 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, item
 	if node.HasChildren {
 		var parent models.FunctionNode
 
-		//这里主要是解决GetFunctionsByParentId方法的条件问题，该方法的查询条件取的是ParentFunctionId字段
+		// 这里主要是解决GetFunctionsByParentId方法的条件问题，该方法的查询条件取的是ParentFunctionId字段
 		parent.ParentFunctionId = node.FunctionId
 		parent.ParentIds = node.ParentIds
 		child, err := dao.GetFunctionsByParentId(&parent)

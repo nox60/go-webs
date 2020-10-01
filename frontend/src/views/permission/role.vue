@@ -78,7 +78,7 @@
               label="页内功能点">
               <template slot-scope="scope">
                   <el-checkbox
-                               v-model="roleForm.testItems"
+                               v-model="roleForm.items"
                                v-for="itemObj in scope.row.items"
                                @change="checked=>handleSelectItem(checked, itemObj)"
                                :label="itemObj.itemId"
@@ -143,8 +143,7 @@ export default {
         name: '',
         code: '',
         functions: [],
-        items: [],
-        testItems: []
+        items: []
       },
       total: 0,
       listQuery: {
@@ -381,12 +380,9 @@ export default {
       }
     },
     handleSelectItem(checked, obj) {
-      const type = Object.prototype.toString.call(this.roleForm.testItems)
       const type2 = Object.prototype.toString.call(this.roleForm.items)
       console.log('------------------------------------->>>>')
-      console.log(type)
       console.log(type2)
-      console.log(this.roleForm.testItems)
       console.log(checked)
       console.log(obj)
       if (checked) {
