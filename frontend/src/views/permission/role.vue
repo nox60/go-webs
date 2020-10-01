@@ -251,7 +251,7 @@ export default {
       const functions = new Array()
       this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
         functions[index] = data.id
-      });
+      })
       this.listLoading = true
       this.roleForm.functions = functions
       // console.log(this.roleForm.id)
@@ -268,7 +268,7 @@ export default {
         this.reload()
       })
     },
-    handleAddOrEditRole(row){
+    handleAddOrEditRole(row) {
       this.listLoading = true
       // this.dialogVisible = false
       // 获取所有功能点
@@ -277,37 +277,38 @@ export default {
           this.treeData = response.data
         }, 1000)
       })
-      if ( row.roleId === 0 ){ //新增
+      if (row.roleId === 0) { // 新增
         console.log('新增数据')
         if (this.$refs.tree) {
           this.$refs.tree.setCheckedNodes([])
         }
         this.dialogType = 'new'
         this.forEdit = 0
-      } else { //修改
+      } else { // 修改
         console.log('修改数据')
         this.forEdit = 1
         this.roleForm.id = row.roleId
         this.listLoading = true
         getAllFuncs().then(response => {
           setTimeout(() => {
-            this.tableData = response.data}, 1000)
+            this.tableData = response.data
+          },1000)
         })
       }
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         this.initFormData()
       })
     },
-    handleClose(){
-      this.$refs['roleForm'].resetFields();
+    handleClose() {
+      this.$refs['roleForm'].resetFields()
     },
-    initFormData(){
-      if(this.forEdit == 1) {//编辑数据
+    initFormData() {
+      if (this.forEdit === 1) {// 编辑数据
         getRoleById(this.roleForm.id).then(response => {
           setTimeout(() => {
             this.dialogVisible = true
             this.$nextTick(() => {
-              this.$refs['roleForm'].resetFields();
+              this.$refs['roleForm'].resetFields()
               this.roleForm = response.data
               this.defaultSelectedNode = response.data.functions
               this.listLoading = false
@@ -336,31 +337,31 @@ export default {
             })
             this.getList()
           })
-          done();
+          // done();
         })
-        .catch(_ => {});
+        .catch(_ => {})
     },
-    handleSelectFunction(checked,obj){
+    handleSelectFunction(checked,obj) {
       // var type=Object.prototype.toString.call(this.roleForm.items);
-      if(checked) {
-        if( obj.parentIds ) {
-          obj.parentIds.forEach((item,index,array)=>{
-            //要判断已经被选中，如果没有被选中才选中
-            if ( this.roleForm.functions.indexOf(item) === -1 && item != 0 && item != -1 ){
+      if (checked) {
+        if (obj.parentIds) {
+          obj.parentIds.forEach((item, index, array) => {
+            // 要判断已经被选中，如果没有被选中才选中
+            if (this.roleForm.functions.indexOf(item) === -1 && item != 0 && item != -1) {
               this.roleForm.functions.push(item)
             }
           })
         }
-        //参数：value数组中的当前项, index当前项的索引, array原始数组；
+        // 参数：value数组中的当前项, index当前项的索引, array原始数组；
       } else {
         console.log(obj)
 
-        if( obj.childIds ) {
-          obj.childIds.forEach((item,index,array)=>{
+        if (obj.childIds) {
+          obj.childIds.forEach((item,index,array) => {
             //首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-            if ( this.roleForm.functions.indexOf(item) > -1 ){
+            if (this.roleForm.functions.indexOf(item) > -1){
               // this.roleForm.functions.push(item)
-              let index = this.roleForm.functions.indexOf(item);
+              const index = this.roleForm.functions.indexOf(item);
               this.roleForm.functions.splice(index, 1);
             }
           })
