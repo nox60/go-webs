@@ -78,7 +78,7 @@
               label="页内功能点">
               <template slot-scope="scope">
                   <el-checkbox
-                               v-model="roleForm.items"
+                               v-model="roleForm.testItems"
                                v-for="itemObj in scope.row.items"
                                @change="checked=>handleSelectItem(checked, itemObj)"
                                :label="itemObj.itemId"
@@ -143,7 +143,8 @@ export default {
         name: '',
         code: '',
         functions: [],
-        items: []
+        items: [],
+        testItems: []
       },
       total: 0,
       listQuery: {
@@ -292,7 +293,7 @@ export default {
         getAllFuncs().then(response => {
           setTimeout(() => {
             this.tableData = response.data
-          },1000)
+          }, 1000)
         })
       }
       this.$nextTick(() => {
@@ -303,7 +304,7 @@ export default {
       this.$refs['roleForm'].resetFields()
     },
     initFormData() {
-      if (this.forEdit === 1) {// 编辑数据
+      if (this.forEdit === 1) { // 编辑数据
         getRoleById(this.roleForm.id).then(response => {
           setTimeout(() => {
             this.dialogVisible = true
@@ -341,13 +342,13 @@ export default {
         })
         .catch(_ => {})
     },
-    handleSelectFunction(checked,obj) {
+    handleSelectFunction(checked, obj) {
       // var type=Object.prototype.toString.call(this.roleForm.items);
       if (checked) {
         if (obj.parentIds) {
           obj.parentIds.forEach((item, index, array) => {
             // 要判断已经被选中，如果没有被选中才选中
-            if (this.roleForm.functions.indexOf(item) === -1 && item != 0 && item != -1) {
+            if (this.roleForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
               this.roleForm.functions.push(item)
             }
           })
@@ -357,49 +358,48 @@ export default {
         console.log(obj)
 
         if (obj.childIds) {
-          obj.childIds.forEach((item,index,array) => {
-            //首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-            if (this.roleForm.functions.indexOf(item) > -1){
+          obj.childIds.forEach((item, index, array) => {
+            // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
+            if (this.roleForm.functions.indexOf(item) > -1) {
               // this.roleForm.functions.push(item)
-              const index = this.roleForm.functions.indexOf(item);
-              this.roleForm.functions.splice(index, 1);
+              const index = this.roleForm.functions.indexOf(item)
+              this.roleForm.functions.splice(index, 1)
             }
           })
         }
 
-        if( obj.childItems ) {
-          obj.childItems.forEach((item,index,array)=>{
-            //首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-            if ( this.roleForm.items.indexOf(item) > -1 ){
+        if (obj.childItems) {
+          obj.childItems.forEach((item, index, array) => {
+            // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
+            if (this.roleForm.items.indexOf(item) > -1) {
               // this.roleForm.functions.push(item)
-              let index = this.roleForm.items.indexOf(item);
-              this.roleForm.items.splice(index, 1);
+              const index = this.roleForm.items.indexOf(item)
+              this.roleForm.items.splice(index, 1)
             }
           })
         }
-
       }
     },
-    handleSelectItem(checked,obj){
-      let type=Object.prototype.toString.call(this.roleForm.items);
-
+    handleSelectItem(checked, obj) {
+      const type = Object.prototype.toString.call(this.roleForm.testItems)
+      const type2 = Object.prototype.toString.call(this.roleForm.items)
       console.log('------------------------------------->>>>')
       console.log(type)
-      console.log(this.roleForm.items)
+      console.log(type2)
+      console.log(this.roleForm.testItems)
       console.log(checked)
       console.log(obj)
-      if(checked) {
-        if( obj.parentIds ) {
-          obj.parentIds.forEach((item,index,array)=>{
-            //要判断已经被选中，如果没有被选中才选中
-            if ( this.roleForm.functions.indexOf(item) === -1 && item != 0 && item != -1 ){
+      if (checked) {
+        if (obj.parentIds) {
+          obj.parentIds.forEach((item, index, array) => {
+            // 要判断已经被选中，如果没有被选中才选中
+            if (this.roleForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
               this.roleForm.functions.push(item)
             }
           })
         }
       }
-    },
-
+    }
   }
 }
 </script>

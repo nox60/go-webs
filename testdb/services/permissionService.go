@@ -193,6 +193,7 @@ func DeleteRole(roleId int64) {
 
 func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error) {
 	dataRes, err := dao.GetRoleById(fetchDataBody)
+	dataRes.Items = append(dataRes.Items, -1)
 	return dataRes, err
 }
 

@@ -33,6 +33,7 @@ type Role struct {
 	Name      string  `json:"name"`
 	Status    int     `json:"status"`
 	Functions []int64 `json:"functions"`
+	Items     []int64 `json:"items"`
 	Page      int     `json:"page"  `
 	Limit     int     `json:"limit" `
 	ForCount  bool
