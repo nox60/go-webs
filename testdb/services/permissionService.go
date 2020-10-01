@@ -241,10 +241,13 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, item
 				for _, t := range child[i].Items {
 					tempItems = append(tempItems, t.ItemId)
 					child[i].ChildItems = append(child[i].ChildItems, t.ItemId)
+
+					// 拼接当前节点孩子节点的items到当前节点，以便在撤销当前节点的选中状态时，能够取消当前节点所有孩子节点的所有item的选中状态。
 					childItems = append(childItems, t.ItemId)
 				}
 			}
 
+			// 拼接当前节点自己的items，以便在取消当前节点的选中状态的同时，能够撤销其他所有items的选中状态
 			if len(items) > 0 {
 				for _, t := range items {
 					childItems = append(childItems, t)
