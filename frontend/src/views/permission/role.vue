@@ -28,10 +28,12 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
-    <el-dialog :visible.sync="dialogVisible"
+    <el-dialog
+               :visible.sync="dialogVisible"
                @close="handleClose"
                :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form :model="roleForm"
+      <el-form
+               :model="roleForm"
                ref="roleForm"
                :modal-append-to-body='true'
                v-if='dialogVisible'
@@ -61,7 +63,8 @@
               width="180"
               label="菜单选择">
               <template slot-scope="scope">
-              <el-checkbox v-model="roleForm.functions"
+              <el-checkbox
+                           v-model="roleForm.functions"
                            @change="checked=>handleSelectFunction(checked, scope.row)"
                            :label="scope.row.id"
                            :key="scope.row.id"
@@ -74,16 +77,16 @@
             <el-table-column
               label="页内功能点">
               <template slot-scope="scope">
-                  <el-checkbox v-model="roleForm.items"
+                  <el-checkbox
+                               v-model="roleForm.items"
                                v-for="itemObj in scope.row.items"
                                @change="checked=>handleSelectItem(checked, itemObj)"
                                :label="itemObj.itemId"
                                :key="itemObj.itemId"
                                border
                                size="mini">
-                    {{itemObj.itemName}}
+                    {{itemObj.itemId}}
                   </el-checkbox>
-
               </template>
             </el-table-column>
 
@@ -102,7 +105,8 @@
 </template>
 
 <script>
-import {addOrUpdateRole,
+import {
+  addOrUpdateRole,
   getFunctions,
   listRoleData,
   deleteRole,
@@ -119,16 +123,15 @@ const defaultRole = {
 }
 
 export default {
-  inject:['reload'],
+  inject: ['reload'],
   components: { Pagination },
   data() {
     return {
-      defaultExpandedNodes:[],
-      defaultSelectedNode:[],
-      treeData:[],
-      tableData:[
-      ],
-      treeForm:'',
+      defaultExpandedNodes: [],
+      defaultSelectedNode: [],
+      treeData: [],
+      tableData: [],
+      treeForm: '',
       forEdit:0,
       defaultProps: {
         label: 'name',
@@ -140,7 +143,7 @@ export default {
         name: '',
         code: '',
         functions: [],
-        items: [],
+        items: []
       },
       total: 0,
       listQuery: {
@@ -158,7 +161,7 @@ export default {
       routes: [],
       rolesList: [],
       dialogType: 'new',
-      checkStrictly: false,
+      checkStrictly: false
     }
   },
   computed: {
@@ -167,7 +170,7 @@ export default {
     }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   mounted() {
   },
@@ -334,7 +337,7 @@ export default {
         .catch(_ => {});
     },
     handleSelectFunction(checked,obj){
-      var type=Object.prototype.toString.call(this.roleForm.functions);
+      // var type=Object.prototype.toString.call(this.roleForm.items);
       if(checked) {
         if( obj.parentIds ) {
           obj.parentIds.forEach((item,index,array)=>{
@@ -373,7 +376,7 @@ export default {
       }
     },
     handleSelectItem(checked,obj){
-      var type=Object.prototype.toString.call(this.roleForm.items);
+      let type=Object.prototype.toString.call(this.roleForm.items);
 
       console.log('------------------------------------->>>>')
       console.log(type)
