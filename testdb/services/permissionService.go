@@ -212,6 +212,8 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, item
 
 		// 这里主要是解决GetFunctionsByParentId方法的条件问题，该方法的查询条件取的是ParentFunctionId字段
 		parent.ParentFunctionId = node.FunctionId
+
+		// parent的ParentIds用于给深入递归时，孩子变量获取父亲节点id
 		parent.ParentIds = node.ParentIds
 		child, err := dao.GetFunctionsByParentId(&parent)
 

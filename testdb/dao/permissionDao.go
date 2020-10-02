@@ -148,7 +148,14 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 					itemIdInt, _ := strconv.Atoi(itemTempArray[0])
 					functionItemTemp.ItemId = itemIdInt
 					functionItemTemp.ItemName = itemTempArray[1]
-					functionItemTemp.ParentIds = fetchDataBody.ParentIds
+
+					// 这里直接赋值似乎有问题
+					// functionItemTemp.ParentIds = fetchDataBody.ParentIds
+
+					for _, parentIdtemp := range fetchDataBody.ParentIds {
+						functionItemTemp.ParentIds = append(functionItemTemp.ParentIds, parentIdtemp)
+					}
+
 					functionItemTemp.ParentIds = append(functionItemTemp.ParentIds, dataObj.FunctionId)
 					itemsTemp = append(itemsTemp, functionItemTemp)
 				}
