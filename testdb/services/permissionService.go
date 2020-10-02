@@ -239,6 +239,8 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, item
 
 			if len(child[i].Items) > 0 {
 				for _, t := range child[i].Items {
+
+					// 此处的tempItems变量似乎没用上。后面的重构可以考虑移除。
 					tempItems = append(tempItems, t.ItemId)
 
 					child[i].ChildItems = append(child[i].ChildItems, t.ItemId)
@@ -264,7 +266,8 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, item
 	}
 	selfAndChildIds = append(selfAndChildIds, node.FunctionId)
 
-	// 返回了当前节点及其所有孩子节点的ID，以便在权限配置菜单中取消上级节点的时候，能够联动撤销下级菜单
+	// 利用selfAndChildIds字段返回了当前节点及其所有孩子节点的ID，以便在权限配置菜单中取消上级节点的时候，能够联动撤销下级菜单
+	// 利用childItems字段返回孩子节点的所有items，以便在权限菜单中进行取消上级节点的时候，能够联动撤销下级的items
 	return err, selfAndChildIds, childItems
 }
 
