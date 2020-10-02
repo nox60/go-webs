@@ -123,7 +123,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	// 处理节点对应的item关系
 	for queryResults.Next() {
 
-		dataObj.ItemStr = ""
+		// dataObj.ItemStr = ""
 
 		dataObj.Items = dataObj.Items[:0]
 
@@ -156,6 +156,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 						functionItemTemp.ParentIds = append(functionItemTemp.ParentIds, parentIdtemp)
 					}
 
+					functionItemTemp.ParentIds = append(functionItemTemp.ParentIds, dataObj.ParentFunctionId)
 					functionItemTemp.ParentIds = append(functionItemTemp.ParentIds, dataObj.FunctionId)
 					itemsTemp = append(itemsTemp, functionItemTemp)
 				}
