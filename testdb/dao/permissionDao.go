@@ -292,6 +292,22 @@ func AddRoleFunction(role *models.Role, tx *sql.Tx) (err error) {
 	return
 }
 
+func AddRoleItem(role *models.Role, tx *sql.Tx) (err error) {
+	for _, value := range role.Items {
+		// fmt.Println("index:", index, "value:", value)
+		_, err := tx.Exec("INSERT INTO `tb_roles_items` (`role_id`,`item_id`) "+
+			"values (?,?) ",
+			role.RoleId,
+			value)
+		//新增
+		if err != nil {
+			return err
+		}
+	}
+
+	return
+}
+
 func UpdateRoleById(roleData *models.Role, tx *sql.Tx) (err error) {
 
 	// 查询语句
@@ -477,6 +493,15 @@ func DeleteRole(roleId int64, tx *sql.Tx) (err error) {
 
 func DeleteRolesAndFunctionsByRoleId(roleId int64, tx *sql.Tx) (err error) {
 	_, err = tx.Exec("DELETE FROM `tb_roles_functions` WHERE role_id = ? ",
+		roleId)
+	if err != nil {
+		return err
+	}
+	return
+}
+
+func DeleteRolesAndItemsByRoleId(roleId int64, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("DELETE FROM `tb_roles_items` WHERE role_id = ? ",
 		roleId)
 	if err != nil {
 		return err
