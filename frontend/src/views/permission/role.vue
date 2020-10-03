@@ -381,10 +381,6 @@ export default {
     },
     handleSelectItem(checked, obj) {
       const type2 = Object.prototype.toString.call(this.roleForm.items)
-      console.log('------------------------------------->>>>')
-      console.log(type2)
-      console.log(checked)
-      console.log(obj)
       if (checked) {
         if (obj.parentIds) {
           obj.parentIds.forEach((item, index, array) => {
