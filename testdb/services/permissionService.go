@@ -135,6 +135,7 @@ func AddRole(role *models.Role) {
 	roleId, err = dao.AddRole(role, tx)
 	role.RoleId = roleId
 	err = dao.AddRoleFunction(role, tx)
+	err = dao.AddRoleItem(role, tx)
 }
 
 func UpdateRole(role *models.Role) {
@@ -156,11 +157,17 @@ func UpdateRole(role *models.Role) {
 
 	err = dao.UpdateRoleById(role, tx)
 
-	//先删除该角色对应的所有权限点
+	// 先删除该角色对应的所有菜单项
 	err = dao.DeleteRolesAndFunctionsByRoleId(role.RoleId, tx)
 
-	//重新添加角色对应的功能点
+	// 删除该角色对应的所有页内功能点itmes
+	err = dao.DeleteRolesAndItemsByRoleId(role.RoleId, tx)
+
+	// 重新添加角色对应的菜单项
 	err = dao.AddRoleFunction(role, tx)
+
+	// 重新添加角色对应的页内功能点
+	err = dao.AddRoleItem(role, tx)
 }
 
 func RetrieveRoleData(fetchDataBody *models.Role) (dataResBody []models.Role, totalCounts int, err error) {
