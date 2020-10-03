@@ -295,13 +295,15 @@ func AddRoleFunction(role *models.Role, tx *sql.Tx) (err error) {
 func AddRoleItem(role *models.Role, tx *sql.Tx) (err error) {
 	for _, value := range role.Items {
 		// fmt.Println("index:", index, "value:", value)
-		_, err := tx.Exec("INSERT INTO `tb_roles_items` (`role_id`,`item_id`) "+
-			"values (?,?) ",
-			role.RoleId,
-			value)
-		//新增
-		if err != nil {
-			return err
+		if value > 0 {
+			_, err := tx.Exec("INSERT INTO `tb_roles_items` (`role_id`,`item_id`) "+
+				"values (?,?) ",
+				role.RoleId,
+				value)
+			//新增
+			if err != nil {
+				return err
+			}
 		}
 	}
 
