@@ -105,14 +105,7 @@
 </template>
 
 <script>
-import {
-  addOrUpdateRole,
-  getFunctions,
-  listRoleData,
-  deleteRole,
-  getRoleById,
-  getAllFuncs
-} from '@/api/role'
+import {addOrUpdateRole, deleteRole, getAllFuncs, getFunctions, getRoleById, listRoleData} from '@/api/role'
 import Pagination from '@/components/Pagination'
 
 const defaultRole = {
@@ -248,12 +241,16 @@ export default {
       })
     },
     confirmAddOrUpdateRole() {
-      const functions = new Array()
-      this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
-        functions[index] = data.id
-      })
+      // const functions = new Array()
+      // this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
+      //   functions[index] = data.id
+      // })
       this.listLoading = true
-      this.roleForm.functions = functions
+      // this.roleForm.functions = functions
+
+
+      console.log(this.roleForm)
+
       // console.log(this.roleForm.id)
       addOrUpdateRole(this.roleForm).then(() => {
         this.$notify({
