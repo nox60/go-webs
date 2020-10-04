@@ -238,8 +238,6 @@ func GetAllFunctions(node *models.FunctionNode) (err error, childIds []int, item
 
 			_, childs, items := GetAllFunctions(&child[i])
 
-			// fmt.Println(items)
-
 			if len(childs) > 0 {
 				for _, t := range childs {
 					selfAndChildIds = append(selfAndChildIds, t)

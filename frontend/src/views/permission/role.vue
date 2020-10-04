@@ -173,7 +173,6 @@ export default {
       listRoleData(this.listQuery).then(response => {
         this.rolesList = response.data.dataLists
         this.total = response.data.totalCounts
-        console.log(this.list)
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
