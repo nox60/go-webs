@@ -247,7 +247,6 @@ export default {
       this.listLoading = true
       // this.roleForm.functions = functions
 
-
       console.log(this.roleForm)
 
       // console.log(this.roleForm.id)
@@ -258,7 +257,9 @@ export default {
           type: 'success',
           duration: 2000
         })
-        this.initFormData()
+        // this.initFormData()
+        this.$refs['roleForm'].resetFields()
+
         this.listLoading = false
         this.dialogVisible = false
         this.reload()
@@ -296,6 +297,7 @@ export default {
       })
     },
     handleClose() {
+      console.log('call handleClose.....')
       this.$refs['roleForm'].resetFields()
     },
     initFormData() {
