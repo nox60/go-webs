@@ -426,7 +426,7 @@
         })
       },
       handleDeleteConfirm(row) {
-        console.log(row)
+        // console.log(row)
         this.$confirm('确认删除？')
           .then(_ => {
             console.log('点击了确认')
@@ -445,7 +445,7 @@
           })
           .catch(_ => {});
       },
-      handleDeleteFunctionItem(itemId) {//新增OR修改权限点时点击树节点
+      handleDeleteFunctionItem(itemId) { // 新增OR修改权限点时点击树节点
         this.$confirm('确认删除？')
           .then(_ => {
             deleteFunctionItem(itemId).then(() => {
