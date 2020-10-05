@@ -148,7 +148,6 @@ func ListRoleData(c *gin.Context) {
 	}
 
 	fetchDataRequestBody.RoleId = -1
-
 	results, totalCount, err := dao.RetrieveRoleData(&fetchDataRequestBody)
 
 	if err != nil {
@@ -156,11 +155,8 @@ func ListRoleData(c *gin.Context) {
 	}
 
 	dataLists.TotalCounts = totalCount
-
 	dataLists.DataLists = results
-
 	resultMsg.Data = dataLists
-
 	c.JSON(200, resultMsg)
 }
 
@@ -182,17 +178,11 @@ func GetRoleById(c *gin.Context) {
 	resultMsg.Msg = "获取数据成功"
 
 	idStr := c.Param("id")
-
 	id, _ := strconv.ParseInt(idStr, 10, 64)
-
 	fetchBody := new(models.Role)
-
 	fetchBody.RoleId = id
-
 	resultBody, _ := services.GetRoleById(fetchBody)
-
 	resultMsg.Data = resultBody
-
 	c.JSON(200, resultMsg)
 }
 
@@ -235,17 +225,11 @@ func GetFunctionItemById(c *gin.Context) {
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
 	resultMsg.Msg = "获取数据成功"
-
 	idStr := c.Param("itemId")
-
 	itemId, _ := strconv.Atoi(idStr)
-
 	fetchBody := new(models.FunctionItem)
-
 	fetchBody.ItemId = itemId
-
 	resultBody, _ := services.GetFunctionItemById(fetchBody)
-
 	resultMsg.Data = resultBody
 
 	c.JSON(200, resultMsg)
