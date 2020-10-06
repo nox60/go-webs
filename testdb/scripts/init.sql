@@ -1,3 +1,27 @@
+DROP TABLE IF EXISTS tb_users;
+CREATE TABLE tb_users (
+	`accountId` INT NOT NULL AUTO_INCREMENT,
+    `userName` VARCHAR(50) NOT NULL,
+    `realName` VARCHAR(50) NOT NULL DEFAULT '',
+    `password` VARCHAR(50) NOT NULL,
+    `phoneNumber` VARCHAR(50) NULL DEFAULT '',
+    `address` VARCHAR(200) NULL DEFAULT '',
+    `major` VARCHAR(200) NULL DEFAULT '',
+    `gender` int not null default 1,
+    `age` int not null default 1,
+    `userType` int not null default 1,
+    `createTime` datetime NOT NULL DEFAULT '1970-01-01',
+ 	`updateTime` datetime NOT NULL DEFAULT '1970-01-01'
+    PRIMARY KEY(`accountId`)
+)DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS tb_users_roles;
+CREATE TABLE tb_users (
+	`rowId` INT NOT NULL AUTO_INCREMENT,
+    `account_id` INT NOT NULL,
+    `role_id` INT NOT NULL
+    PRIMARY KEY(`rowId`)
+)DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS tb_functions;
 CREATE TABLE tb_functions (
@@ -46,3 +70,4 @@ CREATE TABLE tb_roles_items (
     `status` TINYINT NOT NULL DEFAULT 0,
     PRIMARY KEY (`row_id`)
 )DEFAULT CHARSET=utf8;
+
