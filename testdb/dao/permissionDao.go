@@ -580,11 +580,49 @@ func GetRoleById(fetchDataBody *models.Role) (dataResBody models.Role, err error
 
 	for queryResult2.Next() {
 		queryResult2.Scan(&tempFunction)
-
 		results2 = append(results2, tempFunction)
 	}
 
 	dataObj.Functions = results2
+
+	// 获取该角色所有的业内菜单项 items
+	// 获取数据的临时对象
+	var tempItem int64
+
+	// 查询条件
+	var queryStm3 strings.Builder
+
+	// 通过切片存储
+	results3 := make([]int64, 0)
+
+	// 查询条件
+	var fetchArgs3 = make([]interface{}, 0)
+
+	queryStm3.WriteString(" SELECT a.`item_id` ")
+	queryStm3.WriteString(" FROM tb_roles_items AS a  ")
+	queryStm3.WriteString(" WHERE 1=1 ")
+	// 查询条件.
+	queryStm3.WriteString(" AND a.`role_id` = ? ")
+	fetchArgs3 = append(fetchArgs3, fetchDataBody.RoleId)
+
+	// 查询记录
+	stmt3, _ := MysqlDb.Prepare(queryStm3.String())
+	defer stmt3.Close()
+
+	// 查询数据
+	queryResult3, err := stmt3.Query(fetchArgs3...)
+
+	if err != nil {
+		fmt.Println(err)
+		return dataObj, err
+	}
+
+	for queryResult3.Next() {
+		queryResult3.Scan(&tempItem)
+		results3 = append(results3, tempItem)
+	}
+
+	dataObj.Items = results3
 
 	return dataObj, err
 }
