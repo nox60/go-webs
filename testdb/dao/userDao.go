@@ -3,6 +3,7 @@ package dao
 import (
 	"database/sql"
 	"fmt"
+	"strings"
 	"testdb/models"
 )
 
@@ -99,4 +100,65 @@ func RetrieveUserByAccountId(accountId int) (user *User) {
 	}
 
 	return user1
+}
+
+// 分页获取用户信息
+func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, totalCount int, err error) {
+
+	// 通过切片存储
+	results := make([]models.User, 0)
+
+	// 获取数据的临时对象
+	var dataObj models.User
+
+	// 查询条件
+	var queryStm strings.Builder
+
+	// 总记录条数查询条件
+	var countQueryStm strings.Builder
+
+	// 查询条件
+	var fetchArgs = make([]interface{}, 0)
+
+	queryStm.WriteString(" SELECT `role_id`,`name`,`code` FROM tb_roles WHERE 1=1 ")
+	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_roles WHERE 1=1 ")
+	// 查询条件.
+	if fetchDataBody.RoleId > -1 {
+		queryStm.WriteString(" AND role_id = ? ")
+		countQueryStm.WriteString(" AND role_id = ? ")
+		fetchArgs = append(fetchArgs, fetchDataBody.RoleId)
+	}
+
+	queryStm.WriteString("LIMIT ?,? ")
+
+	// 分页查询记录
+	stmt, _ := MysqlDb.Prepare(queryStm.String())
+	stmtCount, _ := MysqlDb.Prepare(countQueryStm.String())
+	defer stmt.Close()
+	defer stmtCount.Close()
+
+	// 先查询总条数count(*)
+	countResult := stmtCount.QueryRow(fetchArgs...)
+
+	if err := countResult.Scan(&totalCount); err != nil {
+		fmt.Printf("scan failed, err:%v", err)
+	}
+
+	// 查询分页数据
+	fetchArgs = append(fetchArgs, fetchDataBody.GetStartByPageAndLimit())
+	fetchArgs = append(fetchArgs, fetchDataBody.Limit)
+	queryResults, err := stmt.Query(fetchArgs...)
+
+	if err != nil {
+		return results, 0, err
+	}
+
+	for queryResults.Next() {
+		queryResults.Scan(&dataObj.RoleId,
+			&dataObj.Name,
+			&dataObj.Code)
+		results = append(results, dataObj)
+	}
+
+	return results, totalCount, err
 }

@@ -1,23 +1,23 @@
 DROP TABLE IF EXISTS tb_users;
 CREATE TABLE tb_users (
-	`accountId` INT NOT NULL AUTO_INCREMENT,
-    `userName` VARCHAR(50) NOT NULL,
-    `realName` VARCHAR(50) NOT NULL DEFAULT '',
+	`account_id` INT NOT NULL AUTO_INCREMENT,
+    `user_name` VARCHAR(50) NOT NULL,
     `password` VARCHAR(50) NOT NULL,
-    `phoneNumber` VARCHAR(50) NULL DEFAULT '',
+    `real_name` VARCHAR(50) NOT NULL DEFAULT '',
+    `phone_number` VARCHAR(50) NULL DEFAULT '',
     `address` VARCHAR(200) NULL DEFAULT '',
     `major` VARCHAR(200) NULL DEFAULT '',
     `gender` int not null default 1,
     `age` int not null default 1,
-    `userType` int not null default 1,
-    `createTime` datetime NOT NULL DEFAULT '1970-01-01',
- 	`updateTime` datetime NOT NULL DEFAULT '1970-01-01'
-    PRIMARY KEY(`accountId`)
+    `user_type` int not null default 1
+    PRIMARY KEY(`account_id`)
 )DEFAULT CHARSET=utf8;
 
+INSERT INTO tb_users (account_id, user_name, password, user_type) VALUES (1,'admin','111111', 0);
+
 DROP TABLE IF EXISTS tb_users_roles;
-CREATE TABLE tb_users (
-	`rowId` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE tb_users_roles (
+	`row_id` INT NOT NULL AUTO_INCREMENT,
     `account_id` INT NOT NULL,
     `role_id` INT NOT NULL
     PRIMARY KEY(`rowId`)
