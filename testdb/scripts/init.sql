@@ -71,3 +71,14 @@ CREATE TABLE tb_roles_items (
     PRIMARY KEY (`row_id`)
 )DEFAULT CHARSET=utf8;
 
+#-----------
+
+DROP TABLE IF EXISTS tb_roles_items;
+CREATE TABLE tb_roles_items (
+    `row_id` INT NOT NULL AUTO_INCREMENT,
+    `role_id` INT NOT NULL,
+    `item_id` INT NOT NULL,
+    `status` TINYINT NOT NULL DEFAULT 0,
+    PRIMARY KEY (`row_id`)
+)DEFAULT CHARSET=utf8;
+
