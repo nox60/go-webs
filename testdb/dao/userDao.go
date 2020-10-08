@@ -103,7 +103,7 @@ func RetrieveUserByAccountId(accountId int) (user *User) {
 }
 
 // 分页获取用户信息
-func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, totalCount int, err error) {
+func RetrieveUsersData(fetchDataBody *models.UserInfo) (dataResBody []models.User, totalCount int, err error) {
 
 	// 通过切片存储
 	results := make([]models.User, 0)
@@ -123,10 +123,10 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	queryStm.WriteString(" SELECT `role_id`,`name`,`code` FROM tb_roles WHERE 1=1 ")
 	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_roles WHERE 1=1 ")
 	// 查询条件.
-	if fetchDataBody.RoleId > -1 {
+	if fetchDataBody.AccountId > -1 {
 		queryStm.WriteString(" AND role_id = ? ")
 		countQueryStm.WriteString(" AND role_id = ? ")
-		fetchArgs = append(fetchArgs, fetchDataBody.RoleId)
+		fetchArgs = append(fetchArgs, fetchDataBody.AccountId)
 	}
 
 	queryStm.WriteString("LIMIT ?,? ")
