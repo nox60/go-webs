@@ -9,7 +9,7 @@ CREATE TABLE tb_users (
     `major` VARCHAR(200) NULL DEFAULT '',
     `gender` int not null default 1,
     `age` int not null default 1,
-    `user_type` int not null default 1
+    `user_type` int not null default 1,
     PRIMARY KEY(`account_id`)
 )DEFAULT CHARSET=utf8;
 
