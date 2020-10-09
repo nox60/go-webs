@@ -103,7 +103,7 @@ func RetrieveUserByAccountId(accountId int) (user *User) {
 }
 
 // 分页获取用户信息
-func RetrieveUsersData(fetchDataBody *models.UserInfo) (dataResBody []models.User, totalCount int, err error) {
+func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, totalCount int, err error) {
 
 	// 通过切片存储
 	results := make([]models.User, 0)
