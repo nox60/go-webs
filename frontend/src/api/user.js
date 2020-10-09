@@ -44,3 +44,11 @@ export function login(data) {
     }
   })
 }
+
+export function listUserData(query) {
+  return request({
+    url: '/listUserData',
+    method: 'post',
+    data: query
+  })
+}
