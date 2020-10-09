@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddOrEditRole({ roleId: 0})">新建用户</el-button>
+    <el-button type="primary" @click="handleAddOrEditUser({ roleId: 0})">新建用户</el-button>
     <el-table
-      :data="rolesList"
+      :data="usersList"
       highlight-current-row
       v-loading="listLoading"
       style="width: 100%;margin-top:10px;"
@@ -15,7 +15,7 @@
       </el-table-column>
       <el-table-column align="center" label="Operations">
         <template slot-scope="{row,$index}">
-          <el-button type="primary" size="small" @click="handleAddOrEditRole(row)">编辑</el-button>
+          <el-button type="primary" size="small" @click="handleAddOrEditUser(row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDeleteConfirm(row)">删除</el-button>
         </template>
       </el-table-column>
@@ -37,13 +37,13 @@
         label-position="left">
         <el-form-item label="用户名" prop="userName">
           <el-input
-            v-model="userForm.name"
-            placeholder="权限点名称" />
+            v-model="userForm.userName"
+            placeholder="用户名" />
         </el-form-item>
-        <el-form-item label="角色编码" prop="code">
+        <el-form-item label="用户姓名" prop="realName">
           <el-input
-            v-model="userForm.code"
-            placeholder="权限点编码"
+            v-model="userForm.realName"
+            placeholder="用户姓名"
           />
         </el-form-item>
       </el-form>
@@ -71,17 +71,7 @@
     components: { Pagination },
     data() {
       return {
-        defaultExpandedNodes: [],
-        defaultSelectedNode: [],
-        treeData: [],
-        tableData: [],
-        treeForm: '',
         forEdit: 0,
-        defaultProps: {
-          label: 'name',
-          children: 'children',
-          isLeaf: 'leaf'
-        },
         userForm: {
           accountId: 0,
           userName: '',
@@ -97,12 +87,11 @@
           type: undefined,
           sort: '+id'
         },
-
         listLoading: false,
         dialogVisible: false,
         role: Object.assign({}, defaultRole),
         routes: [],
-        rolesList: [],
+        usersList: [],
         dialogType: 'new',
         checkStrictly: false
       }
@@ -121,7 +110,7 @@
       getList() {
         this.listLoading = true
         listUserData(this.listQuery).then(response => {
-          this.rolesList = response.data.dataLists
+          this.usersList = response.data.dataLists
           this.total = response.data.totalCounts
           setTimeout(() => {
             this.listLoading = false
@@ -174,16 +163,16 @@
           this.reload()
         })
       },
-      handleAddOrEditRole(row) {
+      handleAddOrEditUser(row) {
         this.listLoading = true
         // this.dialogVisible = false
         // 获取所有功能点
-        getAllFuncs().then(response => {
-          setTimeout(() => {
-            this.treeData = response.data
-          }, 1000)
-        })
-        if (row.roleId === 0) { // 新增
+        // getAllFuncs().then(response => {
+        //   setTimeout(() => {
+        //     this.treeData = response.data
+        //   }, 1000)
+        // })
+        if (row.accountId === 0) { // 新增
           console.log('新增数据')
           if (this.$refs.tree) {
             this.$refs.tree.setCheckedNodes([])
