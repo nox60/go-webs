@@ -13,7 +13,7 @@ CREATE TABLE tb_users (
     PRIMARY KEY(`account_id`)
 )DEFAULT CHARSET=utf8;
 
-INSERT INTO tb_users (account_id, user_name, password, user_type) VALUES (1,'admin','111111', 0);
+INSERT INTO tb_users (account_id, user_name, `password`, user_type) VALUES (1,'admin','111111', 0);
 
 DROP TABLE IF EXISTS tb_users_roles;
 CREATE TABLE tb_users_roles (

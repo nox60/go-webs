@@ -29,20 +29,20 @@
       @close="handleClose"
       :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form
-        :model="roleForm"
-        ref="roleForm"
+        :model="userForm"
+        ref="userForm"
         :modal-append-to-body='true'
         v-if='dialogVisible'
         label-width="100px"
         label-position="left">
         <el-form-item label="角色名称" prop="name">
           <el-input
-            v-model="roleForm.name"
+            v-model="userForm.name"
             placeholder="权限点名称" />
         </el-form-item>
         <el-form-item label="角色编码" prop="code">
           <el-input
-            v-model="roleForm.code"
+            v-model="userForm.code"
             placeholder="权限点编码"
           />
         </el-form-item>
@@ -60,7 +60,7 @@
               label="菜单选择">
               <template slot-scope="scope">
                 <el-checkbox
-                  v-model="roleForm.functions"
+                  v-model="userForm.functions"
                   @change="checked=>handleSelectFunction(checked, scope.row)"
                   :label="scope.row.id"
                   :key="scope.row.id"
@@ -74,7 +74,7 @@
               label="页内功能点">
               <template slot-scope="scope">
                 <el-checkbox
-                  v-model="roleForm.items"
+                  v-model="userForm.items"
                   v-for="itemObj in scope.row.items"
                   @change="checked=>handleSelectItem(checked, itemObj)"
                   :label="itemObj.itemId"
@@ -124,12 +124,11 @@
           children: 'children',
           isLeaf: 'leaf'
         },
-        roleForm: {
-          roleId: 0,
-          name: '',
-          code: '',
-          functions: [],
-          items: []
+        userForm: {
+          accountId: 0,
+          userName: '',
+          realName: '',
+          roles: []
         },
         total: 0,
         listQuery: {
@@ -198,12 +197,12 @@
       },
       confirmAddOrUpdateRole() {
         this.listLoading = true
-        // this.roleForm.functions = functions
+        // this.userForm.functions = functions
 
-        console.log(this.roleForm)
+        console.log(this.userForm)
 
-        // console.log(this.roleForm.id)
-        addOrUpdateRole(this.roleForm).then(() => {
+        // console.log(this.userForm.id)
+        addOrUpdateRole(this.userForm).then(() => {
           this.$notify({
             title: 'Success',
             message: '操作成功',
@@ -211,7 +210,7 @@
             duration: 2000
           })
           // this.initFormData()
-          this.$refs['roleForm'].resetFields()
+          this.$refs['userForm'].resetFields()
           this.listLoading = false
           this.dialogVisible = false
           this.reload()
@@ -236,7 +235,7 @@
         } else { // 修改
           console.log('修改数据')
           this.forEdit = 1
-          this.roleForm.id = row.roleId
+          this.userForm.id = row.roleId
           this.listLoading = true
           getAllFuncs().then(response => {
             setTimeout(() => {
@@ -250,16 +249,16 @@
       },
       handleClose() {
         console.log('call handleClose.....')
-        this.$refs['roleForm'].resetFields()
+        this.$refs['userForm'].resetFields()
       },
       initFormData() {
         if (this.forEdit === 1) { // 编辑数据
-          getRoleById(this.roleForm.id).then(response => {
+          getRoleById(this.userForm.id).then(response => {
             setTimeout(() => {
               this.dialogVisible = true
               this.$nextTick(() => {
-                this.$refs['roleForm'].resetFields()
-                this.roleForm = response.data
+                this.$refs['userForm'].resetFields()
+                this.userForm = response.data
                 this.defaultSelectedNode = response.data.functions
                 this.listLoading = false
               })
@@ -292,13 +291,13 @@
           .catch(_ => {})
       },
       handleSelectFunction(checked, obj) {
-        // var type=Object.prototype.toString.call(this.roleForm.items);
+        // var type=Object.prototype.toString.call(this.userForm.items);
         if (checked) {
           if (obj.parentIds) {
             obj.parentIds.forEach((item, index, array) => {
               // 要判断已经被选中，如果没有被选中才选中
-              if (this.roleForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
-                this.roleForm.functions.push(item)
+              if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
+                this.userForm.functions.push(item)
               }
             })
           }
@@ -309,10 +308,10 @@
           if (obj.childIds) {
             obj.childIds.forEach((item, index, array) => {
               // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-              if (this.roleForm.functions.indexOf(item) > -1) {
-                // this.roleForm.functions.push(item)
-                const index = this.roleForm.functions.indexOf(item)
-                this.roleForm.functions.splice(index, 1)
+              if (this.userForm.functions.indexOf(item) > -1) {
+                // this.userForm.functions.push(item)
+                const index = this.userForm.functions.indexOf(item)
+                this.userForm.functions.splice(index, 1)
               }
             })
           }
@@ -320,23 +319,23 @@
           if (obj.childItems) {
             obj.childItems.forEach((item, index, array) => {
               // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-              if (this.roleForm.items.indexOf(item) > -1) {
-                // this.roleForm.functions.push(item)
-                const index = this.roleForm.items.indexOf(item)
-                this.roleForm.items.splice(index, 1)
+              if (this.userForm.items.indexOf(item) > -1) {
+                // this.userForm.functions.push(item)
+                const index = this.userForm.items.indexOf(item)
+                this.userForm.items.splice(index, 1)
               }
             })
           }
         }
       },
       handleSelectItem(checked, obj) {
-        const type2 = Object.prototype.toString.call(this.roleForm.items)
+        const type2 = Object.prototype.toString.call(this.userForm.items)
         if (checked) {
           if (obj.parentIds) {
             obj.parentIds.forEach((item, index, array) => {
               // 要判断已经被选中，如果没有被选中才选中
-              if (this.roleForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
-                this.roleForm.functions.push(item)
+              if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
+                this.userForm.functions.push(item)
               }
             })
           }
