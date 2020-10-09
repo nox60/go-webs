@@ -7,15 +7,11 @@
       v-loading="listLoading"
       style="width: 100%;margin-top:10px;"
       border>
-      <el-table-column align="center" label="角色代码" width="220" prop="code">
+      <el-table-column align="center" label="用户ID" width="220" prop="accountId">
       </el-table-column>
-      <el-table-column align="center" label="角色名称" width="220" prop="name">
+      <el-table-column align="center" label="用户名" width="220" prop="userName">
       </el-table-column>
-      <el-table-column align="header-center" label="角色说明">
-
-      </el-table-column>
-      <el-table-column align="header-center" label="角色状态">
-
+      <el-table-column align="center" label="姓名" width="220" prop="realName">
       </el-table-column>
       <el-table-column align="center" label="Operations">
         <template slot-scope="{row,$index}">
@@ -89,10 +85,7 @@
                 </el-checkbox>
               </template>
             </el-table-column>
-
           </el-table>
-
-          <!-- https://blog.csdn.net/qq_33769914/article/details/81302116 -->
 
         </el-form-item>
       </el-form>
@@ -191,19 +184,6 @@
           }, 1000)
         })
       },
-      // https://blog.csdn.net/qq_41612675/article/details/86612840
-      // 横排样式
-
-      // 统一处理父节点为选中
-      // selectedParent (currentObj) {
-      //   console.log('父节点被选中')
-      //   let currentNode = this.$refs.treeForm.getNode(currentObj)
-      //
-      //   if (currentNode.parent.key !== undefined) {
-      //     this.$refs.treeForm.setChecked(currentNode.parent, true)
-      //     this.selectedParent(currentNode.parent)
-      //   }
-      // },
 
       // 新增OR修改菜单中获取树的下级节点数据
       getTreeNodes(node, resolve) {
@@ -217,10 +197,6 @@
         })
       },
       confirmAddOrUpdateRole() {
-        // const functions = new Array()
-        // this.$refs.treeForm.getCheckedNodes().forEach((data, index, array) => {
-        //   functions[index] = data.id
-        // })
         this.listLoading = true
         // this.roleForm.functions = functions
 
@@ -236,7 +212,6 @@
           })
           // this.initFormData()
           this.$refs['roleForm'].resetFields()
-
           this.listLoading = false
           this.dialogVisible = false
           this.reload()
