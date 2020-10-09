@@ -19,7 +19,7 @@ type User struct {
 func StructQueryField(accountId int) {
 
 	user := new(User)
-	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where accountId = ? ", accountId)
+	row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where accountId = ? ", accountId)
 
 	if err := row.Scan(&user.Id, &user.Name, &user.Age); err != nil {
 		fmt.Printf("scan failed, err:%v", err)
@@ -43,12 +43,12 @@ func InsertTxTest(user *User, tx *sql.Tx) (err error) {
 
 	//res, err := pool.Exec("insert into `users` (`name`) values (?)", name)
 
-	_, err = tx.Exec("INSERT INTO `tb_users` (`accountId`,`userName`,`realName`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	_, err = tx.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
 	if err != nil {
 		return err
 	}
 
-	_, err = tx.Exec("INSERT INTO `tb_users` (`accountId`,`userName`,`realName`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	_, err = tx.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
 	if err != nil {
 		return err
 	}
@@ -59,12 +59,12 @@ func InsertTxTest(user *User, tx *sql.Tx) (err error) {
 // UpdateFooBar 更新
 func InsertWithOutTxTest(user *User) (err error) {
 
-	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`accountId`,`userName`,`realName`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
 	if err != nil {
 		return err
 	}
 
-	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`accountId`,`userName`,`realName`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
 	if err != nil {
 		return err
 	}
@@ -76,7 +76,7 @@ func InsertWithOutTxTest(user *User) (err error) {
 func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *User) {
 
 	user1 := new(User)
-	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where userName = ? AND password = ? ", userInfo.UserName, userInfo.Password)
+	row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where user_name = ? AND password = ? ", userInfo.UserName, userInfo.Password)
 
 	if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
 		//fmt.Printf("scan failed, err:%v", err)
@@ -94,7 +94,7 @@ func RetrieveUserByAccountId(accountId int) (user *User) {
 
 	user1 := new(User)
 
-	row := MysqlDb.QueryRow("select accountId, userName, age from tb_users where accountId = ? ", accountId)
+	row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where accountId = ? ", accountId)
 
 	if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
 	}
@@ -120,12 +120,12 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT `role_id`,`name`,`code` FROM tb_roles WHERE 1=1 ")
-	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_roles WHERE 1=1 ")
+	queryStm.WriteString(" SELECT `account_id`,`user_name`,`real_name` FROM tb_users WHERE 1=1 ")
+	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_users WHERE 1=1 ")
 	// 查询条件.
 	if fetchDataBody.AccountId > -1 {
-		queryStm.WriteString(" AND role_id = ? ")
-		countQueryStm.WriteString(" AND role_id = ? ")
+		queryStm.WriteString(" AND account_id = ? ")
+		countQueryStm.WriteString(" AND account_id = ? ")
 		fetchArgs = append(fetchArgs, fetchDataBody.AccountId)
 	}
 
@@ -154,9 +154,9 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	}
 
 	for queryResults.Next() {
-		queryResults.Scan(&dataObj.RoleId,
-			&dataObj.Name,
-			&dataObj.Code)
+		queryResults.Scan(&dataObj.AccountId,
+			&dataObj.UserName,
+			&dataObj.RealName)
 		results = append(results, dataObj)
 	}
 
