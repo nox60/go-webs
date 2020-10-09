@@ -105,7 +105,7 @@
 </template>
 
 <script>
-  import {addOrUpdateRole, deleteRole, getAllFuncs, getFunctions, getRoleById, listRoleData} from '@/api/role'
+  import {listUserData} from '@/api/user'
   import Pagination from '@/components/Pagination'
 
   const defaultRole = {
