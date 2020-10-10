@@ -162,3 +162,33 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 
 	return results, totalCount, err
 }
+
+func AddUser(user *models.User, tx *sql.Tx) (err error) {
+	_, err = tx.Exec(" INSERT INTO `tb_users` (`user_name`,`real_name`) "+
+		" values (?,?) ",
+		user.UserName,
+		user.RealName)
+	if err != nil {
+		return err
+	}
+	return
+}
+
+func UpdateUserByAccountId(user *models.User, tx *sql.Tx) (err error) {
+	var queryStm strings.Builder
+	queryStm.WriteString("UPDATE `tb_users` SET `user_name` = ?, `real_name` = ?  WHERE account_id = ? ")
+
+	var args = make([]interface{}, 0)
+
+	args = append(args, user.UserName)
+	args = append(args, user.RealName)
+	args = append(args, user.AccountId)
+
+	_, err = tx.Exec(queryStm.String(), args...)
+
+	if err != nil {
+		return err
+	}
+
+	return
+}

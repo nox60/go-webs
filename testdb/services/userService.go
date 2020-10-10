@@ -53,3 +53,43 @@ func InsertTestWithOutTx() {
 func RetriveUserByUserNameAndPassword(loginBody *models.LoginBody) (user *dao.User) {
 	return dao.RetrieveUserByUserNameAndPassword(loginBody)
 }
+
+func AddUser(user *models.User) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	err = dao.AddUser(user, tx)
+}
+
+func UpdateUser(user *models.User) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	err = dao.UpdateUserByAccountId(user, tx)
+}
