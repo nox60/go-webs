@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"testdb/dao"
 	"testdb/models"
+	"testdb/services"
 	"testdb/utils"
 )
 
@@ -114,5 +115,29 @@ func ListUserData(c *gin.Context) {
 	dataLists.TotalCounts = totalCount
 	dataLists.DataLists = results
 	resultMsg.Data = dataLists
+	c.JSON(200, resultMsg)
+}
+
+func AddOrUpdateUser(c *gin.Context) {
+
+	var userReqbody models.User
+
+	if err := c.ShouldBindJSON(&userReqbody); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if userReqbody.AccountId == 0 {
+		// 新增
+		services.AddUser(&userReqbody)
+	} else {
+		// 更新
+		services.UpdateUser(&userReqbody)
+	}
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "新增用户信息成功"
 	c.JSON(200, resultMsg)
 }
