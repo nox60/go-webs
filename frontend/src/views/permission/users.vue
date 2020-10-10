@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddOrEditUser({ roleId: 0})">新建用户</el-button>
+    <el-button type="primary" @click="handleAddOrEditUser({ accountId: 0})">新建用户</el-button>
     <el-table
       :data="usersList"
       highlight-current-row
@@ -165,30 +165,19 @@
       },
       handleAddOrEditUser(row) {
         this.listLoading = true
-        // this.dialogVisible = false
-        // 获取所有功能点
-        // getAllFuncs().then(response => {
-        //   setTimeout(() => {
-        //     this.treeData = response.data
-        //   }, 1000)
-        // })
         if (row.accountId === 0) { // 新增
           console.log('新增数据')
-          if (this.$refs.tree) {
-            this.$refs.tree.setCheckedNodes([])
-          }
           this.dialogType = 'new'
           this.forEdit = 0
         } else { // 修改
           console.log('修改数据')
           this.forEdit = 1
           this.userForm.id = row.roleId
-          this.listLoading = true
-          getAllFuncs().then(response => {
-            setTimeout(() => {
-              this.tableData = response.data
-            }, 1000)
-          })
+          // getAllFuncs().then(response => {
+          //   setTimeout(() => {
+          //     this.tableData = response.data
+          //   }, 1000)
+          // })
         }
         this.$nextTick(() => {
           this.initFormData()
@@ -210,6 +199,11 @@
                 this.listLoading = false
               })
             }, 1000)
+          })
+        } else {
+          this.dialogVisible = true
+          this.$nextTick(() => {
+            this.$refs['userForm'].resetFields()
           })
         }
       },
