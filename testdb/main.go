@@ -32,6 +32,8 @@ func main() {
 
 	api.Use(Authorize())
 	// 以下接口都需要鉴权，验证token的正确性
+
+	api.POST("/addOrUpdateUser", controller.AddOrUpdateUser)
 	api.GET("/userInfo", controller.UserInfo)
 	api.POST("/listUserData", controller.ListUserData)
 	api.POST("/listSampleData", controller.ListSampleData)

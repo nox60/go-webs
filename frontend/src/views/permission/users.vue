@@ -49,14 +49,14 @@
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
-        <el-button type="primary" @click="confirmAddOrUpdateRole">确认</el-button>
+        <el-button type="primary" @click="confirmAddOrUpdateUser">确认</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-  import {listUserData} from '@/api/user'
+  import {listUserData,addOrUpdateUser} from '@/api/user'
   import Pagination from '@/components/Pagination'
 
   const defaultRole = {
@@ -142,14 +142,10 @@
           }, 1000)
         })
       },
-      confirmAddOrUpdateRole() {
+      confirmAddOrUpdateUser() {
         this.listLoading = true
-        // this.userForm.functions = functions
-
-        console.log(this.userForm)
-
         // console.log(this.userForm.id)
-        addOrUpdateRole(this.userForm).then(() => {
+        addOrUpdateUser(this.userForm).then(() => {
           this.$notify({
             title: 'Success',
             message: '操作成功',

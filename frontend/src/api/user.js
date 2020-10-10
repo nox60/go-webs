@@ -52,3 +52,11 @@ export function listUserData(query) {
     data: query
   })
 }
+
+export function addOrUpdateUser(data) {
+  return request({
+    url: '/addOrUpdateUser',
+    method: 'post',
+    data: data
+  })
+}
