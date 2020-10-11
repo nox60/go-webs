@@ -118,30 +118,30 @@
         })
       },
 
-      // 用于懒加载表内数据
-      getFunctions(tree, treeNode, resolve) {
-        this.listLoading = true
-        getFunctions(tree.id).then(response => {
-          setTimeout(() => {
-            resolve(
-              response.data
-            )
-            this.listLoading = false
-          }, 1000)
-        })
-      },
+      // // 用于懒加载表内数据
+      // getFunctions(tree, treeNode, resolve) {
+      //   this.listLoading = true
+      //   getFunctions(tree.id).then(response => {
+      //     setTimeout(() => {
+      //       resolve(
+      //         response.data
+      //       )
+      //       this.listLoading = false
+      //     }, 1000)
+      //   })
+      // },
 
-      // 新增OR修改菜单中获取树的下级节点数据
-      getTreeNodes(node, resolve) {
-        getFunctions(node.data.id).then(response => {
-          setTimeout(() => {
-            // console.log(response.data)
-            resolve(
-              response.data
-            )
-          }, 1000)
-        })
-      },
+      // // 新增OR修改菜单中获取树的下级节点数据
+      // getTreeNodes(node, resolve) {
+      //   getFunctions(node.data.id).then(response => {
+      //     setTimeout(() => {
+      //       // console.log(response.data)
+      //       resolve(
+      //         response.data
+      //       )
+      //     }, 1000)
+      //   })
+      // },
       confirmAddOrUpdateUser() {
         this.listLoading = true
         // console.log(this.userForm.id)
