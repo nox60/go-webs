@@ -227,44 +227,44 @@
           })
           .catch(_ => {})
       },
-      handleSelectFunction(checked, obj) {
-        // var type=Object.prototype.toString.call(this.userForm.items);
-        if (checked) {
-          if (obj.parentIds) {
-            obj.parentIds.forEach((item, index, array) => {
-              // 要判断已经被选中，如果没有被选中才选中
-              if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
-                this.userForm.functions.push(item)
-              }
-            })
-          }
-          // 参数：value数组中的当前项, index当前项的索引, array原始数组；
-        } else {
-          console.log(obj)
-
-          if (obj.childIds) {
-            obj.childIds.forEach((item, index, array) => {
-              // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-              if (this.userForm.functions.indexOf(item) > -1) {
-                // this.userForm.functions.push(item)
-                const index = this.userForm.functions.indexOf(item)
-                this.userForm.functions.splice(index, 1)
-              }
-            })
-          }
-
-          if (obj.childItems) {
-            obj.childItems.forEach((item, index, array) => {
-              // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-              if (this.userForm.items.indexOf(item) > -1) {
-                // this.userForm.functions.push(item)
-                const index = this.userForm.items.indexOf(item)
-                this.userForm.items.splice(index, 1)
-              }
-            })
-          }
-        }
-      },
+      // handleSelectFunction(checked, obj) {
+      //   // var type=Object.prototype.toString.call(this.userForm.items);
+      //   if (checked) {
+      //     if (obj.parentIds) {
+      //       obj.parentIds.forEach((item, index, array) => {
+      //         // 要判断已经被选中，如果没有被选中才选中
+      //         if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
+      //           this.userForm.functions.push(item)
+      //         }
+      //       })
+      //     }
+      //     // 参数：value数组中的当前项, index当前项的索引, array原始数组；
+      //   } else {
+      //     console.log(obj)
+      //
+      //     if (obj.childIds) {
+      //       obj.childIds.forEach((item, index, array) => {
+      //         // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
+      //         if (this.userForm.functions.indexOf(item) > -1) {
+      //           // this.userForm.functions.push(item)
+      //           const index = this.userForm.functions.indexOf(item)
+      //           this.userForm.functions.splice(index, 1)
+      //         }
+      //       })
+      //     }
+      //
+      //     if (obj.childItems) {
+      //       obj.childItems.forEach((item, index, array) => {
+      //         // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
+      //         if (this.userForm.items.indexOf(item) > -1) {
+      //           // this.userForm.functions.push(item)
+      //           const index = this.userForm.items.indexOf(item)
+      //           this.userForm.items.splice(index, 1)
+      //         }
+      //       })
+      //     }
+      //   }
+      // },
       handleSelectItem(checked, obj) {
         const type2 = Object.prototype.toString.call(this.userForm.items)
         if (checked) {
