@@ -265,19 +265,19 @@
       //     }
       //   }
       // },
-      handleSelectItem(checked, obj) {
-        const type2 = Object.prototype.toString.call(this.userForm.items)
-        if (checked) {
-          if (obj.parentIds) {
-            obj.parentIds.forEach((item, index, array) => {
-              // 要判断已经被选中，如果没有被选中才选中
-              if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
-                this.userForm.functions.push(item)
-              }
-            })
-          }
-        }
-      }
+      // handleSelectItem(checked, obj) {
+      //   const type2 = Object.prototype.toString.call(this.userForm.items)
+      //   if (checked) {
+      //     if (obj.parentIds) {
+      //       obj.parentIds.forEach((item, index, array) => {
+      //         // 要判断已经被选中，如果没有被选中才选中
+      //         if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
+      //           this.userForm.functions.push(item)
+      //         }
+      //       })
+      //     }
+      //   }
+      // }
     }
   }
 </script>
