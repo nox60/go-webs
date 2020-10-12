@@ -120,9 +120,11 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT `account_id`,`user_name`,`real_name` ")
+	queryStm.WriteString(" SELECT `account_id`,`user_name`,`real_name`, ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT(CONCAT_WS('|!|', b.role_id, c.item_name)))  AS itemStr ")
 	queryStm.WriteString(" FROM tb_users a ")
 	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
+	queryStm.WriteString(" LEFT JOIN tb_roles c ON b.role_id = c.role_id ")
 	queryStm.WriteString(" WHERE 1=1 ")
 	queryStm.WriteString(" GROUP BY a.`account_id` ")
 	queryStm.WriteString(" ORDER BY a.`account_id` DESC ")
