@@ -120,8 +120,20 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT `account_id`,`user_name`,`real_name` FROM tb_users WHERE 1=1 ")
-	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_users WHERE 1=1 ")
+	queryStm.WriteString(" SELECT `account_id`,`user_name`,`real_name` ")
+	queryStm.WriteString(" FROM tb_users a ")
+	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
+	queryStm.WriteString(" WHERE 1=1 ")
+	queryStm.WriteString(" GROUP BY a.`account_id` ")
+	queryStm.WriteString(" ORDER BY a.`account_id` DESC ")
+
+	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount ")
+	countQueryStm.WriteString(" FROM tb_users a ")
+	countQueryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
+	countQueryStm.WriteString(" WHERE 1=1 ")
+	countQueryStm.WriteString(" GROUP BY a.`account_id` ")
+	countQueryStm.WriteString(" ORDER BY a.`account_id` DESC ")
+
 	// 查询条件.
 	if fetchDataBody.AccountId > -1 {
 		queryStm.WriteString(" AND account_id = ? ")
