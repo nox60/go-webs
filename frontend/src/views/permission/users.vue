@@ -46,6 +46,23 @@
             placeholder="用户姓名"
           />
         </el-form-item>
+
+        <el-form-item label="用户角色" prop="realName">
+        <template>
+          <el-checkbox-group v-model="checkList">
+            <el-checkbox
+              v-model="userForm.roles"
+              v-for="itemObj in scope.row.items"
+              @change="checked=>handleSelectItem(checked, itemObj)"
+              :label="itemObj.itemId"
+              :key="itemObj.itemId"
+              border
+              size="mini">
+              {{itemObj.itemId}}
+            </el-checkbox>
+          </el-checkbox-group>
+        </template>
+        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
@@ -57,6 +74,7 @@
 
 <script>
   import {listUserData,addOrUpdateUser} from '@/api/user'
+  import {listRoleData} from '@/api/role'
   import Pagination from '@/components/Pagination'
 
   const defaultRole = {
@@ -92,6 +110,7 @@
         role: Object.assign({}, defaultRole),
         routes: [],
         usersList: [],
+        allRoles: [],
         dialogType: 'new',
         checkStrictly: false
       }
@@ -103,6 +122,7 @@
     },
     created() {
       this.getList()
+
     },
     mounted() {
     },
@@ -115,6 +135,10 @@
           setTimeout(() => {
             this.listLoading = false
           }, 1.5 * 1000)
+        })
+
+        listRoleData({"page":1,"limit":999999,"sort":"+id"}).then(response => {
+          this.allRoles = response.data.dataLists
         })
       },
 
