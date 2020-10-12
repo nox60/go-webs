@@ -192,3 +192,23 @@ func UpdateUserByAccountId(user *models.User, tx *sql.Tx) (err error) {
 
 	return
 }
+
+func AddUserRole(accountId int, roleId int, tx *sql.Tx) (err error) {
+	_, err = tx.Exec(" INSERT INTO `tb_users_roles` (`account_id`,`role_id`) "+
+		" values (?,?) ",
+		accountId,
+		roleId)
+	if err != nil {
+		return err
+	}
+	return
+}
+
+func DeleteUserRoleByAccountId(accountId int, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("DELETE FROM `tb_users_roles` WHERE account_id = ? ",
+		accountId)
+	if err != nil {
+		return err
+	}
+	return
+}

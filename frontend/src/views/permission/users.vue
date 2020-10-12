@@ -47,20 +47,18 @@
           />
         </el-form-item>
 
-        <el-form-item label="用户角色" prop="realName">
+        <el-form-item label="用户角色" prop="roles">
         <template>
-          <el-checkbox-group v-model="checkList">
             <el-checkbox
               v-model="userForm.roles"
-              v-for="itemObj in scope.row.items"
+              v-for="itemObj in allRoles"
               @change="checked=>handleSelectItem(checked, itemObj)"
-              :label="itemObj.itemId"
-              :key="itemObj.itemId"
+              :label="itemObj.roleId"
+              :key="itemObj.roleId"
               border
               size="mini">
-              {{itemObj.itemId}}
+              {{itemObj.name}}
             </el-checkbox>
-          </el-checkbox-group>
         </template>
         </el-form-item>
       </el-form>
@@ -169,6 +167,7 @@
       confirmAddOrUpdateUser() {
         this.listLoading = true
         // console.log(this.userForm.id)
+        console.log(this.userForm)
         addOrUpdateUser(this.userForm).then(() => {
           this.$notify({
             title: 'Success',

@@ -72,6 +72,9 @@ func AddUser(user *models.User) {
 	}()
 
 	err = dao.AddUser(user, tx)
+
+	// 将用户加入对应的组
+
 }
 
 func UpdateUser(user *models.User) {
@@ -92,4 +95,10 @@ func UpdateUser(user *models.User) {
 	}()
 
 	err = dao.UpdateUserByAccountId(user, tx)
+
+	// 先删除用户对应的组信息
+	err = dao.DeleteUserRoleByAccountId(user.AccountId, tx)
+
+	// 将用户加入对应的组
+
 }

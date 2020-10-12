@@ -12,6 +12,7 @@ type User struct {
 	AccountId int    `json:"accountId"`
 	UserName  string `json:"userName"`
 	RealName  string `json:"realName"`
+	Roles     []int  `json:"roles"`
 	Page      int    `json:"page"  `
 	Limit     int    `json:"limit" `
 	ForCount  bool
