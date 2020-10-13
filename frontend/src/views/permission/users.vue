@@ -50,7 +50,7 @@
         <el-form-item label="用户角色" prop="roles">
         <template>
             <el-checkbox
-              v-model="userForm.roles"
+              v-model="userForm.roleIds"
               v-for="itemObj in allRoles"
               :label="itemObj.roleId"
               :key="itemObj.roleId"
@@ -91,10 +91,7 @@
           accountId: 0,
           userName: '',
           realName: '',
-          roles: [{
-            roleId:0,
-            name:''
-          }]
+          roleIds: []
         },
         total: 0,
         listQuery: {
