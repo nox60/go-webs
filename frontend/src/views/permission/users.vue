@@ -52,7 +52,6 @@
             <el-checkbox
               v-model="userForm.roles"
               v-for="itemObj in allRoles"
-              @change="checked=>handleSelectItem(checked, itemObj)"
               :label="itemObj.roleId"
               :key="itemObj.roleId"
               border
@@ -92,7 +91,10 @@
           accountId: 0,
           userName: '',
           realName: '',
-          roles: []
+          roles: [{
+            roleId:0,
+            name:''
+          }]
         },
         total: 0,
         listQuery: {
@@ -142,7 +144,6 @@
 
       confirmAddOrUpdateUser() {
         this.listLoading = true
-        // console.log(this.userForm.id)
         console.log(this.userForm)
         addOrUpdateUser(this.userForm).then(() => {
           this.$notify({
@@ -263,20 +264,20 @@
             })
           }
         }
-      },
-      handleSelectItem(checked, obj) {
-        const type2 = Object.prototype.toString.call(this.userForm.items)
-        if (checked) {
-          if (obj.parentIds) {
-            obj.parentIds.forEach((item, index, array) => {
-              // 要判断已经被选中，如果没有被选中才选中
-              if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
-                this.userForm.functions.push(item)
-              }
-            })
-          }
-        }
       }
+      // handleSelectItem(checked, obj) {
+      //   const type2 = Object.prototype.toString.call(this.userForm.items)
+      //   if (checked) {
+      //     if (obj.parentIds) {
+      //       obj.parentIds.forEach((item, index, array) => {
+      //         // 要判断已经被选中，如果没有被选中才选中
+      //         if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
+      //           this.userForm.functions.push(item)
+      //         }
+      //       })
+      //     }
+      //   }
+      // }
     }
   }
 </script>
