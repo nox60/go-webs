@@ -19,8 +19,8 @@ DROP TABLE IF EXISTS tb_users_roles;
 CREATE TABLE tb_users_roles (
 	`row_id` INT NOT NULL AUTO_INCREMENT,
     `account_id` INT NOT NULL,
-    `role_id` INT NOT NULL
-    PRIMARY KEY(`rowId`)
+    `role_id` INT NOT NULL,
+    PRIMARY KEY(`row_id`)
 )DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS tb_functions;

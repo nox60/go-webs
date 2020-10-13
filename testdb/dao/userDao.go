@@ -3,6 +3,7 @@ package dao
 import (
 	"database/sql"
 	"fmt"
+	"strconv"
 	"strings"
 	"testdb/models"
 )
@@ -120,21 +121,18 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT `account_id`,`user_name`,`real_name`, ")
-	queryStm.WriteString(" GROUP_CONCAT(DISTINCT(CONCAT_WS('|!|', b.role_id, c.item_name)))  AS itemStr ")
+	queryStm.WriteString(" SELECT a.`account_id`, a.`user_name`, a.`real_name`, ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT(CONCAT_WS('|!|', c.role_id, c.name))) AS roleStr ")
 	queryStm.WriteString(" FROM tb_users a ")
 	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
 	queryStm.WriteString(" LEFT JOIN tb_roles c ON b.role_id = c.role_id ")
 	queryStm.WriteString(" WHERE 1=1 ")
-	queryStm.WriteString(" GROUP BY a.`account_id` ")
-	queryStm.WriteString(" ORDER BY a.`account_id` DESC ")
 
 	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount ")
 	countQueryStm.WriteString(" FROM tb_users a ")
 	countQueryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
+	countQueryStm.WriteString(" LEFT JOIN tb_roles c ON b.role_id = c.role_id ")
 	countQueryStm.WriteString(" WHERE 1=1 ")
-	countQueryStm.WriteString(" GROUP BY a.`account_id` ")
-	countQueryStm.WriteString(" ORDER BY a.`account_id` DESC ")
 
 	// 查询条件.
 	if fetchDataBody.AccountId > -1 {
@@ -143,11 +141,24 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 		fetchArgs = append(fetchArgs, fetchDataBody.AccountId)
 	}
 
-	queryStm.WriteString("LIMIT ?,? ")
+	queryStm.WriteString(" GROUP BY a.`account_id` ")
+	queryStm.WriteString(" ORDER BY a.`account_id` DESC ")
+	queryStm.WriteString(" LIMIT ?,? ")
+
+	countQueryStm.WriteString(" GROUP BY a.`account_id` ")
+	countQueryStm.WriteString(" ORDER BY a.`account_id` DESC ")
 
 	// 分页查询记录
-	stmt, _ := MysqlDb.Prepare(queryStm.String())
-	stmtCount, _ := MysqlDb.Prepare(countQueryStm.String())
+	stmt, err := MysqlDb.Prepare(queryStm.String())
+	if err != nil {
+		fmt.Printf("SQL Prepare error, err:%v", err)
+	}
+
+	stmtCount, err := MysqlDb.Prepare(countQueryStm.String())
+	if err != nil {
+		fmt.Printf("COUNT SQL Prepare error, err:%v", err)
+	}
+
 	defer stmt.Close()
 	defer stmtCount.Close()
 
@@ -164,15 +175,36 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	queryResults, err := stmt.Query(fetchArgs...)
 
 	if err != nil {
+		fmt.Println(err)
 		return results, 0, err
 	}
 
 	for queryResults.Next() {
 		queryResults.Scan(&dataObj.AccountId,
 			&dataObj.UserName,
-			&dataObj.RealName)
+			&dataObj.RealName,
+			&dataObj.RoleStr)
+
+		if strings.Index(dataObj.RoleStr, "|!|") > 0 {
+			var roles = make([]string, 0)
+			roles = strings.Split(dataObj.RoleStr, ",")
+
+			if len(roles) > 0 {
+				for _, roleTemp := range roles {
+					roleTempArray := strings.Split(roleTemp, "|!|")
+					var roleTemp models.Role
+					roleIdInt, _ := strconv.Atoi(roleTempArray[0])
+					roleTemp.RoleId = int64(roleIdInt)
+					roleTemp.Name = roleTempArray[1]
+					dataObj.Roles = append(dataObj.Roles, roleTemp)
+				}
+			}
+		}
+
 		results = append(results, dataObj)
 	}
+
+	// 处理权限点信息
 
 	return results, totalCount, err
 }
