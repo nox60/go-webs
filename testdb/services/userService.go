@@ -75,7 +75,7 @@ func AddUser(user *models.User) {
 
 	// 将用户加入对应的组
 	for _, t := range user.Roles {
-		err = dao.AddUserRole(user.AccountId, t, tx)
+		err = dao.AddUserRole(user.AccountId, int(t.RoleId), tx)
 	}
 }
 
@@ -103,6 +103,6 @@ func UpdateUser(user *models.User) {
 
 	// 将用户加入对应的组
 	for _, t := range user.Roles {
-		err = dao.AddUserRole(user.AccountId, t, tx)
+		err = dao.AddUserRole(user.AccountId, int(t.RoleId), tx)
 	}
 }
