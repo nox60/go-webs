@@ -105,7 +105,7 @@ func ListUserData(c *gin.Context) {
 		return
 	}
 
-	fetchDataRequestBody.AccountId = -1
+	// fetchDataRequestBody.AccountId = -1
 	results, totalCount, err := dao.RetrieveUsersData(&fetchDataRequestBody)
 
 	if err != nil {

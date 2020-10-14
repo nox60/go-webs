@@ -136,8 +136,8 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 
 	// 查询条件.
 	if fetchDataBody.AccountId > -1 {
-		queryStm.WriteString(" AND account_id = ? ")
-		countQueryStm.WriteString(" AND account_id = ? ")
+		queryStm.WriteString(" AND a.account_id = ? ")
+		countQueryStm.WriteString(" AND a.account_id = ? ")
 		fetchArgs = append(fetchArgs, fetchDataBody.AccountId)
 	}
 

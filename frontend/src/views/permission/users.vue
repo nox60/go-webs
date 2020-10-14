@@ -88,7 +88,7 @@
       return {
         forEdit: 0,
         userForm: {
-          accountId: 0,
+          accountId: -1,
           userName: '',
           realName: '',
           roleIds: []
@@ -165,7 +165,7 @@
         } else { // 修改
           console.log('修改数据')
           this.forEdit = 1
-          this.userForm.id = row.roleId
+          this.userForm.accountId = row.accountId
           // getAllFuncs().then(response => {
           //   setTimeout(() => {
           //     this.tableData = response.data
@@ -182,7 +182,7 @@
       },
       initFormData() {
         if (this.forEdit === 1) { // 编辑数据
-          getRoleById(this.userForm.id).then(response => {
+          listUserData({"page":1,"limit":1,"accountId":this.userForm.accountId}).then(response => {
             setTimeout(() => {
               this.dialogVisible = true
               this.$nextTick(() => {
