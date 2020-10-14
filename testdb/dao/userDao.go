@@ -197,6 +197,7 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 					roleTemp.RoleId = int64(roleIdInt)
 					roleTemp.Name = roleTempArray[1]
 					dataObj.Roles = append(dataObj.Roles, roleTemp)
+					dataObj.RoleIds = append(dataObj.RoleIds, roleIdInt)
 				}
 			}
 		}
