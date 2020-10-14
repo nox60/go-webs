@@ -97,6 +97,7 @@
         listQuery: {
           page: 1,
           limit: 20,
+          accountId: -1,
           importance: undefined,
           title: undefined,
           type: undefined,
@@ -187,7 +188,7 @@
               this.dialogVisible = true
               this.$nextTick(() => {
                 this.$refs['userForm'].resetFields()
-                this.userForm = response.data
+                this.userForm = response.data.dataLists[0]
                 this.defaultSelectedNode = response.data.functions
                 this.listLoading = false
               })
