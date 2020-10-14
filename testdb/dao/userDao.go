@@ -209,15 +209,17 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	return results, totalCount, err
 }
 
-func AddUser(user *models.User, tx *sql.Tx) (err error) {
-	_, err = tx.Exec(" INSERT INTO `tb_users` (`user_name`,`real_name`) "+
+func AddUser(user *models.User, tx *sql.Tx) (accountId int, err error) {
+	ret, err := tx.Exec(" INSERT INTO `tb_users` (`user_name`,`real_name`) "+
 		" values (?,?) ",
 		user.UserName,
 		user.RealName)
-	if err != nil {
-		return err
+	var accountId64 int64
+	if accountId64, err = ret.LastInsertId(); nil == err {
+		fmt.Println("LastInsertId:", accountId)
 	}
-	return
+	accountId = int(accountId64)
+	return accountId, err
 }
 
 func UpdateUserByAccountId(user *models.User, tx *sql.Tx) (err error) {
