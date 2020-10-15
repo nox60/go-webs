@@ -51,6 +51,7 @@ func main() {
 	api.POST("/addOrUpdateFunctionItem", controller.AddOrUpdateFunctionItem)
 	api.DELETE("/deleteFunctionItem/:functionItemId", controller.DeleteFunctionItem)
 	api.GET("/getFunctionItemById/:itemId", controller.GetFunctionItemById)
+	api.DELETE("/deleteUser/:accountId", controller.DeleteUser)
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }

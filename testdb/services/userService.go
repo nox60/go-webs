@@ -106,3 +106,28 @@ func UpdateUser(user *models.User) {
 		err = dao.AddUserRole(user.AccountId, t, tx)
 	}
 }
+
+func DeleteUser(accountId int) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+
+	// 删除用户信息
+	err = dao.DeleteUserByAccountId(accountId, tx)
+
+	// 删除用户对应的组信息
+	err = dao.DeleteUserRoleByAccountId(accountId, tx)
+
+}

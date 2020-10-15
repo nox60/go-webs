@@ -257,6 +257,15 @@ func AddUserRole(accountId int, roleId int, tx *sql.Tx) (err error) {
 	return
 }
 
+func DeleteUserByAccountId(accountId int, tx *sql.Tx) (err error) {
+	_, err = tx.Exec("DELETE FROM `tb_users` WHERE account_id = ? ",
+		accountId)
+	if err != nil {
+		return err
+	}
+	return
+}
+
 func DeleteUserRoleByAccountId(accountId int, tx *sql.Tx) (err error) {
 	_, err = tx.Exec("DELETE FROM `tb_users_roles` WHERE account_id = ? ",
 		accountId)

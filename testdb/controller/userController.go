@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"testdb/dao"
 	"testdb/models"
 	"testdb/services"
@@ -139,5 +140,16 @@ func AddOrUpdateUser(c *gin.Context) {
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
 	resultMsg.Msg = "新增用户信息成功"
+	c.JSON(200, resultMsg)
+}
+
+func DeleteUser(c *gin.Context) {
+	idStr := c.Param("accountId")
+	id, _ := strconv.Atoi(idStr)
+	services.DeleteUser(id)
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "删除用户成功"
 	c.JSON(200, resultMsg)
 }
