@@ -180,6 +180,10 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	}
 
 	for queryResults.Next() {
+
+		dataObj.RoleStr = ""
+		dataObj.RoleIds = []int{}
+
 		queryResults.Scan(&dataObj.AccountId,
 			&dataObj.UserName,
 			&dataObj.RealName,
