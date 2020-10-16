@@ -71,6 +71,7 @@
 
 <script>
   import {listUserData,addOrUpdateUser, deleteUser} from '@/api/user'
+  import {listRoleData} from '@/api/role'
   import Pagination from '@/components/Pagination'
 
   const defaultRole = {
