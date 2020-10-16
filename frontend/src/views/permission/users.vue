@@ -120,7 +120,6 @@
     },
     created() {
       this.getList()
-
     },
     mounted() {
     },
@@ -150,7 +149,6 @@
             type: 'success',
             duration: 2000
           })
-          // this.initFormData()
           this.$refs['userForm'].resetFields()
           this.listLoading = false
           this.dialogVisible = false
@@ -167,11 +165,6 @@
           console.log('修改数据')
           this.forEdit = 1
           this.userForm.accountId = row.accountId
-          // getAllFuncs().then(response => {
-          //   setTimeout(() => {
-          //     this.tableData = response.data
-          //   }, 1000)
-          // })
         }
         this.$nextTick(() => {
           this.initFormData()
@@ -239,7 +232,6 @@
           // 参数：value数组中的当前项, index当前项的索引, array原始数组；
         } else {
           console.log(obj)
-
           if (obj.childIds) {
             obj.childIds.forEach((item, index, array) => {
               // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态

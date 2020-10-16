@@ -76,14 +76,47 @@ func InsertWithOutTxTest(user *User) (err error) {
 // 使用user, password进行查询
 func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *User) {
 
-	user1 := new(User)
-	row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where user_name = ? AND password = ? ", userInfo.UserName, userInfo.Password)
+	// 查询条件
+	var queryStm strings.Builder
 
-	if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
-		//fmt.Printf("scan failed, err:%v", err)
-		//fmt.Println("")
-		//return user1
+	// 查询条件
+	var fetchArgs = make([]interface{}, 0)
+
+	fetchArgs = append(fetchArgs, userInfo.UserName)
+	fetchArgs = append(fetchArgs, userInfo.Password)
+
+	queryStm.WriteString(" select account_id, user_name, age from tb_users where user_name = ? AND password = ? ")
+
+	user1 := new(User)
+
+	//row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where user_name = ? AND password = ? ", userInfo.UserName, userInfo.Password)
+
+	// 分页查询记录
+	stmt, err := MysqlDb.Prepare(queryStm.String())
+	if err != nil {
+		fmt.Printf("SQL Prepare error, err:%v", err)
 	}
+	defer stmt.Close()
+
+	// 查询
+	queryResults, err := stmt.Query(fetchArgs...)
+
+	if err != nil {
+		fmt.Println(err)
+		return user
+	}
+
+	for queryResults.Next() {
+		queryResults.Scan(
+			&user1.Id,
+			&user1.Name,
+			&user1.Age)
+	}
+
+	// if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
+	//fmt.Printf("scan failed, err:%v", err)
+	//fmt.Println("")
+	//return user1
 
 	//fmt.Println(user1.Id, user1.Name, user1.Age)
 
