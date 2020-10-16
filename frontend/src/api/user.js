@@ -60,3 +60,10 @@ export function addOrUpdateUser(data) {
     data: data
   })
 }
+
+export function deleteUser(id) {
+  return request({
+    url: `/deleteUser/${id}`,
+    method: 'delete'
+  })
+}

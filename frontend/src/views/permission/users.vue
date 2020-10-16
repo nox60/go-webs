@@ -70,8 +70,7 @@
 </template>
 
 <script>
-  import {listUserData,addOrUpdateUser} from '@/api/user'
-  import {listRoleData} from '@/api/role'
+  import {listUserData,addOrUpdateUser, deleteUser} from '@/api/user'
   import Pagination from '@/components/Pagination'
 
   const defaultRole = {
@@ -210,12 +209,12 @@
         this.$confirm('确认删除？')
           .then(_ => {
             console.log('点击了确认')
-            console.log(row.roleId)
-            deleteRole(row.roleId).then(() => {
+            console.log(row.accountId)
+            deleteUser(row.accountId).then(() => {
               this.dialogFormVisible = false
               this.$notify({
                 title: 'Success',
-                message: '删除数据成功！',
+                message: '删除用户成功！',
                 type: 'success',
                 duration: 2000
               })
