@@ -33,17 +33,6 @@ func StructQueryField(accountId int) {
 // UpdateFooBar 更新
 func InsertTxTest(user *User, tx *sql.Tx) (err error) {
 
-	//_, err = tx.Exec("update `foo` set `x` = ? where `id` = ?", x, id)
-	//if err != nil {
-	//	return
-	//}
-	//_, err = tx.Exec("update `bar` set `y` = ? where `id` = ?", y, id)
-	//if err != nil {
-	//	return
-	//}
-
-	//res, err := pool.Exec("insert into `users` (`name`) values (?)", name)
-
 	_, err = tx.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
 	if err != nil {
 		return err
