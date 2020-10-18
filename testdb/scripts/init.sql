@@ -69,3 +69,4 @@ CREATE TABLE tb_roles_items (
     `status` TINYINT NOT NULL DEFAULT 0,
     PRIMARY KEY (`row_id`)
 )DEFAULT CHARSET=utf8;
+

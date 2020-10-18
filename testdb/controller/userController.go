@@ -27,8 +27,6 @@ func JsonLogin(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)
 
-	//resultMap := utils.StructToMap(resultMsg)
-
 	if result.Id > 0 {
 		//登录成功
 		resultMsg.Code = 20000
@@ -151,5 +149,29 @@ func DeleteUser(c *gin.Context) {
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
 	resultMsg.Msg = "删除用户成功"
+	c.JSON(200, resultMsg)
+}
+
+func AddOrUpdateUserV2(c *gin.Context) {
+
+	var userReqbody models.User
+
+	if err := c.ShouldBindJSON(&userReqbody); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if userReqbody.AccountId == 0 {
+		// 新增
+		services.AddUser(&userReqbody)
+	} else {
+		// 更新
+		services.UpdateUser(&userReqbody)
+	}
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "新增用户信息成功"
 	c.JSON(200, resultMsg)
 }
