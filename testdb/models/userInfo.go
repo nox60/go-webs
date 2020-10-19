@@ -16,6 +16,7 @@ type User struct {
 	Roles     []Role `json:"roles"`
 	Page      int    `json:"page"  `
 	Limit     int    `json:"limit" `
+	Age       int    `json:"age"`
 	RoleStr   string
 	ForCount  bool
 }

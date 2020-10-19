@@ -9,36 +9,36 @@ import (
 )
 
 // 用户表结构体
-type User struct {
-	Id       int    `db:"id"`
-	Name     string `db:"name"`
-	Age      int    `db:"age"`
-	RealName string `db:"realName"`
-}
+//type User struct {
+//	Id       int    `db:"id"`
+//	Name     string `db:"name"`
+//	Age      int    `db:"age"`
+//	RealName string `db:"realName"`
+//}
 
 // 查询数据，指定字段名
 func StructQueryField(accountId int) {
 
-	user := new(User)
+	user := new(models.User)
 	row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where accountId = ? ", accountId)
 
-	if err := row.Scan(&user.Id, &user.Name, &user.Age); err != nil {
+	if err := row.Scan(&user.AccountId, &user.UserName, &user.Age); err != nil {
 		fmt.Printf("scan failed, err:%v", err)
 		return
 	}
 
-	fmt.Println(user.Id, user.Name, user.Age)
+	fmt.Println(user.AccountId, user.UserName, user.Age)
 }
 
 // UpdateFooBar 更新
-func InsertTxTest(user *User, tx *sql.Tx) (err error) {
+func InsertTxTest(user *models.User, tx *sql.Tx) (err error) {
 
-	_, err = tx.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	_, err = tx.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.AccountId, user.UserName, user.RealName)
 	if err != nil {
 		return err
 	}
 
-	_, err = tx.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	_, err = tx.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.AccountId, user.UserName, user.RealName)
 	if err != nil {
 		return err
 	}
@@ -47,14 +47,13 @@ func InsertTxTest(user *User, tx *sql.Tx) (err error) {
 }
 
 // UpdateFooBar 更新
-func InsertWithOutTxTest(user *User) (err error) {
-
-	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+func InsertWithOutTxTest(user *models.User) (err error) {
+	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.AccountId, user.UserName, user.RealName)
 	if err != nil {
 		return err
 	}
 
-	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.Id, user.Name, user.RealName)
+	_, err = MysqlDb.Exec("INSERT INTO `tb_users` (`account_id`,`user_name`,`real_name`) values (?,?,?) ", user.AccountId, user.UserName, user.RealName)
 	if err != nil {
 		return err
 	}
@@ -63,7 +62,7 @@ func InsertWithOutTxTest(user *User) (err error) {
 }
 
 // 使用user, password进行查询
-func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *User) {
+func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models.User) {
 
 	// 查询条件
 	var queryStm strings.Builder
@@ -76,7 +75,7 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *User) 
 
 	queryStm.WriteString(" select account_id, user_name, age from tb_users where user_name = ? AND password = ? ")
 
-	user1 := new(User)
+	user1 := new(models.User)
 
 	//row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where user_name = ? AND password = ? ", userInfo.UserName, userInfo.Password)
 
@@ -97,8 +96,8 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *User) 
 
 	for queryResults.Next() {
 		queryResults.Scan(
-			&user1.Id,
-			&user1.Name,
+			&user1.AccountId,
+			&user1.UserName,
 			&user1.Age)
 	}
 
@@ -113,13 +112,13 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *User) 
 }
 
 // 使用accountId获取用户信息
-func RetrieveUserByAccountId(accountId int) (user *User) {
+func RetrieveUserByAccountId(accountId int) (user *models.User) {
 
-	user1 := new(User)
+	user1 := new(models.User)
 
 	row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where accountId = ? ", accountId)
 
-	if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
+	if err := row.Scan(&user1.AccountId, &user1.UserName, &user1.Age); err != nil {
 	}
 
 	return user1
