@@ -73,14 +73,15 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 	fetchArgs = append(fetchArgs, userInfo.UserName)
 	fetchArgs = append(fetchArgs, userInfo.Password)
 
-	queryStm.WriteString(" SELECT a.account_id, a.user_name, a.age  ")
+	queryStm.WriteString(" SELECT a.account_id, a.user_name, a.age,  ")
 	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( c.function_id) SEPARATOR '|')  AS funStr, ")
 	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( d.item_id) SEPARATOR '|')  AS itemStr ")
 	queryStm.WriteString(" FROM tb_users a ")
-	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.accountId ")
+	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
 	queryStm.WriteString(" LEFT JOIN tb_roles_functions c ON b.role_id = c.role_id ")
 	queryStm.WriteString(" LEFT JOIN tb_roles_items d ON b.role_id = d.role_id ")
 	queryStm.WriteString(" WHERE user_name = ? AND password = ? ")
+	queryStm.WriteString(" GROUP BY a.`account_id` ")
 
 	user1 := new(models.User)
 
@@ -105,12 +106,17 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 		queryResults.Scan(
 			&user1.AccountId,
 			&user1.UserName,
-			&user1.Age)
+			&user1.Age,
+			&user1.FunStr,
+			&user1.RoleStr)
 	}
 
 	// 如果用户信息不为空,说明该用户存在,需要处理该用户的权限点信息。
 	if user1.AccountId > 0 {
-
+		user1.RoleStr = "|" + user1.RoleStr
+		user1.RoleStr = user1.RoleStr + "|"
+		user1.FunStr = "|" + user1.FunStr
+		user1.FunStr = user1.FunStr + "|"
 	}
 
 	// if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
