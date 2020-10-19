@@ -21,4 +21,11 @@ func main() {
 	fmt.Println(len(c))
 
 	fmt.Println(c)
+
+	arr := []string{"hello", "world", "1", "2"}
+
+	arrString := strings.Join(arr, ",")
+
+	fmt.Println(arrString)
+
 }

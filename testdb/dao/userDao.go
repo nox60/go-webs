@@ -101,6 +101,19 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 			&user1.Age)
 	}
 
+	// 如果用户信息不为空，则查询该用户对应的角色信息，以及权限点
+	if user1.AccountId > 0 {
+		// 查询条件
+		var queryFunsAndItems strings.Builder
+
+		// 查询条件
+		var fetchFunsAndItemsArgs = make([]interface{}, 0)
+
+		fetchFunsAndItemsArgs = append(fetchFunsAndItemsArgs, user1.AccountId)
+
+		queryFunsAndItems.WriteString(" SELECT account_id, user_name, age from tb_users where user_name = ? AND password = ? ")
+	}
+
 	// if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
 	//fmt.Printf("scan failed, err:%v", err)
 	//fmt.Println("")
