@@ -35,7 +35,8 @@ func JsonLogin(c *gin.Context) {
 		//登录成功之后将用户能够使用的菜单权限信息，和其他信息一起编码放入token
 		tokenPayload := new(models.TokenPayload)
 		tokenPayload.AccountId = result.AccountId
-		tokenPayload.MenuItems = "|001|002|003|004|"
+		tokenPayload.MenuItems = result.FunStr
+		tokenPayload.Anothers = result.RoleStr
 		tokenJson, _ := json.Marshal(tokenPayload)
 		jwtSignedToken := utils.JwtSign(string(tokenJson))
 		resultMsg.Token = jwtSignedToken
