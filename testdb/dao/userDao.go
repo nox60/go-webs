@@ -134,7 +134,7 @@ func RetrieveUserByAccountId(accountId int) (user *models.User) {
 
 	user1 := new(models.User)
 
-	row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where accountId = ? ", accountId)
+	row := MysqlDb.QueryRow("SELECT account_id, user_name, age FROM tb_users WHERE accountId = ? ", accountId)
 
 	if err := row.Scan(&user1.AccountId, &user1.UserName, &user1.Age); err != nil {
 	}
