@@ -27,14 +27,14 @@ func JsonLogin(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)
 
-	if result.Id > 0 {
+	if result.AccountId > 0 {
 		//登录成功
 		resultMsg.Code = 20000
 		resultMsg.Msg = "登录成功"
 
 		//登录成功之后将用户能够使用的菜单权限信息，和其他信息一起编码放入token
 		tokenPayload := new(models.TokenPayload)
-		tokenPayload.AccountId = result.Id
+		tokenPayload.AccountId = result.AccountId
 		tokenPayload.MenuItems = "|001|002|003|004|"
 		tokenJson, _ := json.Marshal(tokenPayload)
 		jwtSignedToken := utils.JwtSign(string(tokenJson))

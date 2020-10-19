@@ -27,10 +27,10 @@ func InsertTest() {
 		}
 	}()
 
-	user := dao.User{}
+	user := models.User{}
 
-	user.Id = 888
-	user.Name = "testUserName"
+	user.AccountId = 888
+	user.UserName = "testUserName"
 	user.RealName = "testUssssss"
 
 	err = dao.InsertTxTest(&user, tx)
@@ -39,10 +39,10 @@ func InsertTest() {
 
 func InsertTestWithOutTx() {
 
-	user := dao.User{}
+	user := models.User{}
 
-	user.Id = 888
-	user.Name = "testUserName"
+	user.AccountId = 888
+	user.UserName = "testUserName"
 	user.RealName = "testUssssss"
 
 	err := dao.InsertWithOutTxTest(&user)
@@ -50,7 +50,7 @@ func InsertTestWithOutTx() {
 	fmt.Println(err)
 }
 
-func RetriveUserByUserNameAndPassword(loginBody *models.LoginBody) (user *dao.User) {
+func RetriveUserByUserNameAndPassword(loginBody *models.LoginBody) (user *models.User) {
 	return dao.RetrieveUserByUserNameAndPassword(loginBody)
 }
 
