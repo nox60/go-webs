@@ -19,6 +19,7 @@ type User struct {
 	Age       int    `json:"age"`
 	FunStr    string `json:"funStr"`
 	RoleStr   string `json:"roleStr"`
+	ItemStr   string `json:"itemStr"`
 	ForCount  bool
 }
 

@@ -108,15 +108,15 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 			&user1.UserName,
 			&user1.Age,
 			&user1.FunStr,
-			&user1.RoleStr)
+			&user1.ItemStr)
 	}
 
 	// 如果用户信息不为空,说明该用户存在,需要处理该用户的权限点信息。
 	if user1.AccountId > 0 {
-		user1.RoleStr = "|" + user1.RoleStr
-		user1.RoleStr = user1.RoleStr + "|"
 		user1.FunStr = "|" + user1.FunStr
 		user1.FunStr = user1.FunStr + "|"
+		user1.ItemStr = "|" + user1.ItemStr
+		user1.ItemStr = user1.ItemStr + "|"
 	}
 
 	// if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
