@@ -78,6 +78,7 @@ import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 import { checkLogin } from '@/api/user'
 import { Message } from 'element-ui'
+import { Base64 } from 'js-base64';
 
 export default {
   name: 'Login',
@@ -166,6 +167,10 @@ export default {
                 if (res.data.code == 100) {
                   console.log('login successed')
                   console.log(this.redirect)
+                  console.log('1111111111111111111111111111111111111111111111111111111')
+                  console.log(res.token)
+                  console.log(Base64.decode(res.token))
+                  console.log('-------------------------------------------------------')
                   this.$store.dispatch('user/loginInfo', res.token)
                     .then(() => {
                       this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
