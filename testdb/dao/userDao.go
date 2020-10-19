@@ -20,7 +20,7 @@ import (
 func StructQueryField(accountId int) {
 
 	user := new(models.User)
-	row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where accountId = ? ", accountId)
+	row := MysqlDb.QueryRow("SELECT account_id, user_name, age FROM tb_users where accountId = ? ", accountId)
 
 	if err := row.Scan(&user.AccountId, &user.UserName, &user.Age); err != nil {
 		fmt.Printf("scan failed, err:%v", err)
@@ -73,7 +73,14 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 	fetchArgs = append(fetchArgs, userInfo.UserName)
 	fetchArgs = append(fetchArgs, userInfo.Password)
 
-	queryStm.WriteString(" select account_id, user_name, age from tb_users where user_name = ? AND password = ? ")
+	queryStm.WriteString(" SELECT a.account_id, a.user_name, a.age  ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( c.function_id))  AS funStr, ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( d.item_id))  AS itemStr ")
+	queryStm.WriteString(" FROM tb_users a ")
+	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.accountId ")
+	queryStm.WriteString(" LEFT JOIN tb_roles_functions c ON b.role_id = c.role_id ")
+	queryStm.WriteString(" LEFT JOIN tb_roles_items d ON b.role_id = d.role_id ")
+	queryStm.WriteString(" WHERE user_name = ? AND password = ? ")
 
 	user1 := new(models.User)
 
@@ -101,17 +108,9 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 			&user1.Age)
 	}
 
-	// 如果用户信息不为空，则查询该用户对应的角色信息，以及权限点
+	// 如果用户信息不为空,说明该用户存在,需要处理该用户的权限点信息。
 	if user1.AccountId > 0 {
-		// 查询条件
-		var queryFunsAndItems strings.Builder
 
-		// 查询条件
-		var fetchFunsAndItemsArgs = make([]interface{}, 0)
-
-		fetchFunsAndItemsArgs = append(fetchFunsAndItemsArgs, user1.AccountId)
-
-		queryFunsAndItems.WriteString(" SELECT account_id, user_name, age from tb_users where user_name = ? AND password = ? ")
 	}
 
 	// if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
