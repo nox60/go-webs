@@ -74,8 +74,8 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 	fetchArgs = append(fetchArgs, userInfo.Password)
 
 	queryStm.WriteString(" SELECT a.account_id, a.user_name, a.age  ")
-	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( c.function_id))  AS funStr, ")
-	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( d.item_id))  AS itemStr ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( c.function_id) SEPARATOR '|')  AS funStr, ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( d.item_id) SEPARATOR '|')  AS itemStr ")
 	queryStm.WriteString(" FROM tb_users a ")
 	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.accountId ")
 	queryStm.WriteString(" LEFT JOIN tb_roles_functions c ON b.role_id = c.role_id ")
