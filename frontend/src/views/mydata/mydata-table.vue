@@ -138,7 +138,11 @@ const typeValuesArray = [
   { typeValue: 0, typeName: '小说' },
   { typeValue: 1, typeName: '散文' },
   { typeValue: 2, typeName: '科技论文' },
-  { typeValue: 3, typeName: '其他' }
+  { typeValue: 3, typeName: '其他' },
+  { typeValue: 4, typeName: '测试数据1' },
+  { typeValue: 5, typeName: '测试数据2' },
+  { typeValue: 6, typeName: '测试数据3' },
+  { typeValue: 7, typeName: '测试数据4' },
 ]
 
 const statusOptions = [
