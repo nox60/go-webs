@@ -227,6 +227,18 @@ export default {
         }, 1.5 * 1000)
       })
     },
+    getSecond2List() {
+      this.listLoading = true
+      getSampleData(this.listQuery).then(response => {
+        this.list = response.data.dataLists
+        this.total = response.data.totalCounts
+        console.log(this.list)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
+      })
+    },
     formatType(row, column) {
       return typeValuesArray[row['itemType']].typeName
     },
