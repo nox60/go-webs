@@ -119,13 +119,6 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 		user1.ItemStr = user1.ItemStr + "|"
 	}
 
-	// if err := row.Scan(&user1.Id, &user1.Name, &user1.Age); err != nil {
-	//fmt.Printf("scan failed, err:%v", err)
-	//fmt.Println("")
-	//return user1
-
-	//fmt.Println(user1.Id, user1.Name, user1.Age)
-
 	return user1
 }
 
