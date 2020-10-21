@@ -8,14 +8,6 @@ import (
 	"testdb/models"
 )
 
-// 用户表结构体
-//type User struct {
-//	Id       int    `db:"id"`
-//	Name     string `db:"name"`
-//	Age      int    `db:"age"`
-//	RealName string `db:"realName"`
-//}
-
 // 查询数据，指定字段名
 func StructQueryField(accountId int) {
 
