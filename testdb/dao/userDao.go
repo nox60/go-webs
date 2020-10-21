@@ -77,8 +77,6 @@ func RetrieveUserByUserNameAndPassword(userInfo *models.LoginBody) (user *models
 
 	user1 := new(models.User)
 
-	//row := MysqlDb.QueryRow("select account_id, user_name, age from tb_users where user_name = ? AND password = ? ", userInfo.UserName, userInfo.Password)
-
 	// 分页查询记录
 	stmt, err := MysqlDb.Prepare(queryStm.String())
 	if err != nil {
