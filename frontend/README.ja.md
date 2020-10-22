@@ -28,33 +28,6 @@
 
 日本語 | [English](./README.md) | [简体中文](./README.zh-CN.md) | [Spanish](./README.es.md)
 
-## 概要
-
-[vue-element-admin](https://panjiachen.github.io/vue-element-admin) は管理画面のフロントエンドのインタフェースで、[vue](https://github.com/vuejs/vue) と [element-ui](https://github.com/ElemeFE/element)を使っています。i18nの多言語対応、可変ルート、権限、典型的なビジネスアプリテンプレートであり、豊富なコンポーネントを提供しています。素早くビジネス用の管理画面の現型を構築に役立ちます。
-
-- [デモページ](https://panjiachen.github.io/vue-element-admin)
-
-- [ドキュメント](https://panjiachen.github.io/vue-element-admin-site/)
-
-- [Gitter](https://gitter.im/vue-element-admin/discuss)
-
-- [Donate](https://panjiachen.gitee.io/vue-element-admin-site/zh/donate)
-
-- [Wiki](https://github.com/PanJiaChen/vue-element-admin/wiki)
-
-- おすすめシンプルテンプレート: [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)
-- デスクトップバージョン: [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
-- Typescriptバージョン: [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (感謝: [@Armour](https://github.com/Armour))
-- [awesome-project](https://github.com/PanJiaChen/vue-element-admin/issues/2312)
-
-**バージョン`v4.1.0+`以降について、デフォルトのmasterブランチではi18nをサポートしていません。masterブランチと共にアップデートされる[i18n Branch](https://github.com/PanJiaChen/vue-element-admin/tree/i18n)を使用してください。 **
-
-**現在のバージョン `v4.0+` は `vue-cli` で構築していて、バグ報告は[issue](https://github.com/PanJiaChen/vue-element-admin/issues/new)のissueでお願いします。旧バージョン[tag/3.11.0](https://github.com/PanJiaChen/vue-element-admin/tree/tag/3.11.0)もあります。こちらは`vue-cli`に依存しないです。**
-
-**低いバージョンのブラウザはサーポートしないです(例えば ie)，必要があれば polyfill を追加してください。 [詳細はこちら](https://github.com/PanJiaChen/vue-element-admin/wiki#babel-polyfill)**
-
-
-
 ## Getting started
 
 ```bash
