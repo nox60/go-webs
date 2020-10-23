@@ -174,10 +174,12 @@ export default {
 
                   let resultaa= jwt.decode(res.token)
 
-                  console.log(resultaa)
+                  console.log(resultaa.sub)
 
-                  let parsedJson = JSON.parse(resultaa)
-                  console.log(parsedJson.sub)
+                  let parsedJson = JSON.parse(resultaa.sub)
+                  console.log(">>>>>---")
+                  console.log(parsedJson)
+                  console.log(parsedJson.accountId)
 
                   // let user = decodeURIComponent(escape(window.atob(msg.split('.')[1])))      将JWT切割   获取需要的载荷
 
