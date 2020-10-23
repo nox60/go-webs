@@ -180,16 +180,6 @@ export default {
                   console.log(">>>>>---")
                   console.log(parsedJson)
                   console.log(parsedJson.accountId)
-
-                  // let user = decodeURIComponent(escape(window.atob(msg.split('.')[1])))      将JWT切割   获取需要的载荷
-
-                  // let res = JSON.parse(user).name     将获取的字符串转换成JSON对象
-                  //
-                  // let res = JSON.parse(user).virtualPhone    获取需要的数据
-                  //
-                  // var jsonData = JSON.parse(res.token);
-                  // console.log(jsonData)
-                  // console.log(Base64.decode(res.token))
                   console.log('-------------------------------------------------------')
                   this.$store.dispatch('user/loginInfo', res.token)
                     .then(() => {
