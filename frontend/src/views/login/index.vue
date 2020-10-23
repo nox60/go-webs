@@ -78,7 +78,9 @@ import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 import { checkLogin } from '@/api/user'
 import { Message } from 'element-ui'
-import { Base64 } from 'js-base64';
+import { Base64 } from 'js-base64'
+var jwt = require('jsonwebtoken')
+
 
 export default {
   name: 'Login',
@@ -169,7 +171,23 @@ export default {
                   console.log(this.redirect)
                   console.log('1111111111111111111111111111111111111111111111111111111')
                   console.log(res.token)
-                  console.log(Base64.decode(res.token))
+
+                  let resultaa= jwt.decode(res.token)
+
+                  console.log(resultaa)
+
+                  let parsedJson = JSON.parse(resultaa)
+                  console.log(parsedJson.sub)
+
+                  // let user = decodeURIComponent(escape(window.atob(msg.split('.')[1])))      将JWT切割   获取需要的载荷
+
+                  // let res = JSON.parse(user).name     将获取的字符串转换成JSON对象
+                  //
+                  // let res = JSON.parse(user).virtualPhone    获取需要的数据
+                  //
+                  // var jsonData = JSON.parse(res.token);
+                  // console.log(jsonData)
+                  // console.log(Base64.decode(res.token))
                   console.log('-------------------------------------------------------')
                   this.$store.dispatch('user/loginInfo', res.token)
                     .then(() => {
