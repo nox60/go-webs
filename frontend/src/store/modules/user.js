@@ -70,8 +70,10 @@ const actions = {
     console.log(">>>>>---")
     console.log(parsedJson)
     console.log(parsedJson.MenuItems)
+    console.log(parsedJson.pageItems)
     console.log('-------------------------------------------------------')
-
+    commit('SET_MENUS', parsedJson.MenuItems)
+    commit('SET_ITEMS', parsedJson.pageItems)
     commit('SET_TOKEN', token)
     setToken(token)
   },
