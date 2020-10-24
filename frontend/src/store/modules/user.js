@@ -1,7 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-// const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 
 const state = {
@@ -58,7 +58,20 @@ const actions = {
   },
   loginInfo({ commit }, token) {
     // Write vuex
+    console.log('-------------------- write into store')
+
     console.log(token)
+
+    let resultaa= jwt.decode(token)
+
+    console.log(resultaa.sub)
+
+    let parsedJson = JSON.parse(resultaa.sub)
+    console.log(">>>>>---")
+    console.log(parsedJson)
+    console.log(parsedJson.MenuItems)
+    console.log('-------------------------------------------------------')
+
     commit('SET_TOKEN', token)
     setToken(token)
   },
@@ -92,7 +105,6 @@ const actions = {
 
   // user logout
   logout({ commit, state, dispatch }) {
-    // console.log('log oooooooooooooooooooooooooooo ------------------- ')
     return new Promise((resolve, reject) => {
       // logout(state.token).then(() => {
       //   commit('SET_TOKEN', '')
@@ -110,6 +122,8 @@ const actions = {
       // })
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
+      commit('SET_MENUS', '')
+      commit('SET_ITEMS', '')
       removeToken()
       resetRouter()
 

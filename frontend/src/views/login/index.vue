@@ -167,20 +167,20 @@ export default {
             checkLogin(this.loginForm)
               .then(res => {
                 if (res.data.code == 100) {
-                  console.log('login successed')
-                  console.log(this.redirect)
-                  console.log('1111111111111111111111111111111111111111111111111111111')
-                  console.log(res.token)
+                  // console.log('login successed')
+                  // console.log(this.redirect)
+                  // console.log('1111111111111111111111111111111111111111111111111111111')
+                  // console.log(res.token)
 
-                  let resultaa= jwt.decode(res.token)
-
-                  console.log(resultaa.sub)
-
-                  let parsedJson = JSON.parse(resultaa.sub)
-                  console.log(">>>>>---")
-                  console.log(parsedJson)
-                  console.log(parsedJson.MenuItems)
-                  console.log('-------------------------------------------------------')
+                  // let resultaa= jwt.decode(res.token)
+                  //
+                  // console.log(resultaa.sub)
+                  //
+                  // let parsedJson = JSON.parse(resultaa.sub)
+                  // console.log(">>>>>---")
+                  // console.log(parsedJson)
+                  // console.log(parsedJson.MenuItems)
+                  // console.log('-------------------------------------------------------')
                   this.$store.dispatch('user/loginInfo', res.token)
                     .then(() => {
                       this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
