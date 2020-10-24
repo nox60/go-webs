@@ -122,7 +122,6 @@ func AddOrUpdateRole(c *gin.Context) {
 		services.AddRole(&roleReq)
 	} else {
 		// 更新
-		// services.UpdateItemById(&funcionReq)
 		services.UpdateRole(&roleReq)
 	}
 
@@ -203,7 +202,6 @@ func GetRoleByParentId(c *gin.Context) {
 	services.GetAllFunctions(&parentNode)
 
 	// 处理父节点和孩子节点ID
-
 	resultMsg.Data = parentNode.Child
 
 	c.JSON(200, resultMsg)
