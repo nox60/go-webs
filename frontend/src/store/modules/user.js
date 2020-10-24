@@ -9,7 +9,9 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  menus: '',
+  items: ''
 }
 
 const mutations = {
@@ -27,6 +29,12 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_MENUS: (state, menus) => {
+    state.menus = menus
+  },
+  SET_ITEMS: (state, items) => {
+    state.items = items
   }
 }
 

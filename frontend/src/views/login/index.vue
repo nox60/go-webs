@@ -179,7 +179,7 @@ export default {
                   let parsedJson = JSON.parse(resultaa.sub)
                   console.log(">>>>>---")
                   console.log(parsedJson)
-                  console.log(parsedJson.accountId)
+                  console.log(parsedJson.MenuItems)
                   console.log('-------------------------------------------------------')
                   this.$store.dispatch('user/loginInfo', res.token)
                     .then(() => {
