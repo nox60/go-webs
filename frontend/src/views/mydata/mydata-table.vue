@@ -131,7 +131,8 @@
 import { getSampleData, deleteItem } from '@/api/data-list'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import Pagination from '@/components/Pagination'
+import store from "@/store"; // secondary package based on el-pagination
 
 
 const typeValuesArray = [
@@ -213,6 +214,9 @@ export default {
   },
   created() {
     this.getList()
+    const userMenus = store.getters.menus
+    console.log('------------------------999999')
+    console.log(userMenus)
   },
   methods: {
     getList() {

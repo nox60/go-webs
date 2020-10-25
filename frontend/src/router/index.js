@@ -39,6 +39,8 @@ import mydatasRouter from "./modules/mydata";
  * constantRoutes
  * a base page that does not have permission requirements
  * all roles can be accessed
+ * 这里进行了改造，所有能够访问到的权限点取决于      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+ * ===权限功能
  */
 export const constantRoutes = [
   {
