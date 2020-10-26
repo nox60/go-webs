@@ -168,6 +168,7 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/users'),
         name: 'UsersManage',
         meta: {
+          menuNumber: 308,
           title: '用户管理',
           roles: ['admin']
         }

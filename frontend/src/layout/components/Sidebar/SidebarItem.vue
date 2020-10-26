@@ -57,16 +57,15 @@ export default {
     // const userMenus = this.$store.getters.menus
     this.onlyOneChild = null
     return {
-      userMenus
+      userMenus: ''
     }
   },
   created() {
     this.userMenus = this.$store.getters.menus
-    console.log(userMenus)
+    console.log(this.userMenus)
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
-      console.log('[[[[[[[[[[[[[')
       console.log(this.userMenus)
       const showingChildren = children.filter(item => {
         if (item.hidden) {
