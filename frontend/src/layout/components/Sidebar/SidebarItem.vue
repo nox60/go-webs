@@ -53,11 +53,21 @@ export default {
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
     // TODO: refactor with render function
+    //       return this.$store.getters.permission_routes
+    // const userMenus = this.$store.getters.menus
     this.onlyOneChild = null
-    return {}
+    return {
+      userMenus
+    }
+  },
+  created() {
+    this.userMenus = this.$store.getters.menus
+    console.log(userMenus)
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
+      console.log('[[[[[[[[[[[[[')
+      console.log(this.userMenus)
       const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false
