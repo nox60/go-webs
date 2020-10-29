@@ -28,9 +28,9 @@ export default {
       }
     }
 
-    console.log('------------------------------')
-    console.log(context.props)
-    console.log('----------====================')
+    // console.log('------------------------------')
+    // console.log(context.props)
+    // console.log('----------====================')
 
     if (title) {
       vnodes.push(<span slot='title'>{(title)} </span>)
