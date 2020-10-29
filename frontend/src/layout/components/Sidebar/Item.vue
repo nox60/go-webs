@@ -24,8 +24,13 @@ export default {
       }
     }
 
+    console.log('------------------------------')
+    console.log(h)
+    console.log(context)
+    console.log('----------====================')
+
     if (title) {
-      vnodes.push(<span slot='title'>{(title)} --------------------- </span>)
+      vnodes.push(<span slot='title'>{(title)} </span>)
     }
     return vnodes
   }
