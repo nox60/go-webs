@@ -10,6 +10,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    itemKey: {
+      type: String,
+      default: ''
     }
   },
   render(h, context) {
@@ -25,8 +29,7 @@ export default {
     }
 
     console.log('------------------------------')
-    console.log(h)
-    console.log(context)
+    console.log(context.props)
     console.log('----------====================')
 
     if (title) {

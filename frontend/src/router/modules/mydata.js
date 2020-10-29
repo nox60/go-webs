@@ -17,7 +17,9 @@ const mydatasRouter = {
       path: 'mydataList',
       component: () => import('@/views/mydata/mydata-table'),
       name: 'mydataList',
-      meta: { title: 'mydataList' }
+      itemId: 5009,
+      itemKey: '99933',
+      meta: { title: 'mydataLista', itemKey: '5009' }
     }, {
       path: 'edit/:id(\\d+)',
       component: () => import('@/views/example/edit'),
