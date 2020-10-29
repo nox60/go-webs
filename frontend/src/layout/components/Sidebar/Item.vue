@@ -18,6 +18,8 @@ export default {
   },
   render(h, context) {
     const { icon, title } = context.props
+    console.log('parent pro')
+    console.log(context.props)
     const vnodes = []
 
     if (icon) {
