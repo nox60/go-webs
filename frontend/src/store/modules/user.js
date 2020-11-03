@@ -58,7 +58,7 @@ const actions = {
   },
   loginInfo({ commit }, token) {
     // Write vuex
-    console.log('-------------------- write into store')
+    // console.log('-------------------- write into store')
 
     console.log(token)
 
@@ -67,11 +67,11 @@ const actions = {
     console.log(resultaa.sub)
 
     let parsedJson = JSON.parse(resultaa.sub)
-    console.log(">>>>>---")
-    console.log(parsedJson)
-    console.log(parsedJson.MenuItems)
-    console.log(parsedJson.pageItems)
-    console.log('-------------------------------------------------------')
+    // console.log(">>>>>---")
+    // console.log(parsedJson)
+    // console.log(parsedJson.MenuItems)
+    // console.log(parsedJson.pageItems)
+    // console.log('-------------------------------------------------------')
     commit('SET_MENUS', parsedJson.MenuItems)
     commit('SET_ITEMS', parsedJson.pageItems)
     commit('SET_TOKEN', token)
@@ -79,6 +79,7 @@ const actions = {
   },
   // get user info
   getInfo({ commit, state }) {
+    // console.log('------------------------999999999999999999999999999999')
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
         const { data } = response
@@ -160,6 +161,8 @@ const actions = {
     // generate accessible routes map based on roles
     const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
     // dynamically add accessible routes
+
+
     router.addRoutes(accessRoutes)
 
     // reset visited views and cached views
