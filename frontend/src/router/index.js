@@ -255,13 +255,13 @@ export const asyncRoutes = [
   {
     path: '/tab',
     component: Layout,
-    meta: { 'accessCode': 40008 },
+    meta: { accessCode: 40008 },
     children: [
       {
         path: 'index',
         component: () => import('@/views/tab/index'),
         name: 'Tab',
-        meta: { title: 'Tab', icon: 'tab', 'accessCode': 40009 }
+        meta: { title: 'Tab', icon: 'tab', accessCode: 40009 }
       }
     ]
   },

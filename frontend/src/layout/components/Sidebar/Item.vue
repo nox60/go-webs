@@ -37,6 +37,10 @@ export default {
     if (title) {
       vnodes.push(<span slot='title'>{(title)} </span>)
     }
+
+    if (itemKey) {
+      vnodes.push(<span slot='itemKey'>{(itemKey)} </span>)
+    }
     return vnodes
   }
 }
