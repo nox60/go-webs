@@ -73,6 +73,8 @@
   import {listUserData,addOrUpdateUser, deleteUser} from '@/api/user'
   import {listRoleData} from '@/api/role'
   import Pagination from '@/components/Pagination'
+  import { mapGetters } from 'vuex'
+
 
   const defaultRole = {
     key: '',
@@ -120,6 +122,10 @@
     },
     created() {
       this.getList()
+
+      const test = this.$store.state.permission.routes
+      console.log(test)
+      console.log('routes..........................................')
     },
     mounted() {
     },

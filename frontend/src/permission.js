@@ -19,7 +19,7 @@ router.beforeEach(async(to, from, next) => {
 
   // determine whether the user has logged in
   const hasToken = getToken()
-  console.log(hasToken)
+  // console.log(hasToken)
   if (hasToken) {
     //console.log('........................')
     if (to.path === '/login') {
@@ -28,13 +28,15 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
     } else {
       // determine whether the user has obtained his permission roles through getInfo
+
+      // 权限判断，需要进行改造
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
       if (hasRoles) {
-        //console.log('-------------------------------------NEXT: ' + to.path)
+        // console.log('----------------------------------to.path: ' + to.path)
+        // console.log('-------------------------------------NEXT: ' + next)
         next()
       } else {
         //console.log('-------------------------------------ELSE2: ' + to.path)
-
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
