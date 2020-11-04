@@ -11,11 +11,7 @@ export default {
       type: String,
       default: ''
     },
-    itemKey: {
-      type: String,
-      default: ''
-    },
-    accss: {
+    accessCode: {
       type: Number,
       default: 999
     }
