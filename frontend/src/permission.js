@@ -21,7 +21,7 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
   // console.log(hasToken)
   if (hasToken) {
-    //console.log('........................')
+    // console.log('........................')
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
@@ -36,7 +36,7 @@ router.beforeEach(async(to, from, next) => {
         // console.log('-------------------------------------NEXT: ' + next)
         next()
       } else {
-        //console.log('-------------------------------------ELSE2: ' + to.path)
+        // console.log('-------------------------------------ELSE2: ' + to.path)
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']

@@ -14,11 +14,15 @@ export default {
     itemKey: {
       type: String,
       default: ''
+    },
+    accss: {
+      type: Number,
+      default: 999
     }
   },
   render(h, context) {
     const { icon, title } = context.props
-    console.log('parent pro')
+    // console.log('parent pro')
     console.log(context.props)
     const vnodes = []
 
