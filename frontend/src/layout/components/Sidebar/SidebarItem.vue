@@ -1,6 +1,6 @@
 <template>
   <!-- 和用户权限点进行匹配比对，具有权限点则显示 v-if="abc && abc.indexOf('a') != -1"  -->
-  <div v-if="!item.hidden">
+  <div v-if="!item.hidden && item.meta && this.userMenus.indexOf(item.meta.accessCode) != -1 ">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
@@ -11,7 +11,7 @@
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" :access-code="item.meta.accessCode" />
+        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" :access-code="item.meta && item.meta.accessCode" />
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -67,7 +67,7 @@ export default {
   },
   created() {
     this.userMenus = this.$store.getters.menus
-    // console.log(this.userMenus)
+    console.log(this.userMenus)
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
