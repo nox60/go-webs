@@ -13,7 +13,7 @@
       :load="getFunctions"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column
-        prop="number"
+        prop="id"
         label="编号"
         width="180">
       </el-table-column>
@@ -71,7 +71,7 @@
                 label-width="120px"
                 label-position="left">
         <el-form-item label="编号" prop="id">
-          <el-input v-model.number="functionForm.id"  placeholder="编号" />
+          <el-input v-model.number="functionForm.id" v-bind:disabled="functionForm.forEdit"  placeholder="编号" />
         </el-form-item>
         <el-form-item label="菜单内次序" prop="order">
           <el-input v-model.number="functionForm.order" placeholder="菜单内次序，值越大越靠前" />
@@ -183,6 +183,7 @@
           order:'',
           name: '',
           path:'',
+          forEdit: false,
           parentId:0,
           // type: '菜单项目',
         },
@@ -246,10 +247,11 @@
       },
       initFormData(){
         this.$refs['functionForm'].resetFields();
-        if(this.forEdit == 1) {//编辑数据
+        if(this.forEdit == true) {//编辑数据
           getFunctionById(this.functionForm.id).then(response => {
             setTimeout(() => {
               this.functionForm = response.data
+              this.functionForm.forEdit = true
               let defaultNode = new Array(1);
               defaultNode[0] = response.data.parentId
 
@@ -260,6 +262,7 @@
           })
         } else {
           //this.dialogVisible = true
+          this.functionForm.forEdit = false
           let defaultNode = new Array(1);
           defaultNode[0] = 0
           this.defaultSelectedNode = defaultNode
