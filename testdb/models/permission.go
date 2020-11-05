@@ -1,23 +1,22 @@
 package models
 
 type FunctionNode struct {
-	FunctionId           int             `json:"id"`
-	Number               int             `json:"number"`
-	Order                int             `json:"order"`
-	Name                 string          `json:"name"`
-	Path                 string          `json:"path"`
-	ParentFunctionId     int             `json:"parentId"`
-	ParentFunctionNumber int             `json:"parentNumber"`
-	HasChildren          bool            `json:"hasChildren"`
-	Leaf                 bool            `json:"leaf"`
-	Parents              interface{}     `json:"parents"`
-	Child                *[]FunctionNode `json:"children"`
-	Items                []FunctionItem  `json:"items"`
-	ParentIds            []int           `json:"parentIds"`
-	ChildIds             []int           `json:"childIds"`
-	ChildItems           []int           `json:"childItems"`
-	ParentNode           *FunctionNode
-	ItemStr              string
+	FunctionId       int             `json:"id"`
+	Number           int             `json:"number"`
+	Order            int             `json:"order"`
+	Name             string          `json:"name"`
+	Path             string          `json:"path"`
+	ParentFunctionId int             `json:"parentId"`
+	HasChildren      bool            `json:"hasChildren"`
+	Leaf             bool            `json:"leaf"`
+	Parents          interface{}     `json:"parents"`
+	Child            *[]FunctionNode `json:"children"`
+	Items            []FunctionItem  `json:"items"`
+	ParentIds        []int           `json:"parentIds"`
+	ChildIds         []int           `json:"childIds"`
+	ChildItems       []int           `json:"childItems"`
+	ParentNode       *FunctionNode
+	ItemStr          string
 }
 
 type FunctionItem struct {
