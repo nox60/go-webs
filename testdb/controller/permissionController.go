@@ -185,6 +185,7 @@ func GetRoleById(c *gin.Context) {
 	c.JSON(200, resultMsg)
 }
 
+// 获得功能点（菜单项）所有的子功能点（子菜单），以及对应的页内控件（按钮等）
 func GetRoleByParentId(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)
@@ -195,7 +196,7 @@ func GetRoleByParentId(c *gin.Context) {
 	id, _ := strconv.Atoi(idStr)
 	var parentNode models.FunctionNode
 
-	parentNode.ParentFunctionId = -1
+	parentNode.ParentFunctionNumber = 0
 	parentNode.FunctionId = id
 	parentNode.HasChildren = true
 
