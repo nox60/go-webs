@@ -10,6 +10,9 @@ import (
 	"testdb/services"
 )
 
+/**
+ * 获取分页的功能点列表数据，用于功能点（菜单项）管理界面
+ */
 func ListFunctionsData(c *gin.Context) {
 
 	resultMsg := new(models.HttpResult)

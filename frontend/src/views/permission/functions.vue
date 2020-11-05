@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddOrUpdate({ id: 0})">新建功能点</el-button>
+    <el-button type="primary" @click="handleAddOrUpdate({ id: 0, forEdit: 0 })">新建功能点</el-button>
 
     <el-table
       :data="tableData"
@@ -70,8 +70,8 @@
                 :rules="rules"
                 label-width="120px"
                 label-position="left">
-        <el-form-item label="编号" prop="number">
-          <el-input v-model.number="functionForm.number"  placeholder="编号" />
+        <el-form-item label="编号" prop="id">
+          <el-input v-model.number="functionForm.id"  placeholder="编号" />
         </el-form-item>
         <el-form-item label="菜单内次序" prop="order">
           <el-input v-model.number="functionForm.order" placeholder="菜单内次序，值越大越靠前" />
@@ -105,7 +105,6 @@
         <el-button type="primary" @click="addOrUpdateData">确定</el-button>
       </div>
     </el-dialog>
-
 
     <el-dialog :visible.sync="addItemDialogVisible"
                v-loading="listLoading"
@@ -409,7 +408,8 @@
       handleAddOrUpdate(row) {
         this.listLoading = true
         this.dialogVisible = true
-        if ( row['id'] === 0 ){ //新增
+
+        if ( row['forEdit'] === 0 ){ //新增
           console.log('新增数据')
           if (this.$refs.tree) {
             this.$refs.tree.setCheckedNodes([])

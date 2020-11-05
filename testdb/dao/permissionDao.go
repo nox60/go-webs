@@ -137,6 +137,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.HasChildren,
 			&dataObj.ItemStr,
 		)
+		dataObj.ForEdit = 1
 		var itemsTemp = make([]models.FunctionItem, 0)
 		if strings.Index(dataObj.ItemStr, "|!|") > 0 {
 			var items = make([]string, 0)

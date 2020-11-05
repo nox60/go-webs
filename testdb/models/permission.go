@@ -1,6 +1,7 @@
 package models
 
 type FunctionNode struct {
+	ForEdit          int             `json:"forEdit"`
 	FunctionId       int             `json:"id"`
 	Number           int             `json:"number"`
 	Order            int             `json:"order"`
