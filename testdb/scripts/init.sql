@@ -25,12 +25,12 @@ CREATE TABLE tb_users_roles (
 DROP TABLE IF EXISTS tb_functions;
 CREATE TABLE tb_functions (
 	`function_id` INT NOT NULL AUTO_INCREMENT,
-	`number` INT NOT NULL,
+	`function_number` INT NOT NULL,
 	`order` int NOT NULL,
 	`name` VARCHAR(200) NULL,
 	`path` VARCHAR(200) NULL,
 	`type` TINYINT NOT NULL DEFAULT 0,
-	`parent_number` INT NOT NULL DEFAULT 0,
+	`parent_function_number` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`function_id`)
 )DEFAULT CHARSET=utf8;
 
@@ -44,7 +44,7 @@ INSERT INTO tb_functions (`number`, `name`, `path`, `type`, `parent_number`) VAL
 DROP TABLE IF EXISTS tb_functions_items;
 CREATE TABLE tb_functions_items (
 	`function_item_id` INT NOT NULL AUTO_INCREMENT,
-	`function_id` INT NOT NULL DEFAULT 0,
+	`function_number` INT NOT NULL DEFAULT 0,
 	`item_number` INT NOT NULL DEFAULT 0,
 	`item_name` VARCHAR(200) NULL,
   PRIMARY KEY (`function_item_id`)
