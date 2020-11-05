@@ -20,11 +20,11 @@ type FunctionNode struct {
 }
 
 type FunctionItem struct {
-	ItemId     int    `json:"itemId"`
-	ItemName   string `json:"itemName"`
-	ItemNumber int    `json:"itemNumber"`
-	FunctionId int    `json:"functionId"`
-	ParentIds  []int  `json:"parentIds"`
+	ItemId        int    `json:"itemId"`
+	ItemName      string `json:"itemName"`
+	ItemNumber    int    `json:"itemNumber"`
+	FunctionId    int    `json:"functionId"`
+	ParentNumbers []int  `json:"parentNumbers"`
 }
 
 type Role struct {

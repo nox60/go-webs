@@ -28,8 +28,6 @@ func main() {
 
 	//以下接口不需要鉴权
 	api.POST("/checkLogin", controller.JsonLogin)
-
-	// 获得功能点下面的所有子菜单项，以及所有的页内功能店
 	api.GET("/pid/:id", controller.GetRoleByParentId)
 
 	api.Use(Authorize())
