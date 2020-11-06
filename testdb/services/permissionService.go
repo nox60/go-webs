@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"testdb/constants"
 	"testdb/dao"
 	"testdb/models"
 )
@@ -22,7 +23,7 @@ func AddFunction(function *models.FunctionNode) (addResult int) {
 			fmt.Println(err)
 			fmt.Println("rollback error")
 		default:
-			fmt.Println("commit ")
+			fmt.Println("Add Function no error, commit ")
 			err = tx.Commit()
 		}
 	}()
@@ -31,11 +32,12 @@ func AddFunction(function *models.FunctionNode) (addResult int) {
 	dataRes, err := dao.GetFunctionById(function)
 
 	if dataRes.FunctionId > 0 {
-		return -1
+		//return -1
+		return constants.RECORD_EXISTED
 	} else {
 		err = dao.AddFunction(function, tx)
 		if err == nil {
-			return 1
+			return
 		} else {
 			return 0
 		}

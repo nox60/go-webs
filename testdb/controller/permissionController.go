@@ -44,12 +44,12 @@ func AddOrUpdateFunction(c *gin.Context) {
 		return
 	}
 
-	if funcionReq.FunctionId == 0 {
-		// 新增
-		services.AddFunction(&funcionReq)
-	} else {
+	if funcionReq.ForEdit {
 		// 更新
 		services.UpdateFunctionById(&funcionReq)
+	} else {
+		// 新增
+		services.AddFunction(&funcionReq)
 	}
 
 	resultMsg := new(models.HttpResult)
