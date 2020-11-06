@@ -156,14 +156,14 @@
         //console.log(value)
         if(!value) {
           return new Error('必填信息')
-        }else {
+        } else {
           if(!Number.isInteger(value)) {
             callback(new Error('请输入数字值'))
           }else{
             if(value < 0) {
               callback(new Error('不能小于0'))
-            }else if(value > 20){
-              callback(new Error('不能大于20'))
+            }else if(value > 100000){
+              callback(new Error('不能大于100000'))
             }else {
               callback()
             }
@@ -181,7 +181,7 @@
         functionForm:{
           id: 0,
           number: 0,
-          order:'',
+          order:0,
           name: '',
           path:'',
           forEdit: false,
@@ -220,10 +220,15 @@
         },
         rules: {
           timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-          title: [{ required: true, message: 'title is required', trigger: 'blur' }],
-          number: [
+          name: [{ required: true, message: '菜单名称不能为空！', trigger: 'blur' }],
+          id: [
+            { required: true, message: '功能点编号不能为空！', trigger: 'blur' },
             {validator: checkNumber, trigger:'blur'}
           ],
+          order: [
+            { required: true, message: '序号值不能为空！', trigger: 'blur' },
+            {validator: checkNumber, trigger:'blur'}
+          ]
         },
         rulesForItem: {
         },
@@ -415,7 +420,6 @@
         this.dialogVisible = true
         if ( row['forEdit'] ){
           // console.log('修改数据')
-          this.forEdit = 1
           this.functionForm.id = row['id']
         } else {
           // console.log('新增数据')
@@ -423,7 +427,6 @@
             this.$refs.tree.setCheckedNodes([])
           }
           this.dialogType = 'new'
-          this.forEdit = 0
         }
         this.$nextTick(()=>{
           this.initFormData()
