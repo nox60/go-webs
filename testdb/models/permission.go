@@ -8,6 +8,7 @@ type FunctionNode struct {
 	Name             string          `json:"name"`
 	Path             string          `json:"path"`
 	ParentFunctionId int             `json:"parentId"`
+	Type             int             `json:"type"`
 	HasChildren      bool            `json:"hasChildren"`
 	Leaf             bool            `json:"leaf"`
 	Parents          interface{}     `json:"parents"`

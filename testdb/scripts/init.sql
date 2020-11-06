@@ -34,12 +34,6 @@ CREATE TABLE tb_functions (
   PRIMARY KEY (`function_id`)
 )DEFAULT CHARSET=utf8;
 
-# ---增加默认的
-INSERT INTO tb_functions (`function_id`, `name`, `path`, `type`, `parent_function_id`) VALUES (10000,'权限管理','', 0, 0);
-INSERT INTO tb_functions (`function_id`, `name`, `path`, `type`, `parent_function_id`) VALUES (10001,'用户管理','', 0, 10000);
-INSERT INTO tb_functions (`function_id`, `name`, `path`, `type`, `parent_function_id`) VALUES (10002,'角色管理','', 0, 10000);
-INSERT INTO tb_functions (`function_id`, `name`, `path`, `type`, `parent_function_id`) VALUES (10003,'功能点管理','', 0, 10000);
-
 DROP TABLE IF EXISTS tb_functions_items;
 CREATE TABLE tb_functions_items (
 	`function_item_id` INT NOT NULL AUTO_INCREMENT,
@@ -48,6 +42,19 @@ CREATE TABLE tb_functions_items (
 	`item_name` VARCHAR(200) NULL,
   PRIMARY KEY (`function_item_id`)
 )DEFAULT CHARSET=utf8;
+
+# ---增加默认的
+INSERT INTO tb_functions (`function_id`, `name`, `order`, `path`, `type`, `parent_function_id`) VALUES (1000,'权限管理', 0, '', 0, 0);
+INSERT INTO tb_functions (`function_id`, `name`, `order`, `path`, `type`, `parent_function_id`) VALUES (1001,'用户管理', 1, '', 0, 1000);
+INSERT INTO tb_functions (`function_id`, `name`, `order`, `path`, `type`, `parent_function_id`) VALUES (1002,'角色管理', 2, '', 0, 1000);
+INSERT INTO tb_functions (`function_id`, `name`, `order`, `path`, `type`, `parent_function_id`) VALUES (1003,'功能点管理',3, '', -1, 1000);
+
+INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10011,1001, '查看用户');
+INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10012,1001, '新增用户');
+INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10013,1001, '编辑用户');
+INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10014,1001, '删除用户');
+
+
 
 DROP TABLE IF EXISTS tb_roles;
 CREATE TABLE tb_roles (

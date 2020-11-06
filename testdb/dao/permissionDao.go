@@ -88,7 +88,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT a.`function_id`,a.`number`,a.`order`,a.`name`,a.`path`,a.`parent_function_id`, ")
+	queryStm.WriteString(" SELECT a.`function_id`,a.`number`,a.`order`,a.`name`,a.`path`,a.`parent_function_id`, a.`type`, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,1,0) AS leaf, ")
 	queryStm.WriteString(" IF(b.function_id IS NULL,0,1) AS hasChildren, ")
 	queryStm.WriteString(" GROUP_CONCAT(DISTINCT(CONCAT_WS('|!|', c.function_item_id, c.item_name)))  AS itemStr ")
@@ -133,6 +133,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 			&dataObj.Name,
 			&dataObj.Path,
 			&dataObj.ParentFunctionId,
+			&dataObj.Type,
 			&dataObj.Leaf,
 			&dataObj.HasChildren,
 			&dataObj.ItemStr,

@@ -36,21 +36,22 @@
       <el-table-column prop="items" label="页内功能点">
         <template slot-scope="scope">
           <el-button-group v-for="item in scope.row.items" :key="item.itemId">
-            <el-button size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)" />
-            <el-button size="mini" @click="handleAddOrUpdateFunctionItem({ itemId: item.itemId, functionId: scope.row.id })"> {{ item.itemName }} </el-button>
+            <el-button v-if="scope.row.type > 0" size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)" />
+
+            <el-button v-if="scope.row.type > 0" size="mini" @click="handleAddOrUpdateFunctionItem({ itemId: item.itemId, functionId: scope.row.id })"> {{ item.itemName }} </el-button>
+            <el-button v-else size="mini"> {{ item.itemName }} </el-button>
           </el-button-group>
-
-          <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateFunctionItem({ itemId: 0, functionId: scope.row.id })" />
-
+          <el-button v-if="scope.row.type > 0" align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateFunctionItem({ itemId: 0, functionId: scope.row.id })" />
         </template>
       </el-table-column>
 
       <el-table-column label="操作" prop="leaf" align="left" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleAddOrUpdateFunction(row)">
+          <el-button v-if="row.type > 0" type="primary" size="mini" @click="handleAddOrUpdateFunction(row)">
             编辑
           </el-button>
           <el-button
+            v-if="row.type > 0"
             v-show="row.leaf"
             size="mini"
             type="danger"
