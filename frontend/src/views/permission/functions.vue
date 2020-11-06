@@ -179,7 +179,7 @@
           }],
         functionForm:{
           id: 0,
-          number: '',
+          number: 0,
           order:'',
           name: '',
           path:'',
@@ -331,7 +331,7 @@
               this.functionForm.id = 0
               this.functionForm.parentId = 0
               this.functionForm.name = ''
-              this.functionForm.number = ''
+              this.functionForm.number = 0
               this.functionForm.order = ''
               this.functionForm.path = ''
 

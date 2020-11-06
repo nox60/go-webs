@@ -10,7 +10,7 @@ func GetFunctionsByParentId(fetchDataBody *models.FunctionNode) (dataResBody []m
 	return dao.GetFunctionsByParentId(fetchDataBody)
 }
 
-func AddFunction(function *models.FunctionNode) {
+func AddFunction(function *models.FunctionNode) (addResult int) {
 	tx, err := dao.MysqlDb.Begin()
 
 	if err != nil {
@@ -27,7 +27,19 @@ func AddFunction(function *models.FunctionNode) {
 		}
 	}()
 
-	err = dao.AddFunction(function, tx)
+	// 首先判断ID是否已经存在，如果存在则不能写入
+	dataRes, err := dao.GetFunctionById(function)
+
+	if dataRes.FunctionId > 0 {
+		return -1
+	} else {
+		err = dao.AddFunction(function, tx)
+		if err == nil {
+			return 1
+		} else {
+			return 0
+		}
+	}
 }
 
 func AddFunctionItem(functionItem *models.FunctionItem) {
