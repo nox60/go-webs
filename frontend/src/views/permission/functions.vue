@@ -140,6 +140,7 @@
     addOrUpdateRole,
     getFunctionItemById
   } from '@/api/role'
+  import {Message} from "element-ui";
 
   const defaultRole = {
     key: '',
@@ -321,23 +322,40 @@
             addOrUpdateFunction(this.functionForm).then( response => {
               console.log(response)
 
-              this.$notify({
-                title: 'Success',
-                message: '操作成功',
-                type: 'success',
-                duration: 2000
-              })
+              if( response.data.resultCode !== 1 ){
+                // this.$notify({
+                //   title: 'Error',
+                //   message: '操作失败',
+                //   type: 'failed',
+                //   duration: 2000
+                // })
 
-              this.listLoading = false
-              this.dialogVisible = false
-              this.functionForm.id = 0
-              this.functionForm.parentId = 0
-              this.functionForm.name = ''
-              this.functionForm.number = 0
-              this.functionForm.order = ''
-              this.functionForm.path = ''
+                Message({
+                  message: '错误，记录已经存在！请重新输入编号！',
+                  type: 'error',
+                  duration: 1000
+                })
 
-              this.reload()
+                this.listLoading = false
+              } else {
+                this.$notify({
+                  title: 'Success',
+                  message: '操作成功',
+                  type: 'success',
+                  duration: 2000
+                })
+
+                this.listLoading = false
+                this.dialogVisible = false
+                this.functionForm.id = 0
+                this.functionForm.parentId = 0
+                this.functionForm.name = ''
+                this.functionForm.number = 0
+                this.functionForm.order = ''
+                this.functionForm.path = ''
+
+                this.reload()
+              }
             })
           }
         })

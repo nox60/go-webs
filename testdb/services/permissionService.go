@@ -37,9 +37,9 @@ func AddFunction(function *models.FunctionNode) (addResult int) {
 	} else {
 		err = dao.AddFunction(function, tx)
 		if err == nil {
-			return
+			return constants.SUCCESSED
 		} else {
-			return 0
+			return constants.FAILED
 		}
 	}
 }
