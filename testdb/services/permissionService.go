@@ -88,7 +88,7 @@ func GetFunctionById(fetchDataBody *models.FunctionNode) (dataResBody models.Fun
 	return dataRes, err
 }
 
-func UpdateFunctionById(function *models.FunctionNode) {
+func UpdateFunctionById(function *models.FunctionNode) (resultCode int) {
 	tx, err := dao.MysqlDb.Begin()
 
 	if err != nil {
@@ -106,6 +106,11 @@ func UpdateFunctionById(function *models.FunctionNode) {
 	}()
 
 	err = dao.UpdateFunctionById(function, tx)
+	if err == nil {
+		return constants.SUCCESSED
+	} else {
+		return constants.FAILED
+	}
 }
 
 func DeleteFunction(functionId int) {

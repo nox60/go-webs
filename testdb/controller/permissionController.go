@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"testdb/constants"
 	"testdb/dao"
 	"testdb/models"
 	"testdb/services"
@@ -44,17 +45,19 @@ func AddOrUpdateFunction(c *gin.Context) {
 		return
 	}
 
+	resultCode := constants.SUCCESSED
+
 	if funcionReq.ForEdit {
 		// 更新
-		services.UpdateFunctionById(&funcionReq)
+		resultCode = services.UpdateFunctionById(&funcionReq)
 	} else {
 		// 新增
-		services.AddFunction(&funcionReq)
+		resultCode = services.AddFunction(&funcionReq)
 	}
 
 	resultMsg := new(models.HttpResult)
-	resultMsg.Code = 20000
-	resultMsg.Msg = "新增功能点成功"
+	resultMsg.Code = resultCode
+	resultMsg.Msg = constants.GetResultMsgByCode(resultCode)
 	c.JSON(200, resultMsg)
 }
 
