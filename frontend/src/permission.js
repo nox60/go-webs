@@ -32,11 +32,8 @@ router.beforeEach(async(to, from, next) => {
       // 权限判断，需要进行改造
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
       if (hasRoles) {
-        // console.log('----------------------------------to.path: ' + to.path)
-        // console.log('-------------------------------------NEXT: ' + next)
         next()
       } else {
-        // console.log('-------------------------------------ELSE2: ' + to.path)
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']

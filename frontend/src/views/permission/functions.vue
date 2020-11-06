@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddOrUpdate({ id: 0, forEdit: 0 })">新建功能点</el-button>
+    <el-button type="primary" @click="handleAddOrUpdate({ id: 0, forEdit: false })">新建功能点</el-button>
 
     <el-table
       :data="tableData"
@@ -247,7 +247,7 @@
         })
       },
       initFormData(){
-        this.$refs['functionForm'].resetFields();
+        // this.$refs['functionForm'].resetFields();
         if(this.forEdit == true) {//编辑数据
           getFunctionById(this.functionForm.id).then(response => {
             setTimeout(() => {
@@ -262,7 +262,7 @@
             }, 1000)
           })
         } else {
-          //this.dialogVisible = true
+          this.$refs['functionForm'].resetFields()
           this.functionForm.forEdit = false
           let defaultNode = new Array(1);
           defaultNode[0] = 0
@@ -271,7 +271,7 @@
         }
       },
       initFunctionItemFormData(){
-        this.$refs['itemForm'].resetFields();
+        // this.$refs['itemForm'].resetFields();
         if(this.forEdit == 1) {//编辑数据
           this.$nextTick(() => {
             // this.itemForm.id = jsonObject.itemId
@@ -314,28 +314,18 @@
         }
       },
       addOrUpdateData() {
-        console.log(this.$refs)
+        // console.log(this.$refs)
         this.$refs['functionForm'].validate((valid) => {
           if (valid) {
             this.listLoading = true
             console.log(this.functionForm)
             addOrUpdateFunction(this.functionForm).then( response => {
-              console.log(response)
-
               if( response.data.resultCode !== 1 ){
-                // this.$notify({
-                //   title: 'Error',
-                //   message: '操作失败',
-                //   type: 'failed',
-                //   duration: 2000
-                // })
-
                 Message({
                   message: '错误，记录已经存在！请重新输入编号！',
                   type: 'error',
                   duration: 1000
                 })
-
                 this.listLoading = false
               } else {
                 this.$notify({
@@ -344,16 +334,7 @@
                   type: 'success',
                   duration: 2000
                 })
-
-                this.listLoading = false
-                this.dialogVisible = false
-                this.functionForm.id = 0
-                this.functionForm.parentId = 0
-                this.functionForm.name = ''
-                this.functionForm.number = 0
-                this.functionForm.order = ''
-                this.functionForm.path = ''
-
+                this.$refs['functionForm'].resetFields()
                 this.reload()
               }
             })
@@ -394,8 +375,9 @@
         })
       },
       cancelAddOrEdit() {
-              this.listLoading = false
-              this.dialogVisible = false
+        this.listLoading = false
+        this.dialogVisible = false
+        this.$refs['functionForm'].resetFields()
       },
       cancelAddOrEditItem() {
         this.listLoading = false
@@ -431,18 +413,17 @@
       handleAddOrUpdate(row) {
         this.listLoading = true
         this.dialogVisible = true
-
-        if ( row['forEdit'] === 0 ){ //新增
-          console.log('新增数据')
+        if ( row['forEdit'] ){
+          // console.log('修改数据')
+          this.forEdit = 1
+          this.functionForm.id = row['id']
+        } else {
+          // console.log('新增数据')
           if (this.$refs.tree) {
             this.$refs.tree.setCheckedNodes([])
           }
           this.dialogType = 'new'
           this.forEdit = 0
-        } else { //修改
-          console.log('修改数据')
-          this.forEdit = 1
-          this.functionForm.id = row['id']
         }
         this.$nextTick(()=>{
           this.initFormData()
