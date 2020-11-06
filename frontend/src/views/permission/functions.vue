@@ -3,58 +3,59 @@
     <el-button type="primary" @click="handleAddOrUpdateFunction({ id: 0, forEdit: false })">新建功能点</el-button>
 
     <el-table
+      ref="treeElTable"
+      v-loading="listLoading"
       :data="tableData"
       style="width: 100%;margin-bottom: 20px;margin-top:10px;"
       row-key="id"
       border
-      v-loading="listLoading"
       lazy
-      ref="treeElTable"
       :load="getFunctions"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+    >
       <el-table-column
         prop="id"
         label="编号"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
       <el-table-column
         prop="order"
         label="序号（同级菜单内）"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
       <el-table-column
         prop="name"
         label="功能点"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
       <el-table-column
         prop="path"
-        label="路径">
-      </el-table-column>
+        label="路径"
+      />
 
       <el-table-column prop="items" label="页内功能点">
         <template slot-scope="scope">
-          <el-button-group v-for="item in scope.row.items" :key="item.itemId" >
-            <el-button  size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)"></el-button>
-            <el-button  size="mini" @click="handleAddOrUpdateFunctionItem({ itemId: item.itemId, functionId: scope.row.id })">{{item.itemName}}</el-button>
+          <el-button-group v-for="item in scope.row.items" :key="item.itemId">
+            <el-button size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)" />
+            <el-button size="mini" @click="handleAddOrUpdateFunctionItem({ itemId: item.itemId, functionId: scope.row.id })"> {{ item.itemName }} </el-button>
           </el-button-group>
 
-          <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateFunctionItem({ itemId: 0, functionId: scope.row.id })">
-          </el-button>
+          <el-button align="right" type="warning" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddOrUpdateFunctionItem({ itemId: 0, functionId: scope.row.id })" />
 
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" prop="leaf" align="left"  width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" prop="leaf" align="left" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button  type="primary" size="mini" @click="handleAddOrUpdateFunction(row)">
+          <el-button type="primary" size="mini" @click="handleAddOrUpdateFunction(row)">
             编辑
           </el-button>
           <el-button
-            size="mini"
             v-show="row.leaf"
+            size="mini"
             type="danger"
-            @click="handleDeleteConfirm(row,$index)">
+            @click="handleDeleteConfirm(row,$index)"
+          >
             删除
           </el-button>
         </template>
@@ -62,16 +63,20 @@
 
     </el-table>
 
-    <el-dialog :visible.sync="dialogVisible"
-               v-loading="listLoading"
-               :title="dialogType === 'edit'?'编辑功能点':'新建功能点'">
-      <el-form  ref="functionForm"
-                :model="functionForm"
-                :rules="rules"
-                label-width="120px"
-                label-position="left">
+    <el-dialog
+      v-loading="listLoading"
+      :visible.sync="dialogVisible"
+      :title="dialogType === 'edit'?'编辑功能点':'新建功能点'"
+    >
+      <el-form
+        ref="functionForm"
+        :model="functionForm"
+        :rules="rules"
+        label-width="120px"
+        label-position="left"
+      >
         <el-form-item label="编号" prop="id">
-          <el-input v-model.number="functionForm.id" v-bind:disabled="functionForm.forEdit"  placeholder="编号" />
+          <el-input v-model.number="functionForm.id" :disabled="functionForm.forEdit" placeholder="编号" />
         </el-form-item>
         <el-form-item label="菜单内次序" prop="order">
           <el-input v-model.number="functionForm.order" placeholder="菜单内次序，值越大越靠前" />
@@ -85,6 +90,7 @@
 
         <el-form-item label="父级菜单" prop="parentId">
           <el-tree
+            ref="treeForm"
             :data="treeData"
             :props="treeNodes"
             :load="getTreeNodes"
@@ -92,11 +98,10 @@
             show-checkbox
             node-key="id"
             check-strictly
-            ref="treeForm"
             :default-expanded-keys="defaultExpandedNodes"
             :default-checked-keys="defaultSelectedNode"
-            @check-change="handleNodeClick">
-          </el-tree>
+            @check-change="handleNodeClick"
+          />
 
         </el-form-item>
       </el-form>
@@ -106,16 +111,20 @@
       </div>
     </el-dialog>
 
-    <el-dialog :visible.sync="addItemDialogVisible"
-               v-loading="listLoading"
-               :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form  ref="itemForm"
-                :model="itemForm"
-                :rules="rulesForItem"
-                label-width="120px"
-                label-position="left">
+    <el-dialog
+      v-loading="listLoading"
+      :visible.sync="addItemDialogVisible"
+      :title="dialogType==='edit'?'Edit Role':'New Role'"
+    >
+      <el-form
+        ref="itemForm"
+        :model="itemForm"
+        :rules="rulesForItem"
+        label-width="120px"
+        label-position="left"
+      >
         <el-form-item label="功能点名称" prop="itemName">
-          <el-input v-model="itemForm.itemName"  placeholder="功能点名称" />
+          <el-input v-model="itemForm.itemName" placeholder="功能点名称" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -251,13 +260,13 @@ export default {
 
   },
   methods: {
-    loadPage(){
+    loadPage() {
       getFunctions(0).then(response => { // 表内数据
         this.tableData = response.data
       })
     },
     initFormData() {
-      if (this.functionForm.forEdit === true) {// 编辑数据
+      if (this.functionForm.forEdit === true) { // 编辑数据
         getFunctionById(this.functionForm.id).then(response => {
           setTimeout(() => {
             this.functionForm = response.data
@@ -403,14 +412,14 @@ export default {
         }
       }
     },
-    handleAddOrUpdateFunctionItem(jsonObject){
+    handleAddOrUpdateFunctionItem(jsonObject) {
       this.itemForm.functionId = jsonObject.functionId
       this.listLoading = true
       this.addItemDialogVisible = true
-      if (jsonObject.itemId === 0) { //新增
+      if (jsonObject.itemId === 0) { // 新增
         console.log('新增数据')
         this.forEdit = 0
-      } else { //修改
+      } else { // 修改
         console.log('修改数据')
         this.forEdit = 1
         this.itemForm.itemId = jsonObject.itemId
@@ -423,7 +432,7 @@ export default {
       this.listLoading = true
       this.dialogVisible = true
       this.functionForm.forEdit = row['forEdit']
-      if ( row['forEdit'] ){
+      if (row['forEdit']) {
         // console.log('修改数据')
         this.dialogType = 'edit'
         this.functionForm.id = row['id']
@@ -471,9 +480,9 @@ export default {
             })
             this.reload()
           })
-          done();
+          // done();
         })
-        .catch(_ => {});
+        .catch(_ => {})
     },
     handleUpdateFunctionItem(itemId) {
       console.log(itemId)
