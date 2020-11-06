@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddOrUpdate({ id: 0, forEdit: false })">新建功能点</el-button>
+    <el-button type="primary" @click="handleAddOrUpdateFunction({ id: 0, forEdit: false })">新建功能点</el-button>
 
     <el-table
       :data="tableData"
@@ -47,7 +47,7 @@
 
       <el-table-column label="操作" prop="leaf" align="left"  width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button  type="primary" size="mini" @click="handleAddOrUpdate(row)">
+          <el-button  type="primary" size="mini" @click="handleAddOrUpdateFunction(row)">
             编辑
           </el-button>
           <el-button
@@ -64,7 +64,7 @@
 
     <el-dialog :visible.sync="dialogVisible"
                v-loading="listLoading"
-               :title="dialogType==='edit'?'Edit Role':'New Role'">
+               :title="dialogType === 'edit'?'编辑功能点':'新建功能点'">
       <el-form  ref="functionForm"
                 :model="functionForm"
                 :rules="rules"
@@ -102,7 +102,7 @@
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="cancelAddOrEdit">取消</el-button>
-        <el-button type="primary" @click="addOrUpdateData">确定</el-button>
+        <el-button type="primary" @click="confirmAddOrUpdateFunctionData">确定</el-button>
       </div>
     </el-dialog>
 
@@ -252,8 +252,7 @@
         })
       },
       initFormData(){
-        // this.$refs['functionForm'].resetFields();
-        if(this.forEdit == true) {//编辑数据
+        if(this.functionForm.forEdit == true) {//编辑数据
           getFunctionById(this.functionForm.id).then(response => {
             setTimeout(() => {
               this.functionForm = response.data
@@ -318,7 +317,7 @@
           })
         }
       },
-      addOrUpdateData() {
+      confirmAddOrUpdateFunctionData() {
         // console.log(this.$refs)
         this.$refs['functionForm'].validate((valid) => {
           if (valid) {
@@ -415,18 +414,20 @@
           this.initFunctionItemFormData()
         })
       },
-      handleAddOrUpdate(row) {
+      handleAddOrUpdateFunction(row) {
         this.listLoading = true
         this.dialogVisible = true
+        this.functionForm.forEdit = row['forEdit']
         if ( row['forEdit'] ){
           // console.log('修改数据')
+          this.dialogType = 'edit'
           this.functionForm.id = row['id']
         } else {
           // console.log('新增数据')
+          this.dialogType = 'new'
           if (this.$refs.tree) {
             this.$refs.tree.setCheckedNodes([])
           }
-          this.dialogType = 'new'
         }
         this.$nextTick(()=>{
           this.initFormData()
