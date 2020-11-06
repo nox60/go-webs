@@ -318,7 +318,9 @@
           if (valid) {
             this.listLoading = true
             console.log(this.functionForm)
-            addOrUpdateFunction(this.functionForm).then(() => {
+            addOrUpdateFunction(this.functionForm).then( response => {
+              console.log(response)
+
               this.$notify({
                 title: 'Success',
                 message: '操作成功',

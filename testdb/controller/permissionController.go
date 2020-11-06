@@ -56,8 +56,15 @@ func AddOrUpdateFunction(c *gin.Context) {
 	}
 
 	resultMsg := new(models.HttpResult)
-	resultMsg.Code = resultCode
-	resultMsg.Msg = constants.GetResultMsgByCode(resultCode)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "操作成功"
+
+	requestResult := new(models.RequestBody)
+	requestResult.Code = resultCode
+	requestResult.Msg = constants.GetResultMsgByCode(resultCode)
+
+	resultMsg.Data = requestResult
+
 	c.JSON(200, resultMsg)
 }
 
