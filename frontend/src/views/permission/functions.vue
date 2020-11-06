@@ -161,26 +161,15 @@ export default {
   data() {
     const checkNumber = (rule, value, callback) => {
       // console.log(value)
-
-      if (!value) {
-        return new Error('必填信息')
+      if (!Number.isInteger(value)) {
+        callback(new Error('请输入数字值'))
       } else {
-        if (!Number.isInteger(value)) {
-          callback(new Error('请输入数字值'))
+        if (value <= 0) {
+          callback(new Error('必须大于0'))
+        } else if (value > 100000) {
+          callback(new Error('不能大于100000'))
         } else {
-          // console.log(value)
-          // console.log(value == 0)
-          if (value === 0) {
-            // console.log('必须大于00')
-            callback(new Error('必须大于0'))
-          } else if (value < 0) {
-            callback(new Error('必须大于0'))
-          } else if (value > 100000) {
-            callback(new Error('不能大于100000'))
-          } else {
-            // console.log('dddddddddddddd')
-            callback()
-          }
+          callback()
         }
       }
     }
