@@ -37,7 +37,7 @@
         <template slot-scope="scope">
           <el-button-group v-for="item in scope.row.items" :key="item.itemId">
             <el-button v-if="scope.row.type > 0" size="mini" icon="el-icon-delete" @click="handleDeleteFunctionItem(item.itemId)" />
-
+            <!-- type>0 的菜单类型是用户自己定义的菜单项，可以编辑，反之则是系统核心类型，非常重要，不能编辑 -->
             <el-button v-if="scope.row.type > 0" size="mini" @click="handleAddOrUpdateFunctionItem({ itemId: item.itemId, functionId: scope.row.id })"> {{ item.itemName }} </el-button>
             <el-button v-else size="mini"> {{ item.itemName }} </el-button>
           </el-button-group>
