@@ -58,6 +58,10 @@ INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) 
 INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10022,1001, '新增角色');
 INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10023,1001, '编辑角色');
 INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10024,1001, '删除角色');
+INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10025,1001, '查看角色');
+INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10026,1001, '新增角色');
+INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10027,1001, '编辑角色');
+INSERT INTO tb_functions_items (`function_item_id`, `function_id`, `item_name`) VALUES (10028,1001, '删除角色');
 
 
 DROP TABLE IF EXISTS tb_roles;
