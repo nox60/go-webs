@@ -97,13 +97,10 @@ export default {
     // Filter out the routes that can be displayed in the sidebar
     // And generate the internationalized title
     generateRoutes(routes, basePath = '/', prefixTitle = []) {
-
       let res = []
-
       for (const router of routes) {
         // skip hidden router
         if (router.hidden) { continue }
-
         const data = {
           path: path.resolve(basePath, router.path),
           title: [...prefixTitle]
