@@ -29,16 +29,18 @@
       :visible.sync="dialogVisible"
       @close="handleClose"
       <el-form
+        v-if="dialogVisible"
         ref="userForm"
         :model="userForm"
-        :modal-append-to-body='true'
-        v-if='dialogVisible'
+        :modal-append-to-body="true"
         label-width="100px"
-        label-position="left">
+        label-position="left"
+      >
         <el-form-item label="用户名" prop="userName">
           <el-input
             v-model="userForm.userName"
-            placeholder="用户名" />
+            placeholder="用户名"
+          />
         </el-form-item>
         <el-form-item label="用户姓名" prop="realName">
           <el-input
@@ -48,17 +50,18 @@
         </el-form-item>
 
         <el-form-item label="用户角色" prop="roles">
-        <template>
+          <template>
             <el-checkbox
-              v-model="userForm.roleIds"
               v-for="itemObj in allRoles"
-              :label="itemObj.roleId"
               :key="itemObj.roleId"
+              v-model="userForm.roleIds"
+              :label="itemObj.roleId"
               border
-              size="mini">
-              {{itemObj.name}}
+              size="mini"
+            >
+              {{ itemObj.name }}
             </el-checkbox>
-        </template>
+          </template>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
