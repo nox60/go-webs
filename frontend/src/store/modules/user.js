@@ -3,7 +3,6 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 const jwt = require('jsonwebtoken')
 
-
 const state = {
   token: getToken(),
   name: '',
@@ -48,7 +47,7 @@ const actions = {
         commit('SET_TOKEN', data.accountId)
         setToken(data.token)
         console.log('-----------------------------------------111111')
-        console.log(Base64.decode(data.token))
+        // console.log(Base64.decode(data.token))
         console.log('+++++++++++++++++++++++++++++++++++++++++++++++')
         resolve()
       }).catch(error => {
@@ -62,11 +61,11 @@ const actions = {
 
     console.log(token)
 
-    let resultaa= jwt.decode(token)
+    const resultaa = jwt.decode(token)
 
     console.log(resultaa.sub)
 
-    let parsedJson = JSON.parse(resultaa.sub)
+    const parsedJson = JSON.parse(resultaa.sub)
     // console.log(">>>>>---")
     // console.log(parsedJson)
     // console.log(parsedJson.MenuItems)
@@ -161,7 +160,6 @@ const actions = {
     // generate accessible routes map based on roles
     const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
     // dynamically add accessible routes
-
 
     router.addRoutes(accessRoutes)
 
