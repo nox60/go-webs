@@ -313,6 +313,12 @@ export default {
             })
           }, 1000)
         })
+      } else {
+        this.dialogVisible = true
+        this.$nextTick(() => {
+          this.$refs['roleForm'].resetFields()
+          this.listLoading = false
+        })
       }
     },
     cancelAddOrEdit() {
