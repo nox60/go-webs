@@ -70,198 +70,198 @@
 </template>
 
 <script>
-  import {listUserData,addOrUpdateUser, deleteUser} from '@/api/user'
-  import {listRoleData} from '@/api/role'
-  import Pagination from '@/components/Pagination'
-  import { mapGetters } from 'vuex'
+import {listUserData,addOrUpdateUser, deleteUser} from '@/api/user'
+import {listRoleData} from '@/api/role'
+import Pagination from '@/components/Pagination'
+import { mapGetters } from 'vuex'
 
 
-  const defaultRole = {
-    key: '',
-    name: '',
-    description: '',
-    routes: []
-  }
+const defaultRole = {
+  key: '',
+  name: '',
+  description: '',
+  routes: []
+}
 
-  export default {
-    inject: ['reload'],
-    components: { Pagination },
-    data() {
-      return {
-        forEdit: 0,
-        userForm: {
-          accountId: -1,
-          userName: '',
-          realName: '',
-          roleIds: []
-        },
-        total: 0,
-        listQuery: {
-          page: 1,
-          limit: 20,
-          accountId: -1,
-          importance: undefined,
-          title: undefined,
-          type: undefined,
-          sort: '+id'
-        },
-        listLoading: false,
-        dialogVisible: false,
-        role: Object.assign({}, defaultRole),
-        routes: [],
-        usersList: [],
-        allRoles: [],
-        dialogType: 'new',
-        checkStrictly: false
-      }
-    },
-    computed: {
-      routesData() {
-        return this.routes
-      }
-    },
-    created() {
-      this.getList()
-
-      const test = this.$store.state.permission.routes
-      console.log(test)
-      console.log('routes..........................................')
-    },
-    mounted() {
-    },
-    methods: {
-      getList() {
-        this.listLoading = true
-        listUserData(this.listQuery).then(response => {
-          this.usersList = response.data.dataLists
-          this.total = response.data.totalCounts
-          setTimeout(() => {
-            this.listLoading = false
-          }, 1.5 * 1000)
-        })
-
-        listRoleData({"page":1,"limit":999999,"sort":"+id"}).then(response => {
-          this.allRoles = response.data.dataLists
-        })
+export default {
+  inject: ['reload'],
+  components: { Pagination },
+  data() {
+    return {
+      forEdit: 0,
+      userForm: {
+        accountId: -1,
+        userName: '',
+        realName: '',
+        roleIds: []
       },
+      total: 0,
+      listQuery: {
+        page: 1,
+        limit: 20,
+        accountId: -1,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: '+id'
+      },
+      listLoading: false,
+      dialogVisible: false,
+      role: Object.assign({}, defaultRole),
+      routes: [],
+      usersList: [],
+      allRoles: [],
+      dialogType: 'new',
+      checkStrictly: false
+    }
+  },
+  computed: {
+    routesData() {
+      return this.routes
+    }
+  },
+  created() {
+    this.getList()
 
-      confirmAddOrUpdateUser() {
-        this.listLoading = true
-        console.log(this.userForm)
-        addOrUpdateUser(this.userForm).then(() => {
-          this.$notify({
-            title: 'Success',
-            message: '操作成功',
-            type: 'success',
-            duration: 2000
-          })
-          this.$refs['userForm'].resetFields()
+    const test = this.$store.state.permission.routes
+    console.log(test)
+    console.log('routes..........................................')
+  },
+  mounted() {
+  },
+  methods: {
+    getList() {
+      this.listLoading = true
+      listUserData(this.listQuery).then(response => {
+        this.usersList = response.data.dataLists
+        this.total = response.data.totalCounts
+        setTimeout(() => {
           this.listLoading = false
-          this.dialogVisible = false
-          this.reload()
+        }, 1.5 * 1000)
+      })
+
+      listRoleData({"page":1,"limit":999999,"sort":"+id"}).then(response => {
+        this.allRoles = response.data.dataLists
+      })
+    },
+
+    confirmAddOrUpdateUser() {
+      this.listLoading = true
+      console.log(this.userForm)
+      addOrUpdateUser(this.userForm).then(() => {
+        this.$notify({
+          title: 'Success',
+          message: '操作成功',
+          type: 'success',
+          duration: 2000
         })
-      },
-      handleAddOrEditUser(row) {
-        this.listLoading = true
-        if (row.accountId === 0) { // 新增
-          console.log('新增数据')
-          this.dialogType = 'new'
-          this.forEdit = 0
-        } else { // 修改
-          console.log('修改数据')
-          this.forEdit = 1
-          this.userForm.accountId = row.accountId
-        }
-        this.$nextTick(() => {
-          this.initFormData()
-        })
-      },
-      handleClose() {
-        console.log('call handleClose.....')
         this.$refs['userForm'].resetFields()
-      },
-      initFormData() {
-        if (this.forEdit === 1) { // 编辑数据
-          listUserData({"page":1,"limit":1,"accountId":this.userForm.accountId}).then(response => {
-            setTimeout(() => {
-              this.dialogVisible = true
-              this.$nextTick(() => {
-                this.$refs['userForm'].resetFields()
-                this.userForm = response.data.dataLists[0]
-                this.defaultSelectedNode = response.data.functions
-                this.listLoading = false
-              })
-            }, 1000)
-          })
-        } else {
-          this.dialogVisible = true
-          this.$nextTick(() => {
-            this.$refs['userForm'].resetFields()
-          })
-        }
-      },
-      cancelAddOrEdit() {
         this.listLoading = false
         this.dialogVisible = false
-      },
-      handleDeleteConfirm(row) {
-        console.log(row)
-        this.$confirm('确认删除？')
-          .then(_ => {
-            console.log('点击了确认')
-            console.log(row.accountId)
-            deleteUser(row.accountId).then(() => {
-              this.dialogFormVisible = false
-              this.$notify({
-                title: 'Success',
-                message: '删除用户成功！',
-                type: 'success',
-                duration: 2000
-              })
-              this.getList()
+        this.reload()
+      })
+    },
+    handleAddOrEditUser(row) {
+      this.listLoading = true
+      if (row.accountId === 0) { // 新增
+        console.log('新增数据')
+        this.dialogType = 'new'
+        this.forEdit = 0
+      } else { // 修改
+        console.log('修改数据')
+        this.forEdit = 1
+        this.userForm.accountId = row.accountId
+      }
+      this.$nextTick(() => {
+        this.initFormData()
+      })
+    },
+    handleClose() {
+      console.log('call handleClose.....')
+      this.$refs['userForm'].resetFields()
+    },
+    initFormData() {
+      if (this.forEdit === 1) { // 编辑数据
+        listUserData({ 'page': 1, 'limit': 1, 'accountId': this.userForm.accountId }).then(response => {
+          setTimeout(() => {
+            this.dialogVisible = true
+            this.$nextTick(() => {
+              this.$refs['userForm'].resetFields()
+              this.userForm = response.data.dataLists[0]
+              this.defaultSelectedNode = response.data.functions
+              this.listLoading = false
             })
-            // done();
+          }, 1000)
+        })
+      } else {
+        this.dialogVisible = true
+        this.$nextTick(() => {
+          this.$refs['userForm'].resetFields()
+        })
+      }
+    },
+    cancelAddOrEdit() {
+      this.listLoading = false
+      this.dialogVisible = false
+    },
+    handleDeleteConfirm(row) {
+      console.log(row)
+      this.$confirm('确认删除？')
+        .then(_ => {
+          console.log('点击了确认')
+          console.log(row.accountId)
+          deleteUser(row.accountId).then(() => {
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: '删除用户成功！',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList()
           })
-          .catch(_ => {})
-      },
-      handleSelectFunction(checked, obj) {
-        // var type=Object.prototype.toString.call(this.userForm.items);
-        if (checked) {
-          if (obj.parentIds) {
-            obj.parentIds.forEach((item, index, array) => {
-              // 要判断已经被选中，如果没有被选中才选中
-              if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
-                this.userForm.functions.push(item)
-              }
-            })
-          }
-          // 参数：value数组中的当前项, index当前项的索引, array原始数组；
-        } else {
-          console.log(obj)
-          if (obj.childIds) {
-            obj.childIds.forEach((item, index, array) => {
-              // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-              if (this.userForm.functions.indexOf(item) > -1) {
-                // this.userForm.functions.push(item)
-                const index = this.userForm.functions.indexOf(item)
-                this.userForm.functions.splice(index, 1)
-              }
-            })
-          }
-          if (obj.childItems) {
-            obj.childItems.forEach((item, index, array) => {
-              // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
-              if (this.userForm.items.indexOf(item) > -1) {
-                // this.userForm.functions.push(item)
-                const index = this.userForm.items.indexOf(item)
-                this.userForm.items.splice(index, 1)
-              }
-            })
-          }
+          // done();
+        })
+        .catch(_ => {})
+    },
+    handleSelectFunction(checked, obj) {
+      // var type=Object.prototype.toString.call(this.userForm.items);
+      if (checked) {
+        if (obj.parentIds) {
+          obj.parentIds.forEach((item, index, array) => {
+            // 要判断已经被选中，如果没有被选中才选中
+            if (this.userForm.functions.indexOf(item) === -1 && item !== 0 && item !== -1) {
+              this.userForm.functions.push(item)
+            }
+          })
+        }
+        // 参数：value数组中的当前项, index当前项的索引, array原始数组；
+      } else {
+        console.log(obj)
+        if (obj.childIds) {
+          obj.childIds.forEach((item, index, array) => {
+            // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
+            if (this.userForm.functions.indexOf(item) > -1) {
+              // this.userForm.functions.push(item)
+              const index = this.userForm.functions.indexOf(item)
+              this.userForm.functions.splice(index, 1)
+            }
+          })
+        }
+        if (obj.childItems) {
+          obj.childItems.forEach((item, index, array) => {
+            // 首先要判断该孩子节点是否已经被选中，如果已经被选择了，才撤销选中状态
+            if (this.userForm.items.indexOf(item) > -1) {
+              // this.userForm.functions.push(item)
+              const index = this.userForm.items.indexOf(item)
+              this.userForm.items.splice(index, 1)
+            }
+          })
         }
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
