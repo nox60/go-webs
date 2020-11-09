@@ -139,7 +139,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
     meta: {
-      accessCode: 2,
+      accessCode: 1000,
       title: 'Permission',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
@@ -168,7 +168,7 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/users'),
         name: 'UsersManage',
         meta: {
-          accessCode: 4,
+          accessCode: 1001,
           title: '用户管理',
           roles: ['admin']
         }
@@ -178,7 +178,7 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/role'),
         name: 'RolePermission',
         meta: {
-          accessCode: 6,
+          accessCode: 1002,
           title: '角色管理',
           roles: ['admin']
         }
@@ -188,7 +188,7 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/functions'),
         name: 'functions',
         meta: {
-          accessCode: 3,
+          accessCode: 1003,
           title: '功能点管理',
           roles: ['admin']
         }
