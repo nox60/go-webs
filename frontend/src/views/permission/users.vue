@@ -2,19 +2,18 @@
   <div class="app-container">
     <el-button type="primary" @click="handleAddOrEditUser({ accountId: 0})">新建用户</el-button>
     <el-table
+      v-loading="listLoading"
       :data="usersList"
       highlight-current-row
-      v-loading="listLoading"
       style="width: 100%;margin-top:10px;"
-      border>
-      <el-table-column align="center" label="用户ID" width="220" prop="accountId">
-      </el-table-column>
-      <el-table-column align="center" label="用户名" width="220" prop="userName">
-      </el-table-column>
-      <el-table-column align="center" label="姓名" width="220" prop="realName">
-      </el-table-column>
+      border
+    >
+      <el-table-column align="center" label="用户ID" width="220" prop="accountId" />
+      <el-table-column align="center" label="用户名" width="220" prop="userName" />
+      <el-table-column align="center" label="姓名" width="220" prop="realName" />
       <el-table-column align="center" label="Operations">
-        <template slot-scope="{row,$index}">
+        <!-- <template slot-scope="{row,$index}"> -->
+        <template slot-scope="{row}">
           <el-button type="primary" size="small" @click="handleAddOrEditUser(row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDeleteConfirm(row)">删除</el-button>
         </template>
@@ -25,12 +24,13 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog
+      :title="dialogType==='edit'?'Edit Role':'New Role'"
+    >
       :visible.sync="dialogVisible"
       @close="handleClose"
-      :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form
-        :model="userForm"
         ref="userForm"
+        :model="userForm"
         :modal-append-to-body='true'
         v-if='dialogVisible'
         label-width="100px"
@@ -70,11 +70,10 @@
 </template>
 
 <script>
-import {listUserData,addOrUpdateUser, deleteUser} from '@/api/user'
-import {listRoleData} from '@/api/role'
+import { listUserData, addOrUpdateUser, deleteUser } from '@/api/user'
+import { listRoleData } from '@/api/role'
 import Pagination from '@/components/Pagination'
-import { mapGetters } from 'vuex'
-
+// import { mapGetters } from 'vuex'
 
 const defaultRole = {
   key: '',
@@ -140,7 +139,7 @@ export default {
         }, 1.5 * 1000)
       })
 
-      listRoleData({"page":1,"limit":999999,"sort":"+id"}).then(response => {
+      listRoleData({ 'page': 1, 'limit': 999999, 'sort': '+id' }).then(response => {
         this.allRoles = response.data.dataLists
       })
     },
