@@ -148,13 +148,13 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	queryStm.WriteString(" FROM tb_users a ")
 	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
 	queryStm.WriteString(" LEFT JOIN tb_roles c ON b.role_id = c.role_id ")
-	queryStm.WriteString(" WHERE 1=1 ")
+	queryStm.WriteString(" WHERE 1=1 AND a.user_type > 0 ")
 
 	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount ")
 	countQueryStm.WriteString(" FROM tb_users a ")
 	countQueryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
 	countQueryStm.WriteString(" LEFT JOIN tb_roles c ON b.role_id = c.role_id ")
-	countQueryStm.WriteString(" WHERE 1=1 ")
+	countQueryStm.WriteString(" WHERE 1=1 AND a.user_type > 0 ")
 
 	// 查询条件.
 	if fetchDataBody.AccountId > -1 {

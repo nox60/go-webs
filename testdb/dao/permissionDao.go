@@ -436,8 +436,8 @@ func RetrieveRoleData(fetchDataBody *models.Role) (dataResBody []models.Role, to
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT `role_id`,`name`,`code` FROM tb_roles WHERE 1=1 ")
-	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_roles WHERE 1=1 ")
+	queryStm.WriteString(" SELECT `role_id`,`name`,`code` FROM tb_roles WHERE 1=1 AND type != 0 ")
+	countQueryStm.WriteString(" SELECT COUNT(*) AS totalCount FROM tb_roles WHERE 1=1 AND type != 0 ")
 	// 查询条件.
 	if fetchDataBody.RoleId > -1 {
 		queryStm.WriteString(" AND role_id = ? ")
