@@ -271,7 +271,7 @@ export default {
       // 获取所有功能点
       getAllFuncs().then(response => {
         setTimeout(() => {
-          this.treeData = response.data
+          this.tableData = response.data
         }, 1000)
       })
       if (row.roleId === 0) { // 新增
@@ -286,11 +286,11 @@ export default {
         this.forEdit = 1
         this.roleForm.id = row.roleId
         this.listLoading = true
-        getAllFuncs().then(response => {
-          setTimeout(() => {
-            this.tableData = response.data
-          }, 1000)
-        })
+        // getAllFuncs().then(response => {
+        //   setTimeout(() => {
+        //     this.tableData = response.data
+        //   }, 1000)
+        // })
       }
       this.$nextTick(() => {
         this.initFormData()
