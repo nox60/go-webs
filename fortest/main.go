@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"crypto/rand"
+	"fmt"
 	"math/big"
 )
 
@@ -28,6 +29,11 @@ func main() {
 	//arrString := strings.Join(arr, ",")
 	//
 	//fmt.Println(arrString)
+
+	for i := 0; i < 10; i++ {
+		randonStr := CreateRandomString(8)
+		fmt.Println(randonStr)
+	}
 
 }
 
