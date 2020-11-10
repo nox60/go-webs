@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"strings"
+	"bytes"
+	"crypto/rand"
+	"math/big"
 )
 
 type testStruct struct {
@@ -14,18 +15,37 @@ type testStruct struct {
 }
 
 func main() {
+	//
+	//a := ""
+	//
+	//c := strings.Split(a, ",")
+	//fmt.Println(len(c))
+	//
+	//fmt.Println(c)
+	//
+	//arr := []string{"hello", "world", "1", "2"}
+	//
+	//arrString := strings.Join(arr, ",")
+	//
+	//fmt.Println(arrString)
 
-	a := ""
+}
 
-	c := strings.Split(a, ",")
-	fmt.Println(len(c))
+//func main() {
+//	randomStr := CreateRandomString(15)
+//	ffmt.P(randomStr)
+//	//string("mCvYEd8MH8xnBRn")
+//}
 
-	fmt.Println(c)
-
-	arr := []string{"hello", "world", "1", "2"}
-
-	arrString := strings.Join(arr, ",")
-
-	fmt.Println(arrString)
-
+func CreateRandomString(len int) string {
+	var container string
+	var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+	b := bytes.NewBufferString(str)
+	length := b.Len()
+	bigInt := big.NewInt(int64(length))
+	for i := 0; i < len; i++ {
+		randomInt, _ := rand.Int(rand.Reader, bigInt)
+		container += string(str[randomInt.Int64()])
+	}
+	return container
 }
