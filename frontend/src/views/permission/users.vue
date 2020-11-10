@@ -25,9 +25,10 @@
 
     <el-dialog
       :title="dialogType==='edit'?'Edit Role':'New Role'"
-    >
       :visible.sync="dialogVisible"
       @close="handleClose"
+    >
+
       <el-form
         v-if="dialogVisible"
         ref="userForm"

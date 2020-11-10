@@ -148,7 +148,7 @@ func AddOrUpdateUser(c *gin.Context) {
 		return
 	}
 
-	if userReqbody.AccountId == 0 {
+	if userReqbody.AccountId <= 0 {
 		// 新增
 		services.AddUser(&userReqbody)
 	} else {
