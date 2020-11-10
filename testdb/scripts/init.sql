@@ -9,10 +9,12 @@ CREATE TABLE tb_users (
     `major` VARCHAR(200) NULL DEFAULT '',
     `gender` int not null default 1,
     `age` int not null default 1,
+    `status` tinyint default 0,
+    `active_str` VARCHAR(30) NULL DEFAULT '',
     `user_type` int not null default 1,
     PRIMARY KEY(`account_id`)
 )DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-INSERT INTO tb_users (account_id, user_name, `password`, user_type) VALUES (1,'admin','111111', 0);
+INSERT INTO tb_users (account_id, user_name, `password`, `status`, user_type) VALUES (1,'admin','111111', 1, 0);
 
 DROP TABLE IF EXISTS tb_users_roles;
 CREATE TABLE tb_users_roles (
