@@ -2,23 +2,19 @@
   <div class="app-container">
     <el-button type="primary" @click="handleAddOrEditRole({ roleId: 0})">新建角色</el-button>
     <el-table
+      v-loading="listLoading"
       :data="rolesList"
       highlight-current-row
-      v-loading="listLoading"
       style="width: 100%;margin-top:10px;"
-      border>
-      <el-table-column align="center" label="角色代码" width="220" prop="code">
-      </el-table-column>
-      <el-table-column align="center" label="角色名称" width="220" prop="name">
-      </el-table-column>
-      <el-table-column align="header-center" label="角色说明">
-
-      </el-table-column>
-      <el-table-column align="header-center" label="角色状态">
-
-      </el-table-column>
+      border
+    >
+      <el-table-column align="center" label="角色代码" width="220" prop="code" />
+      <el-table-column align="center" label="角色名称" width="220" prop="name" />
+      <el-table-column align="header-center" label="角色说明" />
+      <el-table-column align="header-center" label="角色状态" />
       <el-table-column align="center" label="Operations">
-        <template slot-scope="{row,$index}">
+        <template slot-scope="{row}">
+          <!-- <template slot-scope="{row,$index}">-->
           <el-button type="primary" size="small" @click="handleAddOrEditRole(row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDeleteConfirm(row)">删除</el-button>
         </template>
@@ -29,16 +25,17 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog
-               :visible.sync="dialogVisible"
-               @close="handleClose"
-               :title="dialogType==='edit'?'Edit Role':'New Role'">
+      :visible.sync="dialogVisible"
+      :title="dialogType==='edit'?'Edit Role':'New Role'"
+      @close="handleClose"
+    >
       <el-form
-               :model="roleForm"
-               ref="roleForm"
-               :modal-append-to-body='true'
-               v-if='dialogVisible'
-               label-width="100px"
-               label-position="left">
+        :model="roleForm"
+        ref="roleForm"
+        :modal-append-to-body='true'
+        v-if='dialogVisible'
+        label-width="100px"
+        label-position="left">
         <el-form-item label="角色名称" prop="name">
           <el-input
             v-model="roleForm.name"
@@ -63,14 +60,26 @@
               width="180"
               label="菜单选择">
               <template slot-scope="scope">
-              <el-checkbox
-                           v-model="roleForm.functions"
-                           @change="checked=>handleSelectFunction(checked, scope.row)"
-                           :label="scope.row.id"
-                           :key="scope.row.id"
-                           size="mini">
-                {{ scope.row.name }}
-              </el-checkbox>
+                <el-checkbox
+                  v-if="scope.row.type == -1 "
+                  v-model="roleForm.functions"
+                  @change="checked=>handleSelectFunction(checked, scope.row)"
+                  :label="scope.row.id"
+                  :key="scope.row.id"
+                  :disabled="true"
+                  size="mini">
+                  {{ scope.row.name }}
+                </el-checkbox>
+
+                <el-checkbox
+                  v-else
+                  v-model="roleForm.functions"
+                  @change="checked=>handleSelectFunction(checked, scope.row)"
+                  :label="scope.row.id"
+                  :key="scope.row.id"
+                  size="mini">
+                  {{ scope.row.name }}
+                </el-checkbox>
               </template>
             </el-table-column>
 
@@ -93,7 +102,6 @@
           </el-table>
 
           <!-- https://blog.csdn.net/qq_33769914/article/details/81302116 -->
-
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -105,7 +113,7 @@
 </template>
 
 <script>
-import {addOrUpdateRole, deleteRole, getAllFuncs, getFunctions, getRoleById, listRoleData} from '@/api/role'
+import { addOrUpdateRole, deleteRole, getAllFuncs, getFunctions, getRoleById, listRoleData } from '@/api/role'
 import Pagination from '@/components/Pagination'
 
 const defaultRole = {
@@ -384,7 +392,7 @@ export default {
       }
     },
     handleSelectItem(checked, obj) {
-      const type2 = Object.prototype.toString.call(this.roleForm.items)
+      // const type2 = Object.prototype.toString.call(this.roleForm.items)
       if (checked) {
         if (obj.parentIds) {
           obj.parentIds.forEach((item, index, array) => {
