@@ -11,7 +11,14 @@
       <el-table-column align="center" label="用户ID" width="220" prop="accountId" />
       <el-table-column align="center" label="用户名" width="220" prop="userName" />
       <el-table-column align="center" label="姓名" width="220" prop="realName" />
-      <el-table-column align="center" label="Operations">
+      <el-table-column align="center" label="状态" width="220" prop="status" >
+        <template slot-scope="{row}">
+          <p v-if="row.status=='0'">未激活</p>
+          <p v-if="row.status=='1'">已激活</p>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="初始激活密码" width="220" prop="activeStr" />
+      <el-table-column align="center" label="操作">
         <!-- <template slot-scope="{row,$index}"> -->
         <template slot-scope="{row}">
           <el-button type="primary" size="small" @click="handleAddOrEditUser(row)">编辑</el-button>
