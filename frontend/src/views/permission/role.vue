@@ -30,16 +30,18 @@
       @close="handleClose"
     >
       <el-form
-        :model="roleForm"
+        v-if="dialogVisible"
         ref="roleForm"
-        :modal-append-to-body='true'
-        v-if='dialogVisible'
+        :model="roleForm"
+        :modal-append-to-body="true"
         label-width="100px"
-        label-position="left">
+        label-position="left"
+      >
         <el-form-item label="角色名称" prop="name">
           <el-input
             v-model="roleForm.name"
-            placeholder="权限点名称" />
+            placeholder="权限点名称"
+          />
         </el-form-item>
         <el-form-item label="角色编码" prop="code">
           <el-input
@@ -54,48 +56,54 @@
             row-key="id"
             border
             default-expand-all
-            :tree-props="{children: 'children', hasChildren: ''}"> /* 这里有坑*/
+            :tree-props="{children: 'children', hasChildren: ''}"
+          > /* 这里有坑*/
 
             <el-table-column
               width="180"
-              label="菜单选择">
+              label="菜单选择"
+            >
               <template slot-scope="scope">
                 <el-checkbox
                   v-if="scope.row.type == -1 "
-                  v-model="roleForm.functions"
-                  @change="checked=>handleSelectFunction(checked, scope.row)"
-                  :label="scope.row.id"
                   :key="scope.row.id"
+                  v-model="roleForm.functions"
+                  :label="scope.row.id"
                   :disabled="true"
-                  size="mini">
+                  size="mini"
+                  @change="checked=>handleSelectFunction(checked, scope.row)"
+                >
                   {{ scope.row.name }}
                 </el-checkbox>
 
                 <el-checkbox
                   v-else
-                  v-model="roleForm.functions"
-                  @change="checked=>handleSelectFunction(checked, scope.row)"
-                  :label="scope.row.id"
                   :key="scope.row.id"
-                  size="mini">
+                  v-model="roleForm.functions"
+                  :label="scope.row.id"
+                  size="mini"
+                  @change="checked=>handleSelectFunction(checked, scope.row)"
+                >
                   {{ scope.row.name }}
                 </el-checkbox>
               </template>
             </el-table-column>
 
             <el-table-column
-              label="页内功能点">
+              label="页内功能点"
+            >
               <template slot-scope="scope">
-                  <el-checkbox
-                               v-model="roleForm.items"
-                               v-for="itemObj in scope.row.items"
-                               @change="checked=>handleSelectItem(checked, itemObj)"
-                               :label="itemObj.itemId"
-                               :key="itemObj.itemId"
-                               border
-                               size="mini">
-                    {{itemObj.itemId}}
-                  </el-checkbox>
+                <el-checkbox
+                  v-for="itemObj in scope.row.items"
+                  :key="itemObj.itemId"
+                  v-model="roleForm.items"
+                  :label="itemObj.itemId"
+                  border
+                  size="mini"
+                  @change="checked=>handleSelectItem(checked, itemObj)"
+                >
+                  {{ itemObj.itemId }}
+                </el-checkbox>
               </template>
             </el-table-column>
 
