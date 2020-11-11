@@ -74,6 +74,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/3000',
+    component: () => import('@/views/mydata/mydata-createOrEdit'),
+    hidden: true
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -85,6 +90,11 @@ export const constantRoutes = [
         meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
       }
     ]
+  },
+  {
+    path: '/3001',
+    component: () => import('@/views/mydata/mydata-createOrEdit'),
+    hidden: false
   },
   {
     path: '/documentation',

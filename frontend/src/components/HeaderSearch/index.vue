@@ -168,6 +168,8 @@ export default {
     }
   }
 
+/*DWS3067-C-CN*/
+/*DWS2000-C-CN*/
   &.show {
     .header-search-select {
       width: 210px;
