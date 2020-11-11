@@ -6,7 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-/* Router Modules */
+/* Router Modules https://www.hangge.com/blog/cache/detail_2120.html */
 import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
@@ -74,7 +74,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/3000',
+    path: '/active-user',
     component: () => import('@/views/mydata/mydata-createOrEdit'),
     hidden: true
   },
