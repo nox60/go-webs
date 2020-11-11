@@ -79,6 +79,18 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/3005',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/mydata/mydata-createOrEdit'),
+        name: '3005',
+        meta: { title: '3005', icon: 'tab', accessCode: 9 }
+      }
+    ]
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',

@@ -8,10 +8,10 @@
       style="width: 100%;margin-top:5px;"
       border
     >
-      <el-table-column align="center" label="用户ID"  prop="accountId" />
-      <el-table-column align="center" label="用户名"  prop="userName" />
-      <el-table-column align="center" label="姓名"  prop="realName" />
-      <el-table-column align="center" label="状态"  prop="status" >
+      <el-table-column align="center" label="用户ID" prop="accountId" />
+      <el-table-column align="center" label="用户名" prop="userName" />
+      <el-table-column align="center" label="姓名" prop="realName" />
+      <el-table-column align="center" label="状态" prop="status">
         <template slot-scope="{row}">
           <p v-if="row.status=='0'">未激活</p>
           <p v-if="row.status=='1'">已激活</p>
