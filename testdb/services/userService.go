@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testdb/dao"
 	"testdb/models"
+	"testdb/utils"
 )
 
 func RetriveUserInfo(accountId int) {
@@ -129,5 +130,38 @@ func DeleteUser(accountId int) {
 
 	// 删除用户对应的组信息
 	err = dao.DeleteUserRoleByAccountId(accountId, tx)
+}
+
+func ResetUser(accountId int) {
+	tx, err := dao.MysqlDb.Begin()
+
+	if err != nil {
+		return
+	}
+	defer func() {
+		switch {
+		case err != nil:
+			fmt.Println(err)
+			fmt.Println("rollback error")
+		default:
+			fmt.Println("commit ")
+			err = tx.Commit()
+		}
+	}()
+	// 首先获取用户
+	tempUser := dao.RetrieveUserByAccountId(accountId)
+	// 将用户状态 status 设置为 0，未激活状态
+	if tempUser.Status == 1 {
+		tempUser.Status = 0
+		// 获取自动生成的8位新密码
+		tempUser.ActiveStr = utils.CreateRandomString(8)
+		tempUser.Password = utils.MD5(tempUser.UserName + tempUser.ActiveStr)
+		// 更新用户
+		dao.UpdateUserByAccountId(tempUser, tx)
+	} else {
+		// 报错，重复设置用户信息失败
+		fmt.Println("Error ")
+	}
+	// 将用户active_str字段设置为8位随机字符+数字格式，将用户名和密码拼接，并加上盐值，计算md5值
 
 }

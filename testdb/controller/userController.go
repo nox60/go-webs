@@ -173,13 +173,14 @@ func DeleteUser(c *gin.Context) {
 	c.JSON(200, resultMsg)
 }
 
-func DeleteUser2(c *gin.Context) {
+func ResetUser(c *gin.Context) {
 	idStr := c.Param("accountId")
 	id, _ := strconv.Atoi(idStr)
-	services.DeleteUser(id)
+
+	services.ResetUser(id)
 
 	resultMsg := new(models.HttpResult)
 	resultMsg.Code = 20000
-	resultMsg.Msg = "删除用户成功"
+	resultMsg.Msg = "重置用户信息成功"
 	c.JSON(200, resultMsg)
 }
