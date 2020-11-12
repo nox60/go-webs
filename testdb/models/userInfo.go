@@ -13,6 +13,7 @@ type User struct {
 	UserName  string `json:"userName"`
 	RealName  string `json:"realName"`
 	RoleIds   []int  `json:"roleIds"`
+	Password  string
 	Roles     []Role `json:"roles"`
 	Page      int    `json:"page"  `
 	Limit     int    `json:"limit" `
