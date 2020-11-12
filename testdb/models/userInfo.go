@@ -6,6 +6,7 @@ type UserInfo struct {
 	Avatar       string `json:"avatar" binding:"required"`
 	Name         string `json:"name" binding:"required"`
 	Roles        string `json:"roles" binding:"required"`
+	Status       int    `json:"status"`
 }
 
 type User struct {

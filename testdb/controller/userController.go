@@ -79,6 +79,7 @@ func UserInfo(c *gin.Context) {
 	userInfo.Name = "Super Admin"
 	userInfo.Code = 100
 	userInfo.Roles = "[admin]"
+
 	resultMsg.Data = userInfo
 
 	c.JSON(200, resultMsg)
