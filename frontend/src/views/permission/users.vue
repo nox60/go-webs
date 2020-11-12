@@ -18,9 +18,10 @@
         </template>
       </el-table-column>
       <el-table-column align="center" label="初始激活密码" width="220" prop="activeStr" />
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" width="250px" label="操作">
         <!-- <template slot-scope="{row,$index}"> -->
         <template slot-scope="{row}">
+          <el-button type="primary" size="small" @click="handleResetUser(row)">重置密码</el-button>
           <el-button type="primary" size="small" @click="handleAddOrEditUser(row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDeleteConfirm(row)">删除</el-button>
         </template>
@@ -81,7 +82,7 @@
 </template>
 
 <script>
-import { listUserData, addOrUpdateUser, deleteUser } from '@/api/user'
+import { listUserData, addOrUpdateUser, deleteUser, resetUser } from '@/api/user'
 import { listRoleData } from '@/api/role'
 import Pagination from '@/components/Pagination'
 // import { mapGetters } from 'vuex'
@@ -226,6 +227,26 @@ export default {
             this.$notify({
               title: 'Success',
               message: '删除用户成功！',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList()
+          })
+          // done();
+        })
+        .catch(_ => {})
+    },
+    handleResetUser(row) {
+      console.log(row)
+      this.$confirm('确认要重置用户密码？')
+        .then(_ => {
+          console.log('点击了确认')
+          console.log(row.accountId)
+          resetUser(row.accountId).then(() => {
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: '重置用户密码成功！',
               type: 'success',
               duration: 2000
             })
