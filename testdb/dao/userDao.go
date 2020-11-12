@@ -253,9 +253,11 @@ func AddUser(user *models.User, tx *sql.Tx) (accountId int, err error) {
 
 func UpdateUserByAccountId(user *models.User, tx *sql.Tx) (err error) {
 	var queryStm strings.Builder
-	queryStm.WriteString(" UPDATE `tb_users` SET `user_name` = ?, `real_name` = ?,  ")
+	queryStm.WriteString(" UPDATE `tb_users` SET `user_name` = ?,  ")
+	queryStm.WriteString(" `real_name` = ?, ")
 	queryStm.WriteString(" `password` = ?, ")
-	queryStm.WriteString(" `active_str` = ? ")
+	queryStm.WriteString(" `active_str` = ?, ")
+	queryStm.WriteString(" `status` = ? ")
 	queryStm.WriteString(" WHERE account_id = ? ")
 
 	var args = make([]interface{}, 0)
@@ -264,6 +266,7 @@ func UpdateUserByAccountId(user *models.User, tx *sql.Tx) (err error) {
 	args = append(args, user.RealName)
 	args = append(args, user.Password)
 	args = append(args, user.ActiveStr)
+	args = append(args, user.Status)
 	args = append(args, user.AccountId)
 
 	_, err = tx.Exec(queryStm.String(), args...)
