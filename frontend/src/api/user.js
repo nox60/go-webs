@@ -67,3 +67,10 @@ export function deleteUser(id) {
     method: 'delete'
   })
 }
+
+export function resetUser(id) {
+  return request({
+    url: `/resetUser/${id}`,
+    method: 'put'
+  })
+}
