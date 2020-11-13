@@ -66,6 +66,7 @@ const actions = {
     console.log(resultaa.sub)
 
     const parsedJson = JSON.parse(resultaa.sub)
+    console.log('tttttt', parsedJson)
     // console.log(">>>>>---")
     // console.log(parsedJson)
     // console.log(parsedJson.MenuItems)
