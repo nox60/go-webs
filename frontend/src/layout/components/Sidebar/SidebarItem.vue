@@ -67,7 +67,7 @@ export default {
   },
   created() {
     this.userMenus = this.$store.getters.menus
-    console.log(this.userMenus)
+    console.log('userMenus', this.userMenus)
   },
   methods: {
     hasOneShowingChild(children = [], parent) {

@@ -117,9 +117,22 @@ func RetrieveUserByAccountId(accountId int) (user *models.User) {
 
 	user1 := new(models.User)
 
-	row := MysqlDb.QueryRow("SELECT account_id, user_name, age, password, active_str, status, user_type FROM tb_users WHERE account_id = ? ", accountId)
+	// 查询条件
+	var queryStm strings.Builder
 
-	if err := row.Scan(&user1.AccountId, &user1.UserName, &user1.Age, &user1.Password, &user1.ActiveStr, &user1.Status, &user1.UserType); err != nil {
+	queryStm.WriteString(" SELECT a.account_id, a.user_name, a.age, a.password, a.active_str, a.status, a.user_type,  ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( c.function_id) SEPARATOR '|')  AS funStr, ")
+	queryStm.WriteString(" GROUP_CONCAT(DISTINCT( d.item_id) SEPARATOR '|')  AS itemStr ")
+	queryStm.WriteString(" FROM tb_users a ")
+	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
+	queryStm.WriteString(" LEFT JOIN tb_roles_functions c ON b.role_id = c.role_id ")
+	queryStm.WriteString(" LEFT JOIN tb_roles_items d ON b.role_id = d.role_id ")
+	queryStm.WriteString(" WHERE a.account_id = ? ")
+
+	row := MysqlDb.QueryRow(queryStm.String(), accountId)
+
+	if err := row.Scan(&user1.AccountId, &user1.UserName, &user1.Age, &user1.Password, &user1.ActiveStr, &user1.Status, &user1.UserType, &user1.FunStr,
+		&user1.ItemStr); err != nil {
 	}
 
 	return user1
