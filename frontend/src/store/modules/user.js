@@ -10,7 +10,9 @@ const state = {
   introduction: '',
   roles: [],
   menus: '',
-  items: ''
+  items: '',
+  userStatus: 0,
+  userType: 0
 }
 
 const mutations = {
@@ -34,6 +36,12 @@ const mutations = {
   },
   SET_ITEMS: (state, items) => {
     state.items = items
+  },
+  SET_USER_STATUS: (state, items) => {
+    state.userStatus = items
+  },
+  SET_USER_TYPE: (state, items) => {
+    state.userType = items
   }
 }
 
@@ -66,7 +74,7 @@ const actions = {
     console.log(resultaa.sub)
 
     const parsedJson = JSON.parse(resultaa.sub)
-    console.log('tttttt', parsedJson)
+    console.log('parsed json............', parsedJson)
     // console.log(">>>>>---")
     // console.log(parsedJson)
     // console.log(parsedJson.MenuItems)
@@ -75,6 +83,9 @@ const actions = {
     commit('SET_MENUS', parsedJson.MenuItems)
     commit('SET_ITEMS', parsedJson.pageItems)
     commit('SET_TOKEN', token)
+    commit('SET_USER_STATUS', parsedJson.userStatus)
+    commit('SET_USER_TYPE', parsedJson.userType)
+
     setToken(token)
   },
   // get user info
