@@ -24,6 +24,7 @@ type User struct {
 	ItemStr   string `json:"itemStr"`
 	Status    int    `json:"status"`
 	ActiveStr string `json:"activeStr"`
+	UserType  int    `json:"userType"`
 	ForCount  bool
 }
 

@@ -117,9 +117,9 @@ func RetrieveUserByAccountId(accountId int) (user *models.User) {
 
 	user1 := new(models.User)
 
-	row := MysqlDb.QueryRow("SELECT account_id, user_name, age, password, active_str, status FROM tb_users WHERE account_id = ? ", accountId)
+	row := MysqlDb.QueryRow("SELECT account_id, user_name, age, password, active_str, status, user_type FROM tb_users WHERE account_id = ? ", accountId)
 
-	if err := row.Scan(&user1.AccountId, &user1.UserName, &user1.Age, &user1.Password, &user1.ActiveStr, &user1.Status); err != nil {
+	if err := row.Scan(&user1.AccountId, &user1.UserName, &user1.Age, &user1.Password, &user1.ActiveStr, &user1.Status, &user1.UserType); err != nil {
 	}
 
 	return user1
@@ -143,7 +143,7 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 	// 查询条件
 	var fetchArgs = make([]interface{}, 0)
 
-	queryStm.WriteString(" SELECT a.`account_id`, a.`user_name`, a.`real_name`, a.`password`, a.`status`, a.`active_str`, ")
+	queryStm.WriteString(" SELECT a.`account_id`, a.`user_name`, a.`real_name`, a.`password`, a.`status`, a.`active_str`, a.`user_type`,  ")
 	queryStm.WriteString(" GROUP_CONCAT(DISTINCT(CONCAT_WS('|!|', c.role_id, c.name))) AS roleStr ")
 	queryStm.WriteString(" FROM tb_users a ")
 	queryStm.WriteString(" LEFT JOIN tb_users_roles b ON a.account_id = b.account_id ")
@@ -212,6 +212,7 @@ func RetrieveUsersData(fetchDataBody *models.User) (dataResBody []models.User, t
 			&dataObj.Password,
 			&dataObj.Status,
 			&dataObj.ActiveStr,
+			&dataObj.UserType,
 			&dataObj.RoleStr)
 
 		if strings.Index(dataObj.RoleStr, "|!|") > 0 {

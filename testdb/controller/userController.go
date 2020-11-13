@@ -37,6 +37,8 @@ func JsonLogin(c *gin.Context) {
 		tokenPayload.AccountId = result.AccountId
 		tokenPayload.MenuItems = result.FunStr
 		tokenPayload.PageItems = result.ItemStr
+		tokenPayload.Status = result.Status
+		tokenPayload.UserType = result.UserType
 		tokenJson, _ := json.Marshal(tokenPayload)
 		jwtSignedToken := utils.JwtSign(string(tokenJson))
 		resultMsg.Token = jwtSignedToken
