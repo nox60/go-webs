@@ -135,6 +135,14 @@ func RetrieveUserByAccountId(accountId int) (user *models.User) {
 		&user1.ItemStr); err != nil {
 	}
 
+	// 如果用户信息不为空,说明该用户存在,需要处理该用户的权限点信息。
+	if user1.AccountId > 0 {
+		user1.FunStr = "|" + user1.FunStr
+		user1.FunStr = user1.FunStr + "|"
+		user1.ItemStr = "|" + user1.ItemStr
+		user1.ItemStr = user1.ItemStr + "|"
+	}
+
 	return user1
 }
 

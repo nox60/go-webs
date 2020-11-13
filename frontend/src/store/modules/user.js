@@ -37,11 +37,11 @@ const mutations = {
   SET_ITEMS: (state, items) => {
     state.items = items
   },
-  SET_USER_STATUS: (state, items) => {
-    state.userStatus = items
+  SET_USER_STATUS: (state, userStatus) => {
+    state.userStatus = userStatus
   },
-  SET_USER_TYPE: (state, items) => {
-    state.userType = items
+  SET_USER_TYPE: (state, userType) => {
+    state.userType = userType
   }
 }
 
@@ -80,7 +80,7 @@ const actions = {
     // console.log(parsedJson.MenuItems)
     // console.log(parsedJson.pageItems)
     // console.log('-------------------------------------------------------')
-    commit('SET_MENUS', parsedJson.MenuItems)
+    commit('SET_MENUS', parsedJson.menuItems)
     commit('SET_ITEMS', parsedJson.pageItems)
     commit('SET_TOKEN', token)
     commit('SET_USER_STATUS', parsedJson.userStatus)
