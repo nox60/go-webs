@@ -273,19 +273,6 @@ func AddUser(user *models.User, tx *sql.Tx) (accountId int, err error) {
 	return accountId, err
 }
 
-func ModifyUserByVe2(user *models.User, tx *sql.Tx) (accountId int, err error) {
-	ret, err := tx.Exec(" INSERT INTO `tb_users` (`user_name`,`real_name`) "+
-		" values (?,?) ",
-		user.UserName,
-		user.RealName)
-	var accountId64 int64
-	if accountId64, err = ret.LastInsertId(); nil == err {
-		fmt.Println("LastInsertId:", accountId)
-	}
-	accountId = int(accountId64)
-	return accountId, err
-}
-
 func UpdateUserByAccountId(user *models.User, tx *sql.Tx) (err error) {
 	var queryStm strings.Builder
 	queryStm.WriteString(" UPDATE `tb_users` SET `user_name` = ?,  ")
