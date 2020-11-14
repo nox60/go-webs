@@ -155,7 +155,8 @@ func ResetUser(accountId int) {
 		tempUser.Status = 0
 		// 获取自动生成的8位新密码
 		tempUser.ActiveStr = utils.CreateRandomString(8)
-		tempUser.Password = utils.MD5(tempUser.UserName + tempUser.ActiveStr)
+		// tempUser.Password = utils.MD5(tempUser.UserName + tempUser.ActiveStr)
+		tempUser.Password = utils.GetEncryptedPasswd(tempUser.UserName, tempUser.ActiveStr)
 		// 更新用户
 		dao.UpdateUserByAccountId(tempUser, tx)
 	} else {

@@ -23,6 +23,8 @@ func JsonLogin(c *gin.Context) {
 		return
 	}
 
+	loginBody.Password = utils.GetEncryptedPasswd(loginBody.Password, loginBody.UserName)
+
 	result := dao.RetrieveUserByUserNameAndPassword(&loginBody)
 
 	resultMsg := new(models.HttpResult)
