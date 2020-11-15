@@ -188,10 +188,13 @@ export default {
 
                   if (parsedJson.userStatus === 0) {
                     console.log('用户没有激活，需要重新激活 ----------------------------------- ')
-                    this.$router.push({ path: '/active-user' })
+                    // this.$router.push({ path: '/active-user' })
+                    this.$router.push({ path: '/dashboard' })
+                    this.loading = false
                   } else {
                     this.$store.dispatch('user/loginInfo', res.token)
                       .then(() => {
+                        console.log('otherQuery',this.otherQuery,'|','redirect',this.redirect)
                         this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
                         this.loading = false
                       })

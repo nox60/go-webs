@@ -30,6 +30,8 @@ func main() {
 	api.POST("/checkLogin", controller.JsonLogin)
 	api.GET("/pid/:id", controller.GetRoleByParentId)
 
+	api.GET("/resetUserUACNOTADSADUnder/:accountId", controller.ResetUser)
+
 	api.Use(Authorize())
 	// 以下接口都需要鉴权，验证token的正确性
 
