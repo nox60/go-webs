@@ -29,7 +29,6 @@ func main() {
 	//以下接口不需要鉴权
 	api.POST("/checkLogin", controller.JsonLogin)
 	api.GET("/pid/:id", controller.GetRoleByParentId)
-
 	api.GET("/resetUserUACNOTADSADUnder/:accountId", controller.ResetUser)
 
 	api.Use(Authorize())

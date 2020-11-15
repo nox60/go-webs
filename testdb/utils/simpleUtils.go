@@ -21,7 +21,7 @@ func StructToMap(obj interface{}) map[string]interface{} {
 	return data
 }
 
-func GetEncryptedPasswd(originalPassword string, userName string) string {
+func GetEncryptedPasswd(userName string, originalPassword string) string {
 	return MD5(userName + originalPassword)
 }
 
