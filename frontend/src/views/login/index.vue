@@ -166,35 +166,20 @@ export default {
             checkLogin(this.loginForm)
               .then(res => {
                 if (res.data.code === 100) {
-                  // console.log('login successed')
-                  // console.log(this.redirect)
-                  // console.log('1111111111111111111111111111111111111111111111111111111')
-                  // console.log(res.token)
-
                   const parsedToken = jwt.decode(res.token)
                   const parsedJson = JSON.parse(parsedToken.sub)
-                  //
-                  // console.log(resultaa.sub)
-                  //
-                  // let parsedJson = JSON.parse(resultaa.sub)
-                  // console.log(">>>>>---")
-                  // console.log(parsedJson)
-                  // console.log(parsedJson.MenuItems)
-                  // console.log('-------------------------------------------------------')
-
                   // 进行判断，如果用户状态为0(未激活状态)，则要求用户重新登录。
-                  console.log('parsed token userStatus', parsedJson)
-                  console.log('parsed token userStatus', parsedJson.userStatus)
-
                   if (parsedJson.userStatus === 0) {
-                    console.log('用户没有激活，需要重新激活 ----------------------------------- ')
-                    // this.$router.push({ path: '/active-user' })
-                    this.$router.push({ path: '/dashboard' })
                     this.loading = false
+                    this.$confirm('你的账户需要激活才能使用！')
+                      .then(_ => {
+                        this.$router.push({ path: '/active-user' })
+                      })
+                      .catch(_ => {})
                   } else {
                     this.$store.dispatch('user/loginInfo', res.token)
                       .then(() => {
-                        console.log('otherQuery',this.otherQuery,'|','redirect',this.redirect)
+                        console.log('otherQuery', this.otherQuery, '|', 'redirect', this.redirect)
                         this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
                         this.loading = false
                       })
