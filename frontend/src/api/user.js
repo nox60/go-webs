@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import qs from 'qs'
 
 //     data
 // export function login(data) {
@@ -12,7 +11,7 @@ import qs from 'qs'
 export function getInfo() {
   return request({
     url: '/userInfo',
-    method: 'get',
+    method: 'get'
   })
 }
 

@@ -45,22 +45,71 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+        <el-form-item prop="activePassword">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="activePassword"
+            v-model="loginForm.activePassword"
+            :type="passwordType"
+            placeholder="新密码"
+            name="activePassword"
+            tabindex="2"
+            autocomplete="on"
+            @keyup.native="checkCapslock"
+            @blur="capsTooltip = false"
+            @keyup.enter.native="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          </span>
+        </el-form-item>
+      </el-tooltip>
 
-      <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
+      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+        <el-form-item prop="activePassword2">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="activePassword2"
+            v-model="loginForm.activePassword2"
+            :type="passwordType"
+            placeholder="再次输入新密码"
+            name="activePassword2"
+            tabindex="2"
+            autocomplete="on"
+            @keyup.native="checkCapslock"
+            @blur="capsTooltip = false"
+            @keyup.enter.native="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          </span>
+        </el-form-item>
+      </el-tooltip>
 
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div>
+      <el-button v-if="forLogin == 1" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button v-if="forLogin == 0" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleActiveUser">Active User</el-button>
+
+      <!--      <div style="position:relative">-->
+      <!--        <div class="tips">-->
+      <!--          <span>Username : admin</span>-->
+      <!--          <span>Password : any</span>-->
+      <!--        </div>-->
+      <!--        <div class="tips">-->
+      <!--          <span style="margin-right:18px;">Username : editor</span>-->
+      <!--          <span>Password : any</span>-->
+      <!--        </div>-->
+
+      <!--        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">-->
+      <!--          Or connect with-->
+      <!--        </el-button>-->
+      <!--      </div>-->
     </el-form>
 
     <el-dialog title="Or connect with" :visible.sync="showDialog">
@@ -100,9 +149,12 @@ export default {
       }
     }
     return {
+      forLogin: 1,
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '111111',
+        activePassword: '',
+        activePassword2: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur' }],
@@ -157,6 +209,64 @@ export default {
       })
     },
     handleLogin() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          // 登录判断逻辑
+          new Promise((resolve, reject) => {
+            // 这里的checkLogin没写对，是应该用token去看用户的token是否过期，后面再重构。
+            checkLogin(this.loginForm)
+              .then(res => {
+                if (res.data.code === 100) {
+                  const parsedToken = jwt.decode(res.token)
+                  const parsedJson = JSON.parse(parsedToken.sub)
+                  // 进行判断，如果用户状态为0(未激活状态)，则要求用户重新登录。
+                  if (parsedJson.userStatus === 0) {
+                    this.loading = false
+                    this.$confirm('你的账户需要激活才能使用！')
+                      .then(_ => {
+                        // this.$router.push({ path: '/active-user' })
+                        this.forLogin = 0
+                      })
+                      .catch(_ => {})
+                  } else {
+                    this.$store.dispatch('user/loginInfo', res.token)
+                      .then(() => {
+                        console.log('otherQuery', this.otherQuery, '|', 'redirect', this.redirect)
+                        this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                        this.loading = false
+                      })
+                      .catch(() => {
+                        this.loading = false
+                      })
+                  }
+                } else {
+                  console.log('login failed')
+                  Message({
+                    message: res.data.msg || 'Error',
+                    type: 'error',
+                    duration: 1 * 1000
+                  })
+                  this.loading = false
+                  return false
+                }
+
+                resolve()
+              })
+              .catch(error => {
+                console.log(error)
+                reject(error)
+              })
+          }).catch(error => {
+            console.log(error)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    handleActiveUser() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
