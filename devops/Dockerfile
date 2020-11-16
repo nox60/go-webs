@@ -2,24 +2,20 @@ FROM golang:1.14-alpine
 
 ENV GO111MODULE on
 
-ENV GOPROXY https://goproxy.baidu.com/
+ENV GOPROXY https://goproxy.cn/
 
 ENV GOCACHE "/root/.cache/go-build"
 
-RUN tar -cvf testdb.tar testdb
+RUN mkdir /opt/logs/
 
-ADD testdb /opt/gopath/src/
-#
-ADD testdb/verdor/* /opt/gopath/src
-#
-WORKDIR /opt/gopath/src
+ADD testdb /opt/gopath/src/testdb
 
-RUN go mod init testdb
+WORKDIR /opt/gopath/src/testdb/
 
-WORKDIR /opt/gopath/src/testdb
+RUN go mod tidy
+
+WORKDIR /opt/gopath/src/testdb/
 
 RUN go build
 
-#WORKDIR /opt/gopath/src
-#
-#RUN go mod vendor
+ENTRYPOINT /opt/gopath/src/testdb/testdb
