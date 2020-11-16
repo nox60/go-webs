@@ -45,7 +45,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip v-if="forLogin == 0" v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="activePassword">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -69,12 +69,13 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip v-if="forLogin == 0" v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="activePassword2">
           <span class="svg-container">
             <svg-icon icon-class="password" />
           </span>
           <el-input
+            v-if="forLogin == 0"
             :key="passwordType"
             ref="activePassword2"
             v-model="loginForm.activePassword2"
@@ -93,8 +94,9 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button v-if="forLogin == 1" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-      <el-button v-if="forLogin == 0" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleActiveUser">Active User</el-button>
+      <el-button v-if="forLogin == 1" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button v-if="forLogin == 0" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleActiveUser">激活用户</el-button>
+      <el-button v-if="forLogin == 0" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleActiveUser">取消返回</el-button>
 
       <!--      <div style="position:relative">-->
       <!--        <div class="tips">-->
