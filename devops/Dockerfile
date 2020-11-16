@@ -6,6 +6,8 @@ ENV GOPROXY https://goproxy.baidu.com/
 
 ENV GOCACHE "/root/.cache/go-build"
 
+RUN tar -cvf testdb.tar testdb
+
 ADD testdb /opt/gopath/src/
 #
 ADD testdb/verdor/* /opt/gopath/src
