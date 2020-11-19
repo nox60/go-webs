@@ -99,3 +99,28 @@ func GetItem(c *gin.Context) {
 
 	c.JSON(200, resultMsg)
 }
+
+func GetItem2(c *gin.Context) {
+
+	itemIdStr := c.Param("itemId")
+
+	resultMsg := new(models.HttpResult)
+	resultMsg.Code = 20000
+	resultMsg.Msg = "获取数据成功"
+
+	var fetchDataRequestBody models.FetchDataRequestBody
+
+	itemId, err := strconv.Atoi(itemIdStr)
+
+	fetchDataRequestBody.ItemId = itemId
+
+	results, err := dao.GetData(&fetchDataRequestBody)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	resultMsg.Data = results
+
+	c.JSON(200, resultMsg)
+}
