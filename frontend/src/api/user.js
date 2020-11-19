@@ -1,13 +1,5 @@
 import request from '@/utils/request'
 
-//     data
-// export function login(data) {
-//   return request({
-//     url: '/vue-element-admin/user/login',
-//     method: 'post',
-//   })
-// }
-
 export function getInfo() {
   return request({
     url: '/userInfo',

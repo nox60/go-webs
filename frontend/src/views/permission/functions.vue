@@ -150,13 +150,6 @@ import {
 } from '@/api/role'
 import { Message } from 'element-ui'
 
-// const defaultRole = {
-//   key: '',
-//   name: '',
-//   description: '',
-//   routes: []
-// }
-
 export default {
   inject: ['reload'],
   data() {
